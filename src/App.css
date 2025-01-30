@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Cookie&family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  transition: .3s ease;
+}
+
+:root {
+  --PrimaryColor: hsl(278, 100%, 50%);
+  --HoverColor: hsl(26, 90%, 42%);
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackColor: hsl(0, 0%, 18%);
+  --textColor: hsl(240, 1%, 48%);
+  --whiteColorDeam: hsl(0, 0%, 93%);
+  --greyBg: hsl(0, 0%, 96%);
+  --greyText: rgb(190, 190, 190);
+  --inputColor: rgb(330, 12%, 97%);
+  /* --boxShadow: box-shadow: 0 2px 8px rgba(178, 178, 178, 0.334); */
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+.section {
+  padding: 4rem 0 2rem;
+}
+
+.container {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.icon {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Admin Layout */
+.admin-layout {
+  display: flex;
+  /* Mengatur sidebar dan konten berdampingan */
+  height: 100vh;
+  /* Sidebar dan konten mengisi seluruh tinggi layar */
+  width: 100%;
+  /* Mengisi seluruh lebar layar */
+}
+
+.admin-content {
+  flex: 1;
+  /* Isi ruang yang tersisa setelah sidebar */
+  margin-left: 250px;
+  /* Jarak default dari sidebar saat terbuka */
+  padding: 20px;
+  overflow-y: auto;
+  /* Konten dapat di-scroll jika lebih tinggi dari layar */
+  transition: margin-left 0.3s ease;
+  /* Efek transisi saat sidebar dibuka/tutup */
+  background-color: var(--greyBg);
+  /* Warna latar belakang konten */
+}
+
+.sidebar.closed+.admin-content {
+  margin-left: 80px;
+  /* Sesuaikan jarak dengan lebar sidebar yang tertutup */
+}
+
+
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20rem;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  align-items: center;
+}
+
+.btn {
+  padding: .4rem 1.5rem;
+  background: var(--PrimaryColor);
+  border: none;
+  outline: none;
+  border-radius: 3rem;
+  cursor: pointer;
+}
+
+.btn a {
+  color: var(--whiteColor);
+  font-weight: 500;
+}
+
+.btn:hover {
+  background: var(--HoverColor);
+}
+
+.btn:hover a {
+  color: var(--whiteColor);
+}
+
+.secIntro {
+  max-width: 70%;
+  text-align: center;
+  margin: 0 auto 2rem;
+}
+
+.secIntro .secTitle {
+  color: var(--blackColor);
+  line-height: 1.5rem;
+  padding-bottom: .5rem;
+}
+
+.secIntro p {
+  font-size: 13px;
+  color: var(--textColor);
+  font-weight: 500;
+}
+
+img,
+video {
+  width: 100%;
+  height: auto;
+}
+
+input {
+  font-size: 100%;
+}
+
+@media screen and (min-width: 556px) {
+
+  .mainContent,
+  .singlePost {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 884px) {
+  .mainContent {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 1240px) {
+  .container {
+    width: 75% !important;
+    margin: auto !important;
+  }
+
+  .section {
+    padding: 5rem 0 3rem;
+  }
+
+  .secIntro {
+    margin: 0 auto 3rem;
+  }
+
+  .secIntro .secTitle {
+    line-height: 2rem;
+    padding-bottom: 1rem;
+    font-size: 2.2rem;
+  }
+
+  .secIntro p {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 1560px) {
+  body {
+    zoom: 1.7;
+  }
+}
+
+::selection {
+  background: var(--PrimaryColor);
+  color: var(--whiteColor);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: var(--greyBg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--PrimaryColor);
+  border-radius: 10px;
+  cursor: pointer;
+}

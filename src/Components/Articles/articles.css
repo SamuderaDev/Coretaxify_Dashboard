@@ -1,0 +1,62 @@
+.articles-section {
+    background-color: #ffa54d;
+    /* Warna oranye */
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.articles-section h2 {
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.articles-section p {
+    font-size: 16px;
+    color: #ffffff;
+    margin-bottom: 30px;
+}
+
+.articles-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.article-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 250px;
+    text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.article-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.article-card h3 {
+    font-size: 18px;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+.article-card p {
+    font-size: 14px;
+    color: #555555;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+    .article-card {
+        width: 100%;
+        /* Membuat artikel memenuhi lebar layar */
+    }
+}
+

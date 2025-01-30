@@ -1,0 +1,190 @@
+/* Sidebar Styles */
+.sidebar {
+          background-color: #f8f9fa;
+          color: #757575;
+          width: 250px;
+          transition: width 0.3s ease;
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          position: fixed;
+}
+
+.sidebar.closed {
+          width: 80px;
+}
+
+.sidebar-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1rem 1rem;
+          background: #fff;
+          border-bottom: 1px solid #eee;
+          margin-left: 20px;
+}
+
+.sidebar-logo {
+          width: 200px;
+          margin-right: 10px; /* Berikan jarak antara logo dan ikon */
+}
+
+.menu-toggle {
+          font-size: 1.5rem;
+          cursor: pointer;
+          color: #673ab7;
+}
+
+.sidebar-menu {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+}
+
+.menu-item {
+          display: flex;
+          align-items: center;
+          padding: 0.8rem 1rem;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+}
+
+
+.menu-item:hover {
+          background-color: #ececec;
+}
+
+.menu-icon {
+          font-size: 1.5rem;
+          margin-right: 1rem;
+          color: #673ab7;
+}
+
+.menu-item span {
+          font-size: 1rem;
+          font-weight: 500;
+}
+
+.sidebar.closed .menu-item span {
+          display: none;
+}
+
+.sidebar.closed .menu-icon {
+          margin-right: 0;
+}
+
+/* Dropdown Menu */
+.dropdown {
+position: relative;
+}
+
+.dropdown-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          cursor: pointer;
+}
+
+.dropdown-menu {
+          position: absolute;
+          top: 100%;
+          /* Posisikan tepat di bawah menu utama */
+          left: 0;
+          /* Sejajarkan ke kiri dengan menu utama */
+          background: #fff;
+          /* Pastikan latar belakang dropdown terlihat */
+          list-style: none;
+          /* Hilangkan bullet point */
+          padding: 0;
+          /* Atur padding agar sesuai */
+          margin: 0;
+          /* Hilangkan margin bawaan */
+          border: 1px solid #ececec;
+          /* Tambahkan border untuk estetika */
+          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+          /* Tambahkan bayangan */
+          display: none;
+          /* Default: sembunyikan dropdown */
+}
+
+.dropdown-item {
+          padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #757575;
+}
+
+.dropdown-item:hover {
+          background-color: #ececec;
+}
+
+.dropdown-icon {
+          font-size: 0.8rem;
+          transition: transform 0.3s ease;
+}
+
+.dropdown-icon.rotate {
+          transform: rotate(180deg);
+}
+
+.dropdown:hover .dropdown-menu {
+          display: block;
+          /* Tampilkan dropdown saat dihover */
+}
+
+/* Profile Section */
+.sidebar-profile {
+          margin-top: auto;
+          /* Tempatkan di bagian bawah */
+          padding: 1rem;
+          border-top: 1px solid #eee;
+          background: #fff;
+}
+
+.profile-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          cursor: pointer;
+}
+
+.profile-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 1rem;
+}
+
+.profile-dropdown-menu {
+          list-style: none;
+          padding: 0;
+          margin: 0.5rem 0 0 0;
+          border: 1px solid #ececec;
+          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+          background-color: #fff;
+}
+
+.profile-dropdown-menu .dropdown-item {
+          padding: 0.5rem 1rem;
+          font-size: 0.9rem;
+          color: #757575;
+          cursor: pointer;
+          transition: all 0.3 s ease;
+}
+
+.profile-dropdown-menu .dropdown-item:hover {
+          background-color: #ececec;
+}
+
+.profile-dropdown-menu .dropdown-item:nth-child(2):hover {
+  color: red; /* Ubah warna teks menjadi merah */
+}
+
+.sidebar.closed .profile-header span,
+.sidebar.closed .profile-dropdown-menu {
+          display: none;
+}
+
+.sidebar.closed .profile-icon {
+          margin-right: 0;
+}

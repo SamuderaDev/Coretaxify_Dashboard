@@ -1,0 +1,130 @@
+/* Overlay untuk menutupi layar */
+.kontrak-popup-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 999;
+          overflow-y: auto;
+          /* Tambahkan untuk memungkinkan scroll */
+}
+
+/* Kontainer popup */
+.kontrak-popup-container {
+          background-color: #ffffff;
+          border-radius: 10px;
+          padding: 2rem;
+          width: 90%;
+          /* Menyesuaikan ukuran agar responsif */
+          max-width: 500px;
+          /* Maksimal lebar untuk layar besar */
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          max-height: 90vh;
+          /* Membatasi tinggi popup */
+          overflow-y: auto;
+          /* Scroll hanya pada popup jika konten terlalu panjang */
+}
+
+/* Header */
+.kontrak-popup-container h2 {
+          margin-bottom: 1.5rem;
+          font-size: 1.5rem;
+          text-align: left;
+          font-weight: bold;
+          color: #333;
+}
+
+/* Grup form */
+.kontrak-form-group {
+          margin-bottom: 1.2rem;
+}
+
+.kontrak-form-group label {
+          display: block;
+          font-weight: bold;
+          margin-bottom: 0.5rem;
+          color: #555;
+}
+
+.kontrak-form-group input,
+.kontrak-form-group select {
+          width: 100%;
+          padding: 0.8rem;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          font-size: 0.9rem;
+          color: #333;
+          box-sizing: border-box;
+}
+
+.kontrak-form-group input:focus,
+.kontrak-form-group select:focus {
+          border-color: #1a73e8;
+          outline: none;
+          box-shadow: 0 0 4px rgba(26, 115, 232, 0.2);
+}
+
+/* Tindakan popup (tombol) */
+.kontrak-popup-actions {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 1.5rem;
+          gap: 0.5rem;
+}
+
+.kontrak-save-button {
+          background-color: #05f811;
+          color: #fff;
+          padding: 0.8rem 1.5rem;
+          border: none;
+          border-radius: 5px;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+}
+
+.kontrak-save-button:hover {
+          background-color: #47208b;
+}
+
+.kontrak-cancel-button {
+          background-color: #e53935;
+          color: #fff;
+          padding: 0.8rem 1.5rem;
+          border: none;
+          border-radius: 5px;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+}
+
+.kontrak-cancel-button:hover {
+          background-color: #b71c1c;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+          .kontrak-popup-container {
+                    padding: 1.5rem;
+                    max-width: 95%;
+                    /* Memaksimalkan penggunaan ruang pada layar kecil */
+          }
+
+          .kontrak-popup-actions {
+                    flex-direction: column;
+                    /* Tombol dalam satu kolom */
+                    gap: 1rem;
+                    /* Spasi antar tombol */
+          }
+
+          .kontrak-save-button,
+          .kontrak-cancel-button {
+                    width: 100%;
+                    text-align: center;
+          }
+}

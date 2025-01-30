@@ -1,0 +1,48 @@
+:root {
+  --PrimaryColor: hsl(26, 93%, 50%);
+  --HoverColor: hsl(26, 90%, 42%);
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackColor: hsl(0, 0%, 18%);
+  --textColor: hsl(240, 1%, 48%);
+  --whiteColorDeam: hsl(0, 0%, 93%);
+  --greyBg: hsl(0, 0%, 96%);
+  --greyText: rgb(190, 190, 190);
+  --inputColor: rgb(330, 12%, 97%);
+  /* --boxShadow: box-shadow: 0 2px 8px rgba(178, 178, 178, 0.334); */
+}
+
+.about .secContainer .title {
+  color: var(--blackColor);
+  line-height: 1.5rem;
+  padding-bottom: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.about .secContainer .mainContent {
+  gap: 1.5rem;
+}
+.about .secContainer .mainContent .singleItem {
+  text-align: center;
+}
+.about .secContainer .mainContent .singleItem img {
+  width: 100px;
+  padding: 0.5rem;
+}
+.about .secContainer .mainContent .singleItem h3 {
+  font-weight: 700;
+  color: var(--blackColor);
+  padding: 0.5rem;
+}
+.about .secContainer .mainContent .singleItem p {
+  font-size: 13px;
+  font-weight: 500;
+  padding-bottom: 0.5rem;
+  color: var(--textColor);
+}
+
+@media screen and (min-width: 1024px) {
+  .about .secContainer .mainContent {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 2.5rem 0;
+  }
+}

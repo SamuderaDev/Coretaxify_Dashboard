@@ -1,0 +1,259 @@
+/* Overlay for the popup */
+/* Popup container */
+.register-popup {
+  background: #ffffff;
+  width: 700px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  transform: translateY(-20px) scale(0.8); /* Mulai dari posisi sedikit di atas */
+  opacity: 0; /* Mulai dengan transparansi 0 */
+  transition:  0.3s ease-out, opacity 0.3s ease-out; /* Animasi transisi */
+}
+
+/* Ketika pop-up muncul */
+.register-popup.show {
+  transform: translateY(0) scale(1); /* Posisi normal */
+  opacity: 1 ; /* Menjadi sepenuhnya terlihat */
+}
+
+
+/* Pop-up overlay */
+.register-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.register-popup-overlay.show {
+  opacity: 1;
+}
+
+/* Logo */
+.logo {
+  width: 150px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Tagline */
+.tagline {
+  font-size: 14px;
+  color: #333;
+  margin: 10px 0 20px;
+}
+
+/* Login form */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.form-group {
+  flex: 1;  /* Membuat input menempati ruang secara proporsional */
+}
+
+/* Label for inputs */
+.register-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  text-align: left;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Login form input styling */
+.register-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;  /* Pastikan lebar input 100% dari container-nya */
+  box-sizing: border-box;  /* Pastikan padding dan border dihitung dalam lebar input */
+}
+
+/* Password container */
+.password-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.password-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  padding-right: 30px;  /* Memberi ruang untuk ikon di kanan input */
+}
+
+.password-container .toggle-password {
+  position: absolute;
+  right: 10px;  /* Menempatkan ikon di kanan input */
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Forgot password */
+.forgot-password {
+  text-align: right;
+  font-size: 12px;
+  margin-top: -10px;
+}
+
+.forgot-password a {
+  color: #6c5ce7;
+  text-decoration: none;
+}
+
+/* Register button */
+.register-button {
+  background: purple;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.register-button-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 180px;/* Mengurangi jarak atas dan bawah */
+}
+
+.register-button:hover {
+  background: #6a0085;
+}
+
+/* Register text */
+.register-text {
+  font-size: 12px;
+  margin-top: 15px;
+}
+
+.register-text a {
+  color: #6c5ce7;
+  text-decoration: none;
+}
+
+.login-text {
+  font-size: 12px;
+  margin-top: 15px;
+}
+
+.login-text a {
+  color: #6c5ce7;
+  text-decoration: none;
+}
+
+/* Close button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Gaya untuk pesan kesalahan */
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: left;
+}
+
+/* Media Query untuk Responsivitas */
+@media (max-width: 768px) {
+  .register-popup {
+    width: 90%;  /* Mengurangi lebar pop-up pada layar kecil */
+    padding: 15px;
+  }
+
+  .form-row {
+    flex-direction: column; /* Menyusun input secara vertikal pada layar kecil */
+  }
+
+  .form-group {
+    width: 100%; /* Membuat setiap input mengambil lebar penuh */
+  }
+
+  .password-container input {
+    width: calc(100% - 40px); /* Mengurangi padding pada layar kecil */
+  }
+
+  .password-container .toggle-password {
+    right: 10px;
+  }
+
+  /* Menyusun tombol Register di bawah */
+  .register-button {
+    width: 100%; /* Membuat tombol register menggunakan lebar penuh */
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-popup {
+    width: 90%;  /* Membuat pop-up lebih kecil lagi pada perangkat dengan layar sangat kecil */
+    padding: 10px;
+  }
+
+  .logo {
+    width: 120px; /* Menyesuaikan ukuran logo untuk perangkat kecil */
+  }
+
+  .tagline {
+    font-size: 12px; /* Mengurangi ukuran font tagline */
+  }
+
+  .register-form {
+    gap: 15px;  /* Mengurangi jarak antar elemen form */
+  }
+
+  .form-row {
+    flex-direction: column; /* Memastikan input disusun secara vertikal */
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  .register-button {
+    padding: 12px;
+    font-size: 14px; /* Menyesuaikan ukuran tombol */
+  }
+}
+
+
