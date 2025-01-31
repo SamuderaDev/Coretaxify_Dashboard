@@ -40,9 +40,17 @@ const SidebarAdmin = () => {
     <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
       <div className="admin-sidebar-header">
         {isOpen && (
-          <img src={Logo} alt="CTaxify Logo" className="sidebar-logo" />
+          <img
+            src={Logo}
+            alt="CTaxify Logo"
+            className="sidebar-logo"
+            onClick={toggleSidebar}
+          />
         )}
-        <FaBars className="menu-toggle" onClick={toggleSidebar} />
+        <FaBars
+          className={`menu-toggle w-full pr-6 mt-2 ${isOpen ? "hidden" : ""} `}
+          onClick={toggleSidebar}
+        />
       </div>
       <ul className="sidebar-menu">
         <li
@@ -75,10 +83,12 @@ const SidebarAdmin = () => {
             <AccordionTrigger className="w-full ">
               <div className="flex">
                 <FaUsers className="menu-icon" />
-                <span className="text-[16px]">Data Pengguna</span>
+                <span className={`text-[16px] ${isOpen ? "" : "hidden"}`}>
+                  Data Pengguna
+                </span>
               </div>
             </AccordionTrigger>
-            <AccordionContent className="">
+            <AccordionContent className={`${isOpen ? "" : "hidden"}`}>
               <ul className="">
                 <li
                   className="dropdown-item"
@@ -116,10 +126,12 @@ const SidebarAdmin = () => {
             <AccordionTrigger className="w-full ">
               <div className="flex">
                 <FaLaptopCode className="menu-icon" />
-                <span className="text-[16px]">Landing Page</span>
+                <span className={`text-[16px] ${isOpen ? "" : "hidden "}`}>
+                  Landing Page
+                </span>
               </div>
             </AccordionTrigger>
-            <AccordionContent className="">
+            <AccordionContent className={`${isOpen ? "" : "hidden"}`}>
               <ul className="">
                 <li
                   className="dropdown-item"
