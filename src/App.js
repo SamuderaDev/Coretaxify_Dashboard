@@ -5,6 +5,8 @@ import DashboardAdmin from './Components/Admin/Dashboard/DashboardAdmin';
 import Kontrak from './Components/Admin/Kontrak/Kontrak';
 import EditDosen from './Components/Admin/Pengguna/Dosen/EditDosen';
 import EditMahasiswa from './Components/Admin/Pengguna/Mahasiswa/EditMahasiswa';
+import EditAdmin from './Components/Admin/Pengguna/Admin/EditAdmin';
+import EditKelas from './Components/Admin/Pengguna/Kelas/EditKelas';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
 
@@ -65,6 +67,28 @@ const App = () => {
               </div>
             }
           />
+          <Route
+          path="/admin/edit-admin"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <EditAdmin />
+              </div>
+            </div>
+          }
+        />
+        <Route
+        path="/admin/edit-kelas"
+        element={
+          <div className="admin-layout">
+            <SidebarAdmin />
+            <div className="admin-content">
+              <EditKelas />
+            </div>
+          </div>
+          }
+        />
         </Routes>
       </Router>
   );

@@ -1,36 +1,19 @@
 import React, { useState } from "react";
-import "./kontrak.css";
-import TambahKontrak from "./TambahKontrak";
+import "./editKelas.css";
+import EditPopupKelas from "./EditPopupKelas";
 import Swal from "sweetalert2";
 
-const Kontrak = () => {
+const EditKelas = () => {
           const [isOpen, setIsOpen] = useState(false);
           const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
+          const [selectedData, setSelectedData] = useState(null);
           const [currentPage, setCurrentPage] = useState(1);
           const itemsPerPage = 10;
-
           const [data, setData] = useState([
-                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", kodePembelian: "L001", status: "Active" },
-                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", kodePembelian: "U002", status: "Expired" },
-                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", kodePembelian: "U003", status: "Active" },
-                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", kodePembelian: "L001", status: "Active" },
-                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", kodePembelian: "U002", status: "Expired" },
-                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", kodePembelian: "U003", status: "Active" },
-                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", kodePembelian: "L001", status: "Active" },
-                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", kodePembelian: "U002", status: "Expired" },
-                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", kodePembelian: "U003", status: "Active" },
-                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", kodePembelian: "L001", status: "Active" },
-                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", kodePembelian: "U002", status: "Expired" },
-                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", kodePembelian: "U003", status: "Active" },
-                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", kodePembelian: "L001", status: "Active" },
-                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", kodePembelian: "U002", status: "Expired" },
-                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", kodePembelian: "U003", status: "Active" },
-
+                    { kelas: "Abangkuh", instansi: "Poltek Jos", kodeRegistrasi: "L001", status: "Active" },
+                    { kelas: "Abangkuh", instansi: "UB Jos", kodeRegistrasi: "U002", status: "Expired" },
+                    { kelas: "Abangkuh", instansi: "UM Jos", kodeRegistrasi: "U003", status: "Active" },
           ]);
-
-          const handleData = (newData) => {
-                    setData([...data, newData]);
-          };
 
           const handleSort = (key) => {
                     let direction = "ascending";
@@ -40,11 +23,20 @@ const Kontrak = () => {
                     setSortConfig({ key, direction });
 
                     const sortedData = [...data].sort((a, b) => {
-                              if (a[key] < b[key]) return direction === "ascending" ? -1 : 1;
-                              if (a[key] > b[key]) return direction === "ascending" ? 1 : -1;
+                              if (a[key] < b[key]) {
+                                        return direction === "ascending" ? -1 : 1;
+                              }
+                              if (a[key] > b[key]) {
+                                        return direction === "ascending" ? 1 : -1;
+                              }
                               return 0;
                     });
                     setData(sortedData);
+          };
+
+          const handleEditClick = (index) => {
+                    setSelectedData(data[index]);
+                    setIsOpen(true);
           };
 
           const indexOfLastItem = currentPage * itemsPerPage;
@@ -55,25 +47,22 @@ const Kontrak = () => {
 
           return (
                     <div className="kontrak-container">
-                              <div className="header-kontrak">
-                                        <h2>Data Kontrak Instansi</h2>
+                              <div className="header">
+                                        <h2>Data Kelas</h2>
                               </div>
                               <div className="search-add-container">
-                                        <input type="text" className="search-input" placeholder="Cari Data Instansi 🔎" />
-                                        <button className="add-button" onClick={() => setIsOpen(true)}>+ Tambah Data Kontrak</button>
+                                        <div className="search-input-container">
+                                                  <input type="text" id="search" className="search-input" placeholder="Cari Data Kelas        🔎" />
+                                        </div>
                               </div>
-                              <TambahKontrak isOpen={isOpen} onClose={() => setIsOpen(false)} onSave={handleData} />
-
                               <div className="table-container">
                                         <table>
                                                   <thead>
                                                             <tr>
-                                                                      <th onClick={() => handleSort("jenisKontrak")}>Jenis Kontrak</th>
-                                                                      <th onClick={() => handleSort("instansi")}>Instansi</th>
-                                                                      <th onClick={() => handleSort("mahasiswa")}>Jumlah Mahasiswa</th>
-                                                                      <th>Periode Awal</th>
-                                                                      <th>Periode Akhir</th>
-                                                                      <th>Kode Pembelian</th>
+                                                                      <th onClick={() => handleSort("kelas")}>
+                                                                                Kelas {sortConfig.key === "kelas" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : (sortConfig.direction === "descending" ? "↓" : "↑")}</th>
+                                                                      <th>Instansi</th>
+                                                                      <th>Kode Registrasi</th>
                                                                       <th>Status</th>
                                                                       <th>Action</th>
                                                             </tr>
@@ -81,15 +70,12 @@ const Kontrak = () => {
                                                   <tbody>
                                                             {currentItems.map((item, index) => (
                                                                       <tr key={index}>
-                                                                                <td>{item.jenisKontrak}</td>
+                                                                                <td>{item.kelas}</td>
                                                                                 <td>{item.instansi}</td>
-                                                                                <td>{item.mahasiswa}</td>
-                                                                                <td>{item.periodeAwal}</td>
-                                                                                <td>{item.periodeAkhir}</td>
-                                                                                <td>{item.kodePembelian}</td>
+                                                                                <td>{item.kodeRegistrasi}</td>
                                                                                 <td>{item.status}</td>
                                                                                 <td>
-                                                                                          <button className="action-button">Edit</button>
+                                                                                          <button className="action-button edit" onClick={() => handleEditClick(index)}>Edit</button>
                                                                                           <button
                                                                                                     className="action-button delete"
                                                                                                     onClick={() => {
@@ -100,9 +86,10 @@ const Kontrak = () => {
                                                                                                                         showCancelButton: true,
                                                                                                                         confirmButtonText: "Ya, hapus!",
                                                                                                                         cancelButtonText: "Batal",
+                                                                                                                        dangerMode: true,
                                                                                                               }).then((result) => {
                                                                                                                         if (result.isConfirmed) {
-                                                                                                                                  const newData = data.filter((itemData) => itemData.kodePembelian !== item.kodePembelian);
+                                                                                                                                  const newData = data.filter((itemData) => itemData.id !== item.id);
                                                                                                                                   setData(newData);
                                                                                                                                   Swal.fire("Berhasil!", "Kelas berhasil dihapus!", "success");
                                                                                                                         }
@@ -136,8 +123,9 @@ const Kontrak = () => {
                                                   </div>
                                         </div>
                               </div>
+                              {isOpen && <EditPopupKelas onClose={() => setIsOpen(false)} data={selectedData} />}
                     </div>
           );
 };
 
-export default Kontrak;
+export default EditKelas;
