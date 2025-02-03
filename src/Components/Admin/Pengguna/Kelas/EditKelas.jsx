@@ -5,15 +5,31 @@ import Swal from "sweetalert2";
 
 const EditKelas = () => {
           const [isOpen, setIsOpen] = useState(false);
+          const [editPopupOpen, setEditPopupOpen] = useState(false);
+          const [selectedKelas, setSelectedKelas] = useState(null);
           const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
           const [selectedData, setSelectedData] = useState(null);
           const [currentPage, setCurrentPage] = useState(1);
           const itemsPerPage = 10;
           const [data, setData] = useState([
-                    { kelas: "Abangkuh", instansi: "Poltek Jos", kodeRegistrasi: "L001", status: "Active" },
-                    { kelas: "Abangkuh", instansi: "UB Jos", kodeRegistrasi: "U002", status: "Expired" },
-                    { kelas: "Abangkuh", instansi: "UM Jos", kodeRegistrasi: "U003", status: "Active" },
+                    { id: 1,kelas: "Abangkuh", instansi: "Poltek Jos", kodeRegistrasi: "L001", status: "Active" },
+                    { id: 2,kelas: "Abangkuh", instansi: "UB Jos", kodeRegistrasi: "U002", status: "Expired" },
+                    { id: 3,kelas: "Abangkuh", instansi: "UM Jos", kodeRegistrasi: "U003", status: "Active" },
           ]);
+
+          const handleData = (newData) => {
+                    setData([...data, { id: data.length + 1, ...newData }]);
+          };
+
+          const handleEdit = (kelas) => {
+                    setSelectedKelas(kelas);
+                    setEditPopupOpen(true);
+          };
+
+          const handleUpdateKelas = (updatedDosen) => {
+                    setData(data.map((item) => (item.id === updatedKelas.id ? updatedKelas : item)));
+                    setEditPopupOpen(false);
+          };
 
           const handleSort = (key) => {
                     let direction = "ascending";

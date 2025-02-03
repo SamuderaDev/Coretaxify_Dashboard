@@ -114,6 +114,14 @@ const SidebarAdmin = () => {
                 >
                   Admin
                 </li>
+                <li
+                  className="dropdown-item"
+                  onClick={() => {
+                    window.location.href = "/admin/edit-kelas";
+                  }}
+                >
+                  Kelas
+                </li>
               </ul>
             </AccordionContent>
           </AccordionItem>
@@ -136,18 +144,26 @@ const SidebarAdmin = () => {
                 <li
                   className="dropdown-item"
                   onClick={() => {
-                    window.location.href = "/edit-profile";
+                    window.location.href = "/admin/edit-landing-page/fitur";
                   }}
                 >
-                  Edit Profile
+                  Fitur
                 </li>
                 <li
                   className="dropdown-item"
                   onClick={() => {
-                    window.location.href = "/logout";
+                    window.location.href = "/admin/edit-landing-page/artikel";
                   }}
                 >
-                  Logout
+                  Artikel
+                </li>
+                <li
+                  className="dropdown-item"
+                  onClick={() => {
+                    window.location.href = "/admin/edit-landing-page/ulasan";
+                  }}
+                >
+                  Ulasan
                 </li>
               </ul>
             </AccordionContent>

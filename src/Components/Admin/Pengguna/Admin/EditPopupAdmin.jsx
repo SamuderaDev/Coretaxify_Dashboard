@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
-import "./editPopupKelas.css";
+import "./editPopupAdmin.css";
 
-const EditPopupKelas = ({ isOpen, onClose, kelas, onSave }) => {
+const EditPopupAdmin = ({ isOpen, onClose, admin, onSave }) => {
           const [formData, setFormData] = useState({
-                    kelas: "",
-                    instansi: "",
-                    kodeRegistrasi: "",
+                    namaAdmin: "",
+                    email: "",
                     status: "",
           });
 
           useEffect(() => {
-                    if (kelas) {
+                    if (admin) {
                               setFormData({
-                                        kelas: kelas.kelas || "",
-                                        instansi: kelas.instansi || "",
-                                        kodeRegistrasi: kelas.kodeRegistrasi || "",
-                                        status: kelas.status || "",
+                                        namaAdmin: admin.namaAdmin || "",
+                                        email: admin.email || "",
+                                        status: admin.status || "",
                               });
                     }
-          }, [kelas]);
+          }, [admin]);
 
           const handleChange = (e) => {
                     const { name, value } = e.target;
@@ -26,8 +24,8 @@ const EditPopupKelas = ({ isOpen, onClose, kelas, onSave }) => {
           };
 
           const handleSave = () => {
-                    if (formData.kelas && formData.instansi && formData.kodeRegistrasi && formData.status) {
-                              onSave({ ...kelas, ...formData }); 
+                    if (formData.namaAdmin && formData.email && formData.status) {
+                              onSave({ ...admin, ...formData }); 
                               onClose(); 
                     } else {
                               alert("Harap isi semua bidang!");
@@ -37,43 +35,33 @@ const EditPopupKelas = ({ isOpen, onClose, kelas, onSave }) => {
           if (!isOpen) return null; 
 
           return (
-                    <div className="edit-popup-container-kelas">
-                              <div className="edit-popup-content-kelas">
-                                        <div className="edit-popup-header-kelas">
-                                                  <h2>Edit Kelas</h2>
+                    <div className="edit-popup-container-admin">
+                              <div className="edit-popup-content-admin">
+                                        <div className="edit-popup-header-admin">
+                                                  <h2>Edit Admin</h2>
                                         </div>
                                         <form>
-                                                  <div className="edit-form-group-kelas">
-                                                            <label>Kelas:</label>
+                                                  <div className="edit-form-group-admin">
+                                                            <label>Nama Admin:</label>
                                                             <input
                                                                       type="text"
-                                                                      name="kelas"
-                                                                      value={formData.kelas}
+                                                                      name="namaAdmin"
+                                                                      value={formData.namaAdmin}
                                                                       onChange={handleChange}
                                                                       required
                                                             />
                                                   </div>
-                                                  <div className="edit-form-group-kelas">
-                                                            <label>Instansi</label>
+                                                  <div className="edit-form-group-admin">
+                                                            <label>Email:</label>
                                                             <input
-                                                                      type="text"
-                                                                      name="instansi"
-                                                                      value={formData.instansi}
+                                                                      type="email"
+                                                                      name="email"
+                                                                      value={formData.email}
                                                                       onChange={handleChange}
                                                                       required
                                                             />
                                                   </div>
-                                                  <div className="edit-form-group-kelas">
-                                                            <label>Kode Registrasi:</label>
-                                                            <input
-                                                                      type="text"
-                                                                      name="kodeRegistrasi"
-                                                                      value={formData.kodeRegistrasi}
-                                                                      onChange={handleChange}
-                                                                      required
-                                                            />
-                                                  </div>
-                                                  <div className="edit-form-group-kelas">
+                                                  <div className="edit-form-group-admin">
                                                             <label>Status:</label>
                                                             <select name="status" value={formData.status} onChange={handleChange} required>
                                                                       <option value="">Pilih Status</option>
@@ -95,4 +83,4 @@ const EditPopupKelas = ({ isOpen, onClose, kelas, onSave }) => {
           );
 };
 
-export default EditPopupKelas;
+export default EditPopupAdmin;
