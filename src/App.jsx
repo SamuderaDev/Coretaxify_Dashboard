@@ -9,8 +9,9 @@ import EditAdmin from "./Components/Admin/Pengguna/Admin/EditAdmin";
 import EditKelas from "./Components/Admin/Pengguna/Kelas/EditKelas";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import Artikel from "./Components/Admin/LandingPage/Artikel";
-import EditArtikel from "./Components/Admin/LandingPage/Artikel";
+import Artikel from "./Components/Admin/LandingPage/EditArtikel";
+import EditArtikel from "./Components/Admin/LandingPage/EditArtikel";
+import EditUlasan from "./Components/Admin/LandingPage/EditUlasan";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -101,6 +102,17 @@ const App = () => {
               <SidebarAdmin />
               <div className="admin-content">
                 <EditArtikel></EditArtikel>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/admin/edit-ulasan"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <EditUlasan></EditUlasan>
               </div>
             </div>
           }

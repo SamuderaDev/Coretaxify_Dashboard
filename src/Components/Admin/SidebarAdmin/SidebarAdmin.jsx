@@ -144,6 +144,14 @@ const SidebarAdmin = () => {
                 <li
                   className="dropdown-item"
                   onClick={() => {
+                    window.location.href = "/admin/edit-ulasan";
+                  }}
+                >
+                  Edit Ulasan
+                </li>
+                <li
+                  className="dropdown-item"
+                  onClick={() => {
                     window.location.href = "/edit-profile";
                   }}
                 >
