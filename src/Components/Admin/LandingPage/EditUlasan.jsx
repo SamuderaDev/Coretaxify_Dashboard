@@ -110,6 +110,75 @@ export default function EditUlasan() {
             placeholder="Cari Ulasan    🔎"
           />
         </div>
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <div className="bg-blue-800 p-2 rounded-lg text-white">
+              + Tambah Ulasan
+            </div>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Tambah Ulasan</AlertDialogTitle>
+              <AlertDialogDescription>
+                <div className="">
+                  <form>
+                    <div className="edit-form-group ">
+                      <label>Nama Pengguna :</label>
+                      <input
+                        type="text"
+                        name="user"
+                        value={formData.user}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="edit-form-group">
+                      <label>Ulasan:</label>
+                      <Textarea
+                        className="text-black"
+                        name="ulasan"
+                        value={formData.ulasan}
+                        onChange={handleChange}
+                      />
+
+                      {/* <input
+                                  type="text"
+                                  name="ulasan"
+                                  value={formData.ulasan}
+                                  onChange={handleChange}
+                                  required
+                                /> */}
+                    </div>
+                    <div className="edit-form-group">
+                      <label>Rating:</label>
+                      <input
+                        min={0}
+                        type="number"
+                        name="rating"
+                        value={formData.rating}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="edit-form-group">
+                      <label>Profile Picture:</label>
+                      <input type="file" onChange={handleChangeFile} />
+                      <img src={file} />
+                    </div>
+                  </form>
+                </div>
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="bg-red-600 text-white">
+                Kembali
+              </AlertDialogCancel>
+              <AlertDialogAction className="bg-green-600">
+                Simpan
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
       <div className="table-container">
         <table>
@@ -211,8 +280,12 @@ export default function EditUlasan() {
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction>Continue</AlertDialogAction>
+                        <AlertDialogCancel className="bg-red-600 text-white">
+                          Kembali
+                        </AlertDialogCancel>
+                        <AlertDialogAction className="bg-green-600">
+                          Simpan
+                        </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>

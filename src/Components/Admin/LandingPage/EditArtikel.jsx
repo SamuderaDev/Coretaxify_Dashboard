@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // import "../Pengguna/Mahasiswa/editMahasiswa.css";
 import EditPopupMahasiswa from "../Pengguna/Mahasiswa/EditPopupMahasiswa";
 import Swal from "sweetalert2";
+import { Textarea } from "@/components/ui/textarea";
 
 import {
   AlertDialog,
@@ -102,6 +103,56 @@ export default function EditArtikel() {
             placeholder="Cari Artikel   🔎"
           />
         </div>
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <div className="bg-blue-800 p-2 rounded-lg text-white">
+              + Tambah Artikel
+            </div>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Tambah Artikel</AlertDialogTitle>
+              <AlertDialogDescription>
+                <div className="">
+                  <form>
+                    <div className="edit-form-group ">
+                      <label>Judul Artikel:</label>
+                      <input
+                        type="text"
+                        name="judul"
+                        value={formData.judul}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="edit-form-group">
+                      <label>Isi Artikel:</label>
+                      <Textarea
+                        className="text-black"
+                        name="isi"
+                        value={formData.isi}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="edit-form-group">
+                      <label>Gambar:</label>
+                      <input type="file" onChange={handleChangeFile} />
+                      <img src={file} />
+                    </div>
+                  </form>
+                </div>
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="bg-red-600 text-white">
+                Kembali
+              </AlertDialogCancel>
+              <AlertDialogAction className="bg-green-600">
+                Simpan
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
       <div className="table-container">
         <table>
@@ -150,13 +201,12 @@ export default function EditArtikel() {
                                 />
                               </div>
                               <div className="edit-form-group">
-                                <label>Email:</label>
-                                <input
-                                  type="text"
+                                <label>Isi Artikel:</label>
+                                <Textarea
+                                  className="text-black"
                                   name="isi"
                                   value={formData.isi}
                                   onChange={handleChange}
-                                  required
                                 />
                               </div>
                               <div className="edit-form-group">
@@ -172,8 +222,12 @@ export default function EditArtikel() {
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction>Continue</AlertDialogAction>
+                        <AlertDialogCancel className="bg-red-600 text-white">
+                          Kembali
+                        </AlertDialogCancel>
+                        <AlertDialogAction className="bg-green-600 ">
+                          Simpan
+                        </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
