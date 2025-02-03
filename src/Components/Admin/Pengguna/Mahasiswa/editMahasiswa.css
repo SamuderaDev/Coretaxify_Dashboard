@@ -8,8 +8,8 @@
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          margin-left: -9rem;
-          margin-top: -3rem;
+          margin-left: 0rem;
+          margin-top: -1rem;
           margin-bottom: 1rem;
           color: #7c7c7c;
 }
@@ -111,4 +111,58 @@ tr:hover td {
 
 .action-button:hover {
           opacity: 0.8;
+}
+
+.pagination-container {
+          position: sticky;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background: white;
+          /* Pastikan pagination terlihat */
+          padding: 5px 0;
+          text-align: center;
+          box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+          /* Tambahkan bayangan */
+          z-index: 1000;
+          /* Pastikan tetap di atas */
+}
+
+.pagination-info {
+          text-align: left;
+          font-size: 14px;
+          color: #555;
+          margin-bottom: 3px;
+          margin-top: 1rem;
+          margin-left: 1rem;
+}
+
+.pagination {
+          display: flex;
+          justify-content: end;
+          margin-top: 0.5rem;
+}
+
+.page-item {
+          padding: 0.5rem 1rem;
+          margin: 0 0.2rem;
+          background-color: #ddd;
+          border: none;
+          cursor: pointer;
+          border-radius: 5px;
+}
+
+.page-item:hover {
+          background-color: #aaa;
+}
+
+.page-item.active {
+          background-color: #060C65;
+          color: white;
+          font-weight: bold;
+}
+
+.page-item.disabled {
+          cursor: not-allowed;
+          opacity: 0.5;
 }

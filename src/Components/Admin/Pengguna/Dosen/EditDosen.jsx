@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import "./editDosen.css";
 import TambahDosen from "./TambahDosen";
+import Swal from "sweetalert2";
+
 const EditDosen = () => {
           const [isOpen, setIsOpen] = useState(false);
           const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
+          const [currentPage, setCurrentPage] = useState(1);
+          const itemsPerPage = 10;
+
           const [data, setData] = useState([
                     { namaDosen: "Hendra", instansi: "Poltek Jos", kuotaKelas: 50, kodeRegistrasi: "L001", jumlahSiswa: 50, kodePembelian: "L001", status: "Active" },
                     { namaDosen: "Udin", instansi: "UB Jos", kuotaKelas: 30, kodeRegistrasi: "U002", jumlahSiswa: 30, kodePembelian: "U002", status: "Expired" },
@@ -32,8 +37,14 @@ const EditDosen = () => {
                     setData(sortedData);
           };
 
+          const indexOfLastItem = currentPage * itemsPerPage;
+          const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+          const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+          const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
           return (
-                    
+
                     <div className="kontrak-container">
                               <div className="header">
                                         <h2>Data Dosen</h2>
@@ -42,7 +53,7 @@ const EditDosen = () => {
                                         <div className="search-input-container">
                                                   <input type="text" id="search" className="search-input" placeholder="Cari Data Dosen     🔎" />
                                         </div>
-                                                  <button className="add-button" onClick={() => setIsOpen(true)}>+ Tambah Dosen</button>
+                                        <button className="add-button" onClick={() => setIsOpen(true)}>+ Tambah Dosen</button>
                               </div>
                               <TambahDosen isOpen={isOpen} onClose={() => setIsOpen(false)} onSave={handleData} />
                               <div className="table-container">
@@ -66,7 +77,7 @@ const EditDosen = () => {
                                                             </tr>
                                                   </thead>
                                                   <tbody>
-                                                            {data.map((item, index) => (
+                                                            {currentItems.map((item, index) => (
                                                                       <tr key={index}>
                                                                                 <td>{item.namaDosen}</td>
                                                                                 <td>{item.instansi}</td>
@@ -77,12 +88,52 @@ const EditDosen = () => {
                                                                                 <td>{item.status}</td>
                                                                                 <td>
                                                                                           <button className="action-button">Edit</button>
-                                                                                          <button className="action-button delete">Delete</button>
+                                                                                          <button
+                                                                                                    className="action-button delete"
+                                                                                                    onClick={() => {
+                                                                                                              Swal.fire({
+                                                                                                                        title: "Hapus Kelas?",
+                                                                                                                        text: "Kelas akan dihapus secara permanen!",
+                                                                                                                        icon: "warning",
+                                                                                                                        showCancelButton: true,
+                                                                                                                        confirmButtonText: "Ya, hapus!",
+                                                                                                                        cancelButtonText: "Batal",
+                                                                                                                        dangerMode: true,
+                                                                                                              }).then((result) => {
+                                                                                                                        if (result.isConfirmed) {
+                                                                                                                                  const newData = data.filter((itemData) => itemData.id !== item.id);
+                                                                                                                                  setData(newData);
+                                                                                                                                  Swal.fire("Berhasil!", "Kelas berhasil dihapus!", "success");
+                                                                                                                        }
+                                                                                                              });
+                                                                                                    }}
+                                                                                          >
+                                                                                                    Delete
+                                                                                          </button>
                                                                                 </td>
                                                                       </tr>
                                                             ))}
                                                   </tbody>
                                         </table>
+                                        <div className="pagination-container">
+                                                  <div className="pagination-info">
+                                                            {`Showing ${indexOfFirstItem + 1} to ${Math.min(indexOfLastItem, data.length)} of ${data.length} entries`}
+                                                  </div>
+
+                                                  <div className="pagination">
+                                                            <button className={`page-item ${currentPage === 1 ? "disabled" : ""}`} onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
+                                                                      &lt;
+                                                            </button>
+                                                            {Array.from({ length: Math.ceil(data.length / itemsPerPage) }, (_, index) => (
+                                                                      <button key={index + 1} className={`page-item ${currentPage === index + 1 ? "active" : ""}`} onClick={() => paginate(index + 1)}>
+                                                                                {index + 1}
+                                                                      </button>
+                                                            ))}
+                                                            <button className={`page-item ${currentPage === Math.ceil(data.length / itemsPerPage) ? "disabled" : ""}`} onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(data.length / itemsPerPage)}>
+                                                                      &gt;
+                                                            </button>
+                                                  </div>
+                                        </div>
                               </div>
                     </div>
           );
