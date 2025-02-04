@@ -60,7 +60,7 @@ export default function Praktikum() {
 
     const sortedData = [...data].sort((a, b) => {
       if (a[key] < b[key]) {
-        return direction === "ascending" ? -1 : 1;
+        return direction === "ascending" ? -1 - mahasiswa : 1;
       }
       if (a[key] > b[key]) {
         return direction === "ascending" ? 1 : -1;
@@ -127,7 +127,7 @@ export default function Praktikum() {
               <AlertDialogDescription className="w-full">
                 <div className="">
                   <form>
-                    <div className="edit-form-group ">
+                    <div className="edit-form-group-mahasiswa ">
                       <label>Judul Praktikum:</label>
                       <input
                         type="text"
@@ -137,7 +137,7 @@ export default function Praktikum() {
                         required
                       />
                     </div>
-                    <div className="edit-form-group">
+                    <div className="edit-form-group-mahasiswa">
                       <label>Kode Praktikum:</label>
                       <Textarea
                         className="text-black"
@@ -146,7 +146,7 @@ export default function Praktikum() {
                         onChange={handleChange}
                       />
                     </div>
-                    <div className="edit-form-group">
+                    <div className="edit-form-group-mahasiswa">
                       <label>Tanggal Praktikum:</label>
                       <input type="date" onChange={handleChangeFile} />
                     </div>
@@ -205,7 +205,7 @@ export default function Praktikum() {
                         <AlertDialogDescription className="w-full">
                           <div className="">
                             <form>
-                              <div className="edit-form-group ">
+                              <div className="edit-form-group-mahasiswa ">
                                 <label>Judul Praktikum:</label>
                                 <input
                                   type="text"
@@ -215,7 +215,7 @@ export default function Praktikum() {
                                   required
                                 />
                               </div>
-                              <div className="edit-form-group">
+                              <div className="edit-form-group-mahasiswa">
                                 <label>Kode Praktikum:</label>
                                 <input
                                   className="text-black"
@@ -224,7 +224,7 @@ export default function Praktikum() {
                                   onChange={handleChange}
                                 />
                               </div>
-                              <div className="edit-form-group">
+                              <div className="edit-form-group-mahasiswa">
                                 <label>Tanggal Praktikum:</label>
                                 <input
                                   type="date"

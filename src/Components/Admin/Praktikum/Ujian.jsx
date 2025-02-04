@@ -119,7 +119,7 @@ export default function Ujian() {
         </div>
         <AlertDialog>
           <AlertDialogTrigger>
-            <div className="bg-blue-800 p-2 rounded-lg text-white">
+            <div className="bg-blue-700 p-2 rounded-lg text-white ">
               + Tambah Ujian
             </div>
           </AlertDialogTrigger>
@@ -129,7 +129,7 @@ export default function Ujian() {
               <AlertDialogDescription className="w-full">
                 <div className="">
                   <form>
-                    <div className="edit-form-group ">
+                    <div className="edit-form-group-kelas ">
                       <label>Judul Ujian:</label>
                       <input
                         type="text"
@@ -139,7 +139,7 @@ export default function Ujian() {
                         required
                       />
                     </div>
-                    <div className="edit-form-group">
+                    <div className="edit-form-group-kelas ">
                       <label>Kode Ujian:</label>
                       <Textarea
                         className="text-black"
@@ -148,7 +148,7 @@ export default function Ujian() {
                         onChange={handleChange}
                       />
                     </div>
-                    <div className="edit-form-group">
+                    <div className="edit-form-group-kelas ">
                       <label>Tanggal Ujian:</label>
                       <input type="date" onChange={handleChangeFile} />
                     </div>
@@ -207,7 +207,7 @@ export default function Ujian() {
                         <AlertDialogDescription className="w-full">
                           <div className="">
                             <form>
-                              <div className="edit-form-group ">
+                              <div className="edit-form-group-mahasiswa ">
                                 <label>Judul Ujian:</label>
                                 <input
                                   type="text"
@@ -217,7 +217,7 @@ export default function Ujian() {
                                   required
                                 />
                               </div>
-                              <div className="edit-form-group">
+                              <div className="edit-form-group-mahasiswa">
                                 <label>Kode Ujian:</label>
                                 <input
                                   className="text-black"
@@ -226,7 +226,7 @@ export default function Ujian() {
                                   onChange={handleChange}
                                 />
                               </div>
-                              <div className="edit-form-group">
+                              <div className="edit-form-group-mahasiswa">
                                 <label>Tanggal Ujian:</label>
                                 <input
                                   type="date"

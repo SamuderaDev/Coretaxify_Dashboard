@@ -115,7 +115,7 @@ export default function EditArtikel() {
               <AlertDialogDescription>
                 <div className="">
                   <form>
-                    <div className="edit-form-group ">
+                    <div className="edit-form-group-mahasiswa ">
                       <label>Judul Artikel:</label>
                       <input
                         type="text"
@@ -125,7 +125,7 @@ export default function EditArtikel() {
                         required
                       />
                     </div>
-                    <div className="edit-form-group">
+                    <div className="edit-form-group-mahasiswa">
                       <label>Isi Artikel:</label>
                       <Textarea
                         className="text-black"
@@ -134,7 +134,7 @@ export default function EditArtikel() {
                         onChange={handleChange}
                       />
                     </div>
-                    <div className="edit-form-group">
+                    <div className="edit-form-group-mahasiswa">
                       <label>Gambar:</label>
                       <input type="file" onChange={handleChangeFile} />
                       <img src={file} />
@@ -190,7 +190,7 @@ export default function EditArtikel() {
                         <AlertDialogDescription className="w-full">
                           <div className="">
                             <form>
-                              <div className="edit-form-group ">
+                              <div className="edit-form-group-mahasiswa ">
                                 <label>Judul Artikel:</label>
                                 <input
                                   type="text"
@@ -200,7 +200,7 @@ export default function EditArtikel() {
                                   required
                                 />
                               </div>
-                              <div className="edit-form-group">
+                              <div className="edit-form-group-mahasiswa">
                                 <label>Isi Artikel:</label>
                                 <Textarea
                                   className="text-black"
@@ -209,7 +209,7 @@ export default function EditArtikel() {
                                   onChange={handleChange}
                                 />
                               </div>
-                              <div className="edit-form-group">
+                              <div className="edit-form-group-mahasiswa">
                                 <label>Gambar:</label>
                                 <input
                                   type="file"

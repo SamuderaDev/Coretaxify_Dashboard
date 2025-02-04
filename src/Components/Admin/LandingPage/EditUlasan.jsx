@@ -122,7 +122,7 @@ export default function EditUlasan() {
               <AlertDialogDescription>
                 <div className="">
                   <form>
-                    <div className="edit-form-group ">
+                    <div className="edit-form-group-mahasiswa ">
                       <label>Nama Pengguna :</label>
                       <input
                         type="text"
@@ -132,7 +132,7 @@ export default function EditUlasan() {
                         required
                       />
                     </div>
-                    <div className="edit-form-group">
+                    <div className="edit-form-group-mahasiswa">
                       <label>Ulasan:</label>
                       <Textarea
                         className="text-black"
@@ -149,7 +149,7 @@ export default function EditUlasan() {
                                   required
                                 /> */}
                     </div>
-                    <div className="edit-form-group">
+                    <div className="edit-form-group-mahasiswa">
                       <label>Rating:</label>
                       <input
                         min={0}
@@ -160,7 +160,7 @@ export default function EditUlasan() {
                         required
                       />
                     </div>
-                    <div className="edit-form-group">
+                    <div className="edit-form-group-mahasiswa">
                       <label>Profile Picture:</label>
                       <input type="file" onChange={handleChangeFile} />
                       <img src={file} />
@@ -229,7 +229,7 @@ export default function EditUlasan() {
                         <AlertDialogDescription className="w-full">
                           <div className="">
                             <form>
-                              <div className="edit-form-group ">
+                              <div className="edit-form-group-mahasiswa ">
                                 <label>Nama Pengguna :</label>
                                 <input
                                   type="text"
@@ -239,7 +239,7 @@ export default function EditUlasan() {
                                   required
                                 />
                               </div>
-                              <div className="edit-form-group">
+                              <div className="edit-form-group-mahasiswa">
                                 <label>Ulasan:</label>
                                 <Textarea
                                   className="text-black"
@@ -256,7 +256,7 @@ export default function EditUlasan() {
                                   required
                                 /> */}
                               </div>
-                              <div className="edit-form-group">
+                              <div className="edit-form-group-mahasiswa">
                                 <label>Rating:</label>
                                 <input
                                   min={0}
@@ -267,7 +267,7 @@ export default function EditUlasan() {
                                   required
                                 />
                               </div>
-                              <div className="edit-form-group">
+                              <div className="edit-form-group-mahasiswa">
                                 <label>Profile Picture:</label>
                                 <input
                                   type="file"
