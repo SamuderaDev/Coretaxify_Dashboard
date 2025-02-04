@@ -1,49 +1,82 @@
 import React, { useState, useEffect } from "react";
-import "./editPopupKelas.css";
+import "./editPopupMahasiswa.css";
 
-const EditPopupKelas = ({ isOpen, onClose, kelas, onSave }) => {
+const EditPopupMahasiswa = ({ onClose, data = {}, onSave }) => {
           const [formData, setFormData] = useState({
-                    kelas: "",
+                    namaMahasiswa: "",
+                    email: "",
                     instansi: "",
+                    kelas: "",
                     kodeRegistrasi: "",
                     status: "",
           });
 
           useEffect(() => {
-                    if (kelas) {
+                    if (data) {
                               setFormData({
-                                        kelas: kelas.kelas || "",
-                                        instansi: kelas.instansi || "",
-                                        kodeRegistrasi: kelas.kodeRegistrasi || "",
-                                        status: kelas.status || "",
+                                        namaMahasiswa: data.namaMahasiswa || "",
+                                        email: data.email || "",
+                                        instansi: data.instansi || "",
+                                        kelas: data.kelas || "",
+                                        kodeRegistrasi: data.kodeRegistrasi || "",
+                                        status: data.status || "",
                               });
                     }
-          }, [kelas]);
+          }, [data]);
 
           const handleChange = (e) => {
                     const { name, value } = e.target;
                     setFormData({ ...formData, [name]: value });
           };
 
-          const handleSave = () => {
-                    if (formData.kelas && formData.instansi && formData.kodeRegistrasi && formData.status) {
-                              onSave({ ...kelas, ...formData }); 
-                              onClose(); 
-                    } else {
-                              alert("Harap isi semua bidang!");
+          const handleSubmit = (e) => {
+                    e.preventDefault();
+                    if (!formData.namaMahasiswa || !formData.email || !formData.instansi || !formData.kelas || !formData.kodeRegistrasi || !formData.status) {
+                              window.alert("Harap isi semua bidang!");
+                              return;
                     }
+                    onSave({ ...data, ...formData });
+                    onClose();
           };
 
-          if (!isOpen) return null; 
-
           return (
-                    <div className="edit-popup-container-kelas">
-                              <div className="edit-popup-content-kelas">
-                                        <div className="edit-popup-header-kelas">
-                                                  <h2>Edit Kelas</h2>
+                    <div className="edit-popup-container-mahasiswa">
+                              <div className="edit-popup-content-mahasiswa">
+                                        <div className="edit-popup-header-mahasiswa">
+                                                  <h2>Edit Mahasiswa</h2>
                                         </div>
-                                        <form>
-                                                  <div className="edit-form-group-kelas">
+                                        <form onSubmit={handleSubmit}>
+                                                  <div className="edit-form-group-mahasiswa">
+                                                            <label>Nama Mahasiswa:</label>
+                                                            <input
+                                                                      type="text"
+                                                                      name="namaMahasiswa"
+                                                                      value={formData.namaMahasiswa}
+                                                                      onChange={handleChange}
+                                                                      required
+                                                            />
+                                                  </div>
+                                                  <div className="edit-form-group-mahasiswa">
+                                                            <label>Email:</label>
+                                                            <input
+                                                                      type="email"
+                                                                      name="email"
+                                                                      value={formData.email}
+                                                                      onChange={handleChange}
+                                                                      required
+                                                            />
+                                                  </div>
+                                                  <div className="edit-form-group-mahasiswa">
+                                                            <label>Instansi:</label>
+                                                            <input
+                                                                      type="text"
+                                                                      name="instansi"
+                                                                      value={formData.instansi}
+                                                                      onChange={handleChange}
+                                                                      required
+                                                            />
+                                                  </div>
+                                                  <div className="edit-form-group-mahasiswa">
                                                             <label>Kelas:</label>
                                                             <input
                                                                       type="text"
@@ -53,17 +86,7 @@ const EditPopupKelas = ({ isOpen, onClose, kelas, onSave }) => {
                                                                       required
                                                             />
                                                   </div>
-                                                  <div className="edit-form-group-kelas">
-                                                            <label>Instansi</label>
-                                                            <input
-                                                                      type="text"
-                                                                      name="instansi"
-                                                                      value={formData.instansi}
-                                                                      onChange={handleChange}
-                                                                      required
-                                                            />
-                                                  </div>
-                                                  <div className="edit-form-group-kelas">
+                                                  <div className="edit-form-group-mahasiswa">
                                                             <label>Kode Registrasi:</label>
                                                             <input
                                                                       type="text"
@@ -73,7 +96,7 @@ const EditPopupKelas = ({ isOpen, onClose, kelas, onSave }) => {
                                                                       required
                                                             />
                                                   </div>
-                                                  <div className="edit-form-group-kelas">
+                                                  <div className="edit-form-group-mahasiswa">
                                                             <label>Status:</label>
                                                             <select name="status" value={formData.status} onChange={handleChange} required>
                                                                       <option value="">Pilih Status</option>
@@ -81,18 +104,18 @@ const EditPopupKelas = ({ isOpen, onClose, kelas, onSave }) => {
                                                                       <option value="Expired">Expired</option>
                                                             </select>
                                                   </div>
+                                                  <div className="edit-popup-actions-mahasiswa">
+                                                            <button className="edit-save-button" type="submit">
+                                                                      Simpan
+                                                            </button>
+                                                            <button className="edit-cancel-button" type="button" onClick={onClose}>
+                                                                      Batal
+                                                            </button>
+                                                  </div>
                                         </form>
-                                        <div className="edit-popup-actions-admin">
-                                                  <button className="edit-save-button" onClick={handleSave}>
-                                                            Simpan
-                                                  </button>
-                                                  <button className="edit-cancel-button" onClick={onClose}>
-                                                            Batal
-                                                  </button>
-                                        </div>
                               </div>
                     </div>
           );
 };
 
-export default EditPopupKelas;
+export default EditPopupMahasiswa;

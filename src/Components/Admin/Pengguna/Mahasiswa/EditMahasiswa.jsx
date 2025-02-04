@@ -11,9 +11,9 @@ const EditMahasiswa = () => {
     const itemsPerPage = 10;
 
     const [data, setData] = useState([
-        { namaMahasiswa: "Hendra", instansi: "Poltek Jos", email: "hendra@coretaxify.com", kelas: "Abangkuh", kodeRegistrasi: "L001", status: "Active" },
-        { namaMahasiswa: "Udin", instansi: "UB Jos", email: "hendra@coretaxify.com", kelas: "Abangkuh", kodeRegistrasi: "U002", status: "Expired" },
-        { namaMahasiswa: "Galeh", instansi: "UM Jos", email: "hendra@coretaxify.com", kelas: "Abangkuh", kodeRegistrasi: "U003", status: "Active" },
+        { id: 1, namaMahasiswa: "Hendra", instansi: "Poltek Jos", email: "hendra@coretaxify.com", kelas: "Abangkuh", kodeRegistrasi: "L001", status: "Active" },
+        { id: 2, namaMahasiswa: "Udin", instansi: "UB Jos", email: "udin@coretaxify.com", kelas: "Abangkuh", kodeRegistrasi: "U002", status: "Expired" },
+        { id: 3, namaMahasiswa: "Galeh", instansi: "UM Jos", email: "galeh@coretaxify.com", kelas: "Abangkuh", kodeRegistrasi: "U003", status: "Active" },
     ]);
 
     const handleSort = (key) => {
@@ -24,20 +24,21 @@ const EditMahasiswa = () => {
         setSortConfig({ key, direction });
 
         const sortedData = [...data].sort((a, b) => {
-            if (a[key] < b[key]) {
-                return direction === "ascending" ? -1 : 1;
-            }
-            if (a[key] > b[key]) {
-                return direction === "ascending" ? 1 : -1;
-            }
+            if (a[key] < b[key]) return direction === "ascending" ? -1 : 1;
+            if (a[key] > b[key]) return direction === "ascending" ? 1 : -1;
             return 0;
         });
         setData(sortedData);
     };
 
-    const handleEditClick = (index) => {
-        setSelectedData(data[index]);
+    const handleEditClick = (mahasiswa) => {
+        setSelectedData(mahasiswa);
         setIsOpen(true);
+    };
+
+    const handleUpdateMahasiswa = (updatedMahasiswa) => {
+        setData(data.map((item) => (item.id === updatedMahasiswa.id ? updatedMahasiswa : item)));
+        setIsOpen(false);
     };
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -53,7 +54,7 @@ const EditMahasiswa = () => {
             </div>
             <div className="search-add-container">
                 <div className="search-input-container">
-                    <input type="text" id="search" className="search-input" placeholder="Cari Data Mahasiswa   🔎" />
+                    <input type="text" id="search" className="search-input" placeholder="Cari Data Mahasiswa 🔎" />
                 </div>
             </div>
             <div className="table-container">
@@ -61,7 +62,8 @@ const EditMahasiswa = () => {
                     <thead>
                         <tr>
                             <th onClick={() => handleSort("namaMahasiswa")}>
-                                Nama Mahasiswa {sortConfig.key === "namaMahasiswa" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : (sortConfig.direction === "descending" ? "↓" : "↑")}</th>
+                                Nama Mahasiswa {sortConfig.key === "namaMahasiswa" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
+                            </th>
                             <th>Email</th>
                             <th>Instansi</th>
                             <th>Kelas</th>
@@ -71,8 +73,8 @@ const EditMahasiswa = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((item, index) => (
-                            <tr key={index}>
+                        {currentItems.map((item) => (
+                            <tr key={item.id}>
                                 <td>{item.namaMahasiswa}</td>
                                 <td>{item.email}</td>
                                 <td>{item.instansi}</td>
@@ -80,23 +82,21 @@ const EditMahasiswa = () => {
                                 <td>{item.kodeRegistrasi}</td>
                                 <td>{item.status}</td>
                                 <td>
-                                    <button className="action-button edit" onClick={() => handleEditClick(index)}>Edit</button>
+                                    <button className="action-button edit" onClick={() => handleEditClick(item)}>Edit</button>
                                     <button
                                         className="action-button delete"
                                         onClick={() => {
                                             Swal.fire({
-                                                title: "Hapus Kelas?",
-                                                text: "Kelas akan dihapus secara permanen!",
+                                                title: "Hapus Mahasiswa?",
+                                                text: "Data akan dihapus secara permanen!",
                                                 icon: "warning",
                                                 showCancelButton: true,
                                                 confirmButtonText: "Ya, hapus!",
                                                 cancelButtonText: "Batal",
-                                                dangerMode: true,
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    const newData = data.filter((itemData) => itemData.id !== item.id);
-                                                    setData(newData);
-                                                    Swal.fire("Berhasil!", "Kelas berhasil dihapus!", "success");
+                                                    setData(data.filter((itemData) => itemData.id !== item.id));
+                                                    Swal.fire("Berhasil!", "Data mahasiswa berhasil dihapus!", "success");
                                                 }
                                             });
                                         }}
@@ -128,7 +128,7 @@ const EditMahasiswa = () => {
                     </div>
                 </div>
             </div>
-            {isOpen && <EditPopupMahasiswa onClose={() => setIsOpen(false)} data={selectedData} />}
+            {isOpen && <EditPopupMahasiswa onClose={() => setIsOpen(false)} data={selectedData} onSave={handleUpdateMahasiswa} />}
         </div>
     );
 };
