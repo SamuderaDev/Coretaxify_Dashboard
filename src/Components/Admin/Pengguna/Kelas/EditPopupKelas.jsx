@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./editPopupMahasiswa.css";
+import "./editPopupKelas.css";
 
 const EditPopupMahasiswa = ({ onClose, data = {}, onSave }) => {
           const [formData, setFormData] = useState({
