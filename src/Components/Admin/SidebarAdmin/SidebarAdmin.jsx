@@ -11,14 +11,13 @@ import {
 import { GiPieChart } from "react-icons/gi";
 import Logo from "../../../Assets/image/7.png"; // Pastikan ini menunjuk ke file logo Anda.
 import ProfileIcon from "../../../Assets/image/wulan.png"; // Gambar untuk profile.
-
+import { FaPencil } from "react-icons/fa6";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
 const SidebarAdmin = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State untuk dropdown
@@ -71,9 +70,23 @@ const SidebarAdmin = () => {
           <FaBox className="menu-icon" />
           {isOpen && <span>Kontrak</span>}
         </li>
-        <li className="menu-item">
+        <li
+          className="menu-item"
+          onClick={() => {
+            window.location.href = "/admin/praktikum";
+          }}
+        >
           <FaLaptopCode className="menu-icon" />
           {isOpen && <span>Praktikum</span>}
+        </li>
+        <li
+          className="menu-item"
+          onClick={() => {
+            window.location.href = "/admin/ujian";
+          }}
+        >
+          <FaPencil className="menu-icon" />
+          {isOpen && <span>Ujian</span>}
         </li>
         <Accordion type="single" collapsible className="pl-4">
           <AccordionItem
@@ -144,6 +157,23 @@ const SidebarAdmin = () => {
                 <li
                   className="dropdown-item"
                   onClick={() => {
+                    window.location.href = "/admin/edit-artikel";
+                  }}
+                >
+                  Edit Artikel
+                </li>
+                <li
+                  className="dropdown-item"
+                  onClick={() => {
+                    window.location.href = "/admin/edit-ulasan";
+                  }}
+                >
+                  Edit Ulasan
+                </li>
+                <li
+                  className="dropdown-item"
+                  onClick={() => {
+                    window.location.href = "/edit-profile";
                     window.location.href = "/admin/edit-landing-page/fitur";
                   }}
                 >

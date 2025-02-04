@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import Login from './Components/Auth/Login/Login'
 import SidebarAdmin from './Components/Admin/SidebarAdmin/SidebarAdmin';
 import DashboardAdmin from './Components/Admin/Dashboard/DashboardAdmin';
 import Kontrak from './Components/Admin/Kontrak/Kontrak';
@@ -18,17 +17,12 @@ const App = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 500);
   }, []);
-
   return (
     loading ? <div className="loading"><ClipLoader color="#7502B5" size={50} /></div> :
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={<Login />}
-          />
           <Route
             path="/admin"
             element={
@@ -74,27 +68,27 @@ const App = () => {
             }
           />
           <Route
-            path="/admin/edit-admin"
-            element={
-              <div className="admin-layout">
-                <SidebarAdmin />
-                <div className="admin-content">
-                  <EditAdmin />
-                </div>
+          path="/admin/edit-admin"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <EditAdmin />
               </div>
-            }
-          />
-          <Route
-            path="/admin/edit-kelas"
-            element={
-              <div className="admin-layout">
-                <SidebarAdmin />
-                <div className="admin-content">
-                  <EditKelas />
-                </div>
-              </div>
-            }
-          />
+            </div>
+          }
+        />
+        <Route
+        path="/admin/edit-kelas"
+        element={
+          <div className="admin-layout">
+            <SidebarAdmin />
+            <div className="admin-content">
+              <EditKelas />
+            </div>
+          </div>
+          }
+        />
         </Routes>
       </Router>
   );
