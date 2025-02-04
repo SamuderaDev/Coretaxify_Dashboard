@@ -1,5 +1,5 @@
 /* Overlay untuk menutupi layar */
-.edit-popup-container {
+.edit-popup-container-kelas {
           position: fixed;
           top: 0;
           left: 0;
@@ -12,8 +12,7 @@
           z-index: 999;
 }
 
-/* Kontainer popup */
-.edit-popup-content {
+.edit-popup-content-kelas {
           background-color: #ffffff;
           border-radius: 10px;
           padding: 2rem;
@@ -24,33 +23,33 @@
           overflow-y: auto;
 }
 
-.edit-popup-header {
+.edit-popup-header-kelas {
           display: flex;
           align-items: center;
           justify-content: space-between;
           margin-bottom: 1rem;
 }
 
-.edit-popup-header h2 {
+.edit-popup-header-kelas h2 {
           font-size: 1.5rem;
           font-weight: bold;
           color: #333;
 }
 
 /* Grup form */
-.edit-form-group {
+.edit-form-group-kelas {
           margin-bottom: 1.2rem;
 }
 
-.edit-form-group label {
+.edit-form-group-kelas label {
           display: block;
           font-weight: bold;
           margin-bottom: 0.5rem;
           color: #555;
 }
 
-.edit-form-group input,
-.edit-form-group select {
+.edit-form-group-kelas input,
+.edit-form-group-kelas select {
           width: 100%;
           padding: 0.8rem;
           border: 1px solid #ddd;
@@ -60,15 +59,14 @@
           box-sizing: border-box;
 }
 
-.edit-form-group input:focus,
-.edit-form-group select:focus {
+.edit-form-group-kelas input:focus,
+.edit-form-group-kelas select:focus {
           border-color: #1a73e8;
           outline: none;
           box-shadow: 0 0 4px rgba(26, 115, 232, 0.2);
 }
 
-/* Tindakan popup (tombol) */
-.edit-popup-actions {
+.edit-popup-actions-kelas {
           display: flex;
           justify-content: flex-end;
           margin-top: 1.5rem;

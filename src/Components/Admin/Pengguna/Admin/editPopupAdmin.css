@@ -1,5 +1,5 @@
 /* Overlay untuk menutupi layar */
-.kontrak-popup-overlay-dosen {
+.edit-popup-container-admin {
           position: fixed;
           top: 0;
           left: 0;
@@ -9,14 +9,10 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 1001;
-          overflow-y: auto;
+          z-index: 2000;
 }
 
-
-
-
-.kontrak-popup-container-dosen {
+.edit-popup-content-admin {
           background-color: #ffffff;
           border-radius: 10px;
           padding: 2rem;
@@ -27,49 +23,33 @@
           overflow-y: auto;
 }
 
-.kontrak-popup-header-dosen {
+.edit-popup-header-admin {
           display: flex;
           align-items: center;
           justify-content: space-between;
           margin-bottom: 1rem;
 }
 
-.kontrak-popup-header-dosen h2 {
+.edit-popup-header-admin h2 {
           font-size: 1.5rem;
           font-weight: bold;
           color: #333;
-          display: inline-block;
-          margin-right: 1rem;
-}
-
-.kontrak-popup-import-actions-dosen {
-          display: inline-block;
-          transform: translateY(-25px);
 }
 
 
-.kontrak-popup-container-dosen h2 {
-          margin-bottom: 1.5rem;
-          font-size: 1.5rem;
-          text-align: left;
-          font-weight: bold;
-          color: #333;
-}
-
-
-.kontrak-form-group-dosen {
+.edit-form-group-admin {
           margin-bottom: 1.2rem;
 }
 
-.kontrak-form-group-dosen label {
+.edit-form-group-admin label {
           display: block;
           font-weight: bold;
           margin-bottom: 0.5rem;
           color: #555;
 }
 
-.kontrak-form-group-dosen input,
-.kontrak-form-group-dosen select {
+.edit-form-group-admin input,
+.edit-form-group-admin select {
           width: 100%;
           padding: 0.8rem;
           border: 1px solid #ddd;
@@ -79,21 +59,21 @@
           box-sizing: border-box;
 }
 
-.kontrak-form-group-dosen input:focus,
-.kontrak-form-group-dosen select:focus {
+.edit-form-group-admin input:focus,
+.edit-form-group-admin select:focus {
           border-color: #1a73e8;
           outline: none;
           box-shadow: 0 0 4px rgba(26, 115, 232, 0.2);
 }
 
-.kontrak-popup-actions-dosen {
+.edit-popup-actions-admin {
           display: flex;
           justify-content: flex-end;
           margin-top: 1.5rem;
           gap: 0.5rem;
 }
 
-.kontrak-save-button-dosen {
+.edit-save-button-admin {
           background-color: #05f811;
           color: #fff;
           padding: 0.8rem 1.5rem;
@@ -104,11 +84,11 @@
           transition: background-color 0.3s ease;
 }
 
-.kontrak-save-button-dosen:hover {
+.edit-save-button:hover {
           background-color: #47208b;
 }
 
-.kontrak-cancel-button-dosen {
+.edit-cancel-button {
           background-color: #e53935;
           color: #fff;
           padding: 0.8rem 1.5rem;
@@ -119,53 +99,24 @@
           transition: background-color 0.3s ease;
 }
 
-.kontrak-cancel-button-dosen:hover {
+.edit-cancel-button:hover {
           background-color: #b71c1c;
 }
 
-.kontrak-popup-import-actions-dosen {
-          display: flex;
-          justify-content: flex-end;
-          margin-top: 1.5rem;
-          padding: 1rem;
-          border-radius: 5px;
-          gap: 0.5rem;
-}
-
-.kontrak-popup-import-actions-dosen button {
-          background-color: #673ab7;
-          color: #fff;
-          padding: 0.5rem 1rem;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-}
-
-.kontrak-import-icon-dosen {
-          font-size: 1rem;
-          margin-right: 0.5rem;
-          color: #fff;
-}
-
-.kontrak-popup-import-actions-dosen button:hover {
-          background-color: #47208b;
-}
-
+/* Responsif untuk layar kecil */
 @media (max-width: 768px) {
-          .kontrak-popup-container-dosen {
+          .edit-popup-content {
                     padding: 1.5rem;
                     max-width: 95%;
           }
 
-          .kontrak-popup-actions-dosen {
+          .edit-popup-actions {
                     flex-direction: column;
                     gap: 1rem;
           }
 
-          .kontrak-save-button-dosen,
-          .kontrak-cancel-button-dosen {
+          .edit-save-button,
+          .edit-cancel-button {
                     width: 100%;
                     text-align: center;
           }

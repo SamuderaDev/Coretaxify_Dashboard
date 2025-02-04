@@ -1,21 +1,35 @@
 import React, { useState } from "react";
 import "./editDosen.css";
 import TambahDosen from "./TambahDosen";
+import EditPopupDosen from "./EditPopupDosen";
 import Swal from "sweetalert2";
 
 const EditDosen = () => {
           const [isOpen, setIsOpen] = useState(false);
+          const [editPopupOpen, setEditPopupOpen] = useState(false);
+          const [selectedDosen, setSelectedDosen] = useState(null);
           const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
           const [currentPage, setCurrentPage] = useState(1);
           const itemsPerPage = 10;
 
           const [data, setData] = useState([
-                    { namaDosen: "Hendra", instansi: "Poltek Jos", kuotaKelas: 50, kodeRegistrasi: "L001", jumlahSiswa: 50, kodePembelian: "L001", status: "Active" },
-                    { namaDosen: "Udin", instansi: "UB Jos", kuotaKelas: 30, kodeRegistrasi: "U002", jumlahSiswa: 30, kodePembelian: "U002", status: "Expired" },
-                    { namaDosen: "Galeh", instansi: "UM Jos", kuotaKelas: 70, kodeRegistrasi: "U003", jumlahSiswa: 70, kodePembelian: "U003", status: "Active" },
+                    { id: 1, namaDosen: "Hendra", instansi: "Poltek Jos", kuotaKelas: 50, kodeRegistrasi: "L001", jumlahSiswa: 50, kodePembelian: "L001", status: "Active" },
+                    { id: 2, namaDosen: "Udin", instansi: "UB Jos", kuotaKelas: 30, kodeRegistrasi: "U002", jumlahSiswa: 30, kodePembelian: "U002", status: "Expired" },
+                    { id: 3, namaDosen: "Galeh", instansi: "UM Jos", kuotaKelas: 70, kodeRegistrasi: "U003", jumlahSiswa: 70, kodePembelian: "U003", status: "Active" },
           ]);
+
           const handleData = (newData) => {
-                    setData([...data, newData]);
+                    setData([...data, { id: data.length + 1, ...newData }]);
+          };
+
+          const handleEdit = (dosen) => {
+                    setSelectedDosen(dosen);
+                    setEditPopupOpen(true);
+          };
+
+          const handleUpdateDosen = (updatedDosen) => {
+                    setData(data.map((item) => (item.id === updatedDosen.id ? updatedDosen : item)));
+                    setEditPopupOpen(false);
           };
 
           const handleSort = (key) => {
@@ -44,31 +58,25 @@ const EditDosen = () => {
           const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
           return (
-
                     <div className="kontrak-container">
                               <div className="header">
                                         <h2>Data Dosen</h2>
                               </div>
                               <div className="search-add-container">
                                         <div className="search-input-container">
-                                                  <input type="text" id="search" className="search-input" placeholder="Cari Data Dosen     🔎" />
+                                                  <input type="text" className="search-input" placeholder="Cari Data Dosen 🔎" />
                                         </div>
                                         <button className="add-button" onClick={() => setIsOpen(true)}>+ Tambah Dosen</button>
                               </div>
                               <TambahDosen isOpen={isOpen} onClose={() => setIsOpen(false)} onSave={handleData} />
+                              <EditPopupDosen isOpen={editPopupOpen} onClose={() => setEditPopupOpen(false)} dosen={selectedDosen} onSave={handleUpdateDosen} />
                               <div className="table-container">
                                         <table>
                                                   <thead>
                                                             <tr>
-                                                                      <th onClick={() => handleSort("namaDosen")}>
-                                                                                Nama Dosen {sortConfig.key === "namaDosen" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : (sortConfig.direction === "descending" ? "↓" : "↑")}
-                                                                      </th>
-                                                                      <th onClick={() => handleSort("instansi")}>
-                                                                                Instansi {sortConfig.key === "instansi" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : (sortConfig.direction === "descending" ? "↓" : "↑")}
-                                                                      </th>
-                                                                      <th onClick={() => handleSort("mahasiswa")}>
-                                                                                Kuota Kelas {sortConfig.key === "kuotaKelas" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : (sortConfig.direction === "descending" ? "↓" : "↑")}
-                                                                      </th>
+                                                                      <th onClick={() => handleSort("namaDosen")}>Nama Dosen {sortConfig.key === "namaDosen" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}</th>
+                                                                      <th onClick={() => handleSort("instansi")}>Instansi {sortConfig.key === "instansi" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}</th>
+                                                                      <th onClick={() => handleSort("kuotaKelas")}>Kuota Kelas {sortConfig.key === "kuotaKelas" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}</th>
                                                                       <th>Kode Registrasi</th>
                                                                       <th>Jumlah Siswa</th>
                                                                       <th>Kode Pembelian</th>
@@ -77,8 +85,8 @@ const EditDosen = () => {
                                                             </tr>
                                                   </thead>
                                                   <tbody>
-                                                            {currentItems.map((item, index) => (
-                                                                      <tr key={index}>
+                                                            {currentItems.map((item) => (
+                                                                      <tr key={item.id}>
                                                                                 <td>{item.namaDosen}</td>
                                                                                 <td>{item.instansi}</td>
                                                                                 <td>{item.kuotaKelas}</td>
@@ -87,23 +95,21 @@ const EditDosen = () => {
                                                                                 <td>{item.kodePembelian}</td>
                                                                                 <td>{item.status}</td>
                                                                                 <td>
-                                                                                          <button className="action-button">Edit</button>
+                                                                                          <button className="action-button" onClick={() => handleEdit(item)}>Edit</button>
                                                                                           <button
                                                                                                     className="action-button delete"
                                                                                                     onClick={() => {
                                                                                                               Swal.fire({
-                                                                                                                        title: "Hapus Kelas?",
-                                                                                                                        text: "Kelas akan dihapus secara permanen!",
+                                                                                                                        title: "Hapus Dosen?",
+                                                                                                                        text: "Data dosen akan dihapus secara permanen!",
                                                                                                                         icon: "warning",
                                                                                                                         showCancelButton: true,
                                                                                                                         confirmButtonText: "Ya, hapus!",
                                                                                                                         cancelButtonText: "Batal",
-                                                                                                                        dangerMode: true,
                                                                                                               }).then((result) => {
                                                                                                                         if (result.isConfirmed) {
-                                                                                                                                  const newData = data.filter((itemData) => itemData.id !== item.id);
-                                                                                                                                  setData(newData);
-                                                                                                                                  Swal.fire("Berhasil!", "Kelas berhasil dihapus!", "success");
+                                                                                                                                  setData(data.filter((d) => d.id !== item.id));
+                                                                                                                                  Swal.fire("Berhasil!", "Data dosen berhasil dihapus!", "success");
                                                                                                                         }
                                                                                                               });
                                                                                                     }}
@@ -119,7 +125,6 @@ const EditDosen = () => {
                                                   <div className="pagination-info">
                                                             {`Showing ${indexOfFirstItem + 1} to ${Math.min(indexOfLastItem, data.length)} of ${data.length} entries`}
                                                   </div>
-
                                                   <div className="pagination">
                                                             <button className={`page-item ${currentPage === 1 ? "disabled" : ""}`} onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
                                                                       &lt;

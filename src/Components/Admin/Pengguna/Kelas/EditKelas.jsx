@@ -5,15 +5,26 @@ import Swal from "sweetalert2";
 
 const EditKelas = () => {
           const [isOpen, setIsOpen] = useState(false);
+          const [selectedKelas, setSelectedKelas] = useState(null);
           const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
-          const [selectedData, setSelectedData] = useState(null);
           const [currentPage, setCurrentPage] = useState(1);
           const itemsPerPage = 10;
+
           const [data, setData] = useState([
-                    { kelas: "Abangkuh", instansi: "Poltek Jos", kodeRegistrasi: "L001", status: "Active" },
-                    { kelas: "Abangkuh", instansi: "UB Jos", kodeRegistrasi: "U002", status: "Expired" },
-                    { kelas: "Abangkuh", instansi: "UM Jos", kodeRegistrasi: "U003", status: "Active" },
+                    { id: 1, kelas: "Abangkuh", instansi: "Poltek Jos", kodeRegistrasi: "L001", status: "Active" },
+                    { id: 2, kelas: "Abangkuh", instansi: "UB Jos", kodeRegistrasi: "U002", status: "Expired" },
+                    { id: 3, kelas: "Abangkuh", instansi: "UM Jos", kodeRegistrasi: "U003", status: "Active" },
           ]);
+
+          const handleEdit = (kelas) => {
+                    setSelectedKelas(kelas);
+                    setIsOpen(true);
+          };
+
+          const handleUpdateKelas = (updatedKelas) => {
+                    setData(data.map((item) => (item.id === updatedKelas.id ? updatedKelas : item)));
+                    setIsOpen(false);
+          };
 
           const handleSort = (key) => {
                     let direction = "ascending";
@@ -23,20 +34,12 @@ const EditKelas = () => {
                     setSortConfig({ key, direction });
 
                     const sortedData = [...data].sort((a, b) => {
-                              if (a[key] < b[key]) {
-                                        return direction === "ascending" ? -1 : 1;
-                              }
-                              if (a[key] > b[key]) {
-                                        return direction === "ascending" ? 1 : -1;
-                              }
+                              if (a[key] < b[key]) return direction === "ascending" ? -1 : 1;
+                              if (a[key] > b[key]) return direction === "ascending" ? 1 : -1;
                               return 0;
                     });
-                    setData(sortedData);
-          };
 
-          const handleEditClick = (index) => {
-                    setSelectedData(data[index]);
-                    setIsOpen(true);
+                    setData(sortedData);
           };
 
           const indexOfLastItem = currentPage * itemsPerPage;
@@ -52,7 +55,7 @@ const EditKelas = () => {
                               </div>
                               <div className="search-add-container">
                                         <div className="search-input-container">
-                                                  <input type="text" id="search" className="search-input" placeholder="Cari Data Kelas        🔎" />
+                                                  <input type="text" id="search" className="search-input" placeholder="Cari Data Kelas 🔎" />
                                         </div>
                               </div>
                               <div className="table-container">
@@ -60,7 +63,8 @@ const EditKelas = () => {
                                                   <thead>
                                                             <tr>
                                                                       <th onClick={() => handleSort("kelas")}>
-                                                                                Kelas {sortConfig.key === "kelas" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : (sortConfig.direction === "descending" ? "↓" : "↑")}</th>
+                                                                                Kelas {sortConfig.key === "kelas" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
+                                                                      </th>
                                                                       <th>Instansi</th>
                                                                       <th>Kode Registrasi</th>
                                                                       <th>Status</th>
@@ -68,14 +72,14 @@ const EditKelas = () => {
                                                             </tr>
                                                   </thead>
                                                   <tbody>
-                                                            {currentItems.map((item, index) => (
-                                                                      <tr key={index}>
+                                                            {currentItems.map((item) => (
+                                                                      <tr key={item.id}>
                                                                                 <td>{item.kelas}</td>
                                                                                 <td>{item.instansi}</td>
                                                                                 <td>{item.kodeRegistrasi}</td>
                                                                                 <td>{item.status}</td>
                                                                                 <td>
-                                                                                          <button className="action-button edit" onClick={() => handleEditClick(index)}>Edit</button>
+                                                                                          <button className="action-button edit" onClick={() => handleEdit(item)}>Edit</button>
                                                                                           <button
                                                                                                     className="action-button delete"
                                                                                                     onClick={() => {
@@ -89,8 +93,7 @@ const EditKelas = () => {
                                                                                                                         dangerMode: true,
                                                                                                               }).then((result) => {
                                                                                                                         if (result.isConfirmed) {
-                                                                                                                                  const newData = data.filter((itemData) => itemData.id !== item.id);
-                                                                                                                                  setData(newData);
+                                                                                                                                  setData(data.filter((itemData) => itemData.id !== item.id));
                                                                                                                                   Swal.fire("Berhasil!", "Kelas berhasil dihapus!", "success");
                                                                                                                         }
                                                                                                               });
@@ -107,7 +110,6 @@ const EditKelas = () => {
                                                   <div className="pagination-info">
                                                             {`Showing ${indexOfFirstItem + 1} to ${Math.min(indexOfLastItem, data.length)} of ${data.length} entries`}
                                                   </div>
-
                                                   <div className="pagination">
                                                             <button className={`page-item ${currentPage === 1 ? "disabled" : ""}`} onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
                                                                       &lt;
@@ -123,7 +125,7 @@ const EditKelas = () => {
                                                   </div>
                                         </div>
                               </div>
-                              {isOpen && <EditPopupKelas onClose={() => setIsOpen(false)} data={selectedData} />}
+                              {isOpen && <EditPopupKelas onClose={() => setIsOpen(false)} data={selectedKelas} onSave={handleUpdateKelas} />}
                     </div>
           );
 };

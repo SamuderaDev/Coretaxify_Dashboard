@@ -10,21 +10,21 @@ const Kontrak = () => {
           const itemsPerPage = 10;
 
           const [data, setData] = useState([
-                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", kodePembelian: "L001", status: "Active" },
-                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", kodePembelian: "U002", status: "Expired" },
-                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", kodePembelian: "U003", status: "Active" },
-                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", kodePembelian: "L001", status: "Active" },
-                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", kodePembelian: "U002", status: "Expired" },
-                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", kodePembelian: "U003", status: "Active" },
-                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", kodePembelian: "L001", status: "Active" },
-                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", kodePembelian: "U002", status: "Expired" },
-                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", kodePembelian: "U003", status: "Active" },
-                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", kodePembelian: "L001", status: "Active" },
-                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", kodePembelian: "U002", status: "Expired" },
-                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", kodePembelian: "U003", status: "Active" },
-                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", kodePembelian: "L001", status: "Active" },
-                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", kodePembelian: "U002", status: "Expired" },
-                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", kodePembelian: "U003", status: "Active" },
+                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", spt: "5", bupot: "5", faktur : "5" , kodePembelian: "L001", status: "Active" },
+                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", spt: "5", bupot: "5", faktur: "5", kodePembelian: "U002", status: "Expired" },
+                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", spt: "5", bupot: "5", faktur: "5", kodePembelian: "U003", status: "Active" },
+                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", spt: "5", bupot: "5", faktur: "5", kodePembelian: "L001", status: "Active" },
+                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", spt: "5", bupot: "5", faktur: "5", kodePembelian: "U002", status: "Expired" },
+                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", spt: "5", bupot: "5", faktur: "5", kodePembelian: "U003", status: "Active" },
+                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", spt: "5", bupot: "5", faktur: "5", kodePembelian: "L001", status: "Active" },
+                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", spt: "5", bupot: "5", faktur: "5", kodePembelian: "U002", status: "Expired" },
+                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", spt: "5", bupot: "5", faktur: "5", kodePembelian: "U003", status: "Active" },
+                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", spt: "5", bupot: "5", faktur: "5", kodePembelian: "L001", status: "Active" },
+                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", spt: "5", bupot: "5", faktur: "5", kodePembelian: "U002", status: "Expired" },
+                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", spt: "5", bupot: "5", faktur: "5", kodePembelian: "U003", status: "Active" },
+                    { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", spt: "5", bupot: "5", faktur: "5", kodePembelian: "L001", status: "Active" },
+                    { jenisKontrak: "Unit", instansi: "UB Jos", mahasiswa: 30, periodeAwal: "2022-06-01", periodeAkhir: "2023-05-31", spt: "5", bupot: "5", faktur: "5", kodePembelian: "U002", status: "Expired" },
+                    { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", spt: "5", bupot: "5", faktur: "5", kodePembelian: "U003", status: "Active" },
 
           ]);
 
@@ -73,6 +73,9 @@ const Kontrak = () => {
                                                                       <th onClick={() => handleSort("mahasiswa")}>Jumlah Mahasiswa</th>
                                                                       <th>Periode Awal</th>
                                                                       <th>Periode Akhir</th>
+                                                                      <th>SPT</th>
+                                                                      <th>Bupot</th>
+                                                                      <th>Faktur</th>
                                                                       <th>Kode Pembelian</th>
                                                                       <th>Status</th>
                                                                       <th>Action</th>
@@ -86,6 +89,9 @@ const Kontrak = () => {
                                                                                 <td>{item.mahasiswa}</td>
                                                                                 <td>{item.periodeAwal}</td>
                                                                                 <td>{item.periodeAkhir}</td>
+                                                                                <td>{item.spt}</td>
+                                                                                <td>{item.bupot}</td>
+                                                                                <td>{item.faktur}</td>
                                                                                 <td>{item.kodePembelian}</td>
                                                                                 <td>{item.status}</td>
                                                                                 <td>

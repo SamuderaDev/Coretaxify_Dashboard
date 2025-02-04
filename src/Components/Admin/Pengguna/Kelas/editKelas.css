@@ -100,9 +100,7 @@ tr:hover td {
           cursor: pointer;
           display: inline-block;
           margin: 0.1rem 0;
-          /* Beri jarak vertikal antara button */
           margin-right: 0.5rem;
-          /* Beri jarak horizontal antara button */
 }
 
 .action-button.delete {
@@ -124,7 +122,7 @@ tr:hover td {
           text-align: center;
           box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
           /* Tambahkan bayangan */
-          z-index: 1000;
+          z-index: 999;
           /* Pastikan tetap di atas */
 }
 
