@@ -71,7 +71,12 @@ const SidebarAdmin = () => {
           <FaBox className="menu-icon" />
           {isOpen && <span>Kontrak</span>}
         </li>
-        <li className="menu-item">
+        <li
+          className="menu-item"
+          onClick={() => {
+            window.location.href = "/admin/praktikum";
+          }}
+        >
           <FaLaptopCode className="menu-icon" />
           {isOpen && <span>Praktikum</span>}
         </li>

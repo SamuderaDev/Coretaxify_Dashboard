@@ -12,6 +12,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Artikel from "./Components/Admin/LandingPage/EditArtikel";
 import EditArtikel from "./Components/Admin/LandingPage/EditArtikel";
 import EditUlasan from "./Components/Admin/LandingPage/EditUlasan";
+import Praktikum from "./Components/Admin/Praktikum/Praktikum";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -47,6 +48,17 @@ const App = () => {
               <SidebarAdmin />
               <div className="admin-content">
                 <Kontrak />
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/admin/praktikum"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <Praktikum></Praktikum>
               </div>
             </div>
           }
