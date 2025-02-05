@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { CookiesProvider, useCookies } from "react-cookie";
 
-export default function Praktikum() {
+export default function UploadSoal() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [selectedData, setSelectedData] = useState(null);
@@ -28,27 +28,23 @@ export default function Praktikum() {
 
   const [data, setData] = useState([
     {
-      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-      kodePraktikum: "xAE12",
-      nilai: "98",
+      namaSoal: "Soal Pajak Bumi Bangunan",
+      kodeSoal: "xAE12",
       tanggal: "25-Januari-2024",
     },
     {
-      namaPraktikum: "Praktikum Pajak Bumi Makanan",
-      kodePraktikum: "xAE12",
-      nilai: "98",
+      namaSoal: "Soal Pajak Bumi Makanan",
+      kodeSoal: "xAE12",
       tanggal: "25-Januari-2024",
     },
     {
-      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-      kodePraktikum: "xAE12",
-      nilai: "98",
+      namaSoal: "Soal Pajak Bumi Bangunan",
+      kodeSoal: "xAE12",
       tanggal: "25-Januari-2024",
     },
     {
-      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-      kodePraktikum: "xAE12",
-      nilai: "98",
+      namaSoal: "Soal Pajak Bumi Bangunan",
+      kodeSoal: "xAE12",
       tanggal: "25-Januari-2024",
     },
   ]);
@@ -84,10 +80,10 @@ export default function Praktikum() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [formData, setFormData] = useState({
-    namaPraktikum: "",
-    kodePraktikum: "",
-    nilai: "",
+    namaSoal: "",
+    kodeSoal: "",
     tanggal: "",
+    file: "",
   });
 
   const handleChange = (e) => {
@@ -118,11 +114,11 @@ export default function Praktikum() {
   return (
     <div className="kontrak-container">
       <div className="header">
-        <h2>Data Praktikum</h2>
+        <h2>Data Soal</h2>
         {/* <p>{cookies.user ? cookies.user : "no user"}</p>
         {processedData.map((item) => (
           <li key={item.id} style={{ color: item.highlight ? "red" : "black" }}>
-            {item.namaPraktikum}
+            {item.namaSoal}
           </li>
         ))} */}
       </div>
@@ -132,44 +128,52 @@ export default function Praktikum() {
             type="text"
             id="search"
             className="search-input"
-            placeholder="Cari Praktikum   🔎"
+            placeholder="Cari Soal   🔎"
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <AlertDialog>
           <AlertDialogTrigger>
             <div className="bg-blue-800 p-2 rounded-lg text-white">
-              + Tambah Praktikum
+              + Tambah Soal
             </div>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Tambah Praktikum</AlertDialogTitle>
+              <AlertDialogTitle>Tambah Soal</AlertDialogTitle>
               <AlertDialogDescription className="w-full">
                 <div className="">
                   <form>
                     <div className="edit-form-group-mahasiswa ">
-                      <label>Judul Praktikum:</label>
+                      <label>Judul Soal:</label>
                       <input
                         type="text"
-                        name="namaPraktikum"
-                        value={formData.namaPraktikum}
+                        name="namaSoal"
+                        value={formData.namaSoal}
                         onChange={handleChange}
                         required
                       />
                     </div>
                     <div className="edit-form-group-mahasiswa">
-                      <label>Kode Praktikum:</label>
+                      <label>Kode Soal:</label>
                       <input
                         className="text-black"
-                        name="kodePraktikum"
-                        value={formData.kodePraktikum}
+                        name="kodeSoal"
+                        value={formData.kodeSoal}
                         onChange={handleChange}
                       />
                     </div>
                     <div className="edit-form-group-mahasiswa">
-                      <label>Tanggal Praktikum:</label>
+                      <label>Tanggal Soal:</label>
                       <input type="date" onChange={handleChangeFile} />
+                    </div>
+                    <div className="edit-form-group-mahasiswa">
+                      <label>File Soal:</label>
+                      <input
+                        type="file"
+                        onChange={handleChangeFile}
+                        accept="application/pdf,application/vnd.ms-excel"
+                      />
                     </div>
                   </form>
                 </div>
@@ -190,9 +194,9 @@ export default function Praktikum() {
         <table>
           <thead>
             <tr>
-              <th onClick={() => handleSort("namaPraktikum")}>
-                Judul Praktikum{" "}
-                {sortConfig.key === "namaPraktikum"
+              <th onClick={() => handleSort("namaSoal")}>
+                Judul Soal{" "}
+                {sortConfig.key === "namaSoal"
                   ? sortConfig.direction === "ascending"
                     ? "↑"
                     : "↓"
@@ -200,17 +204,17 @@ export default function Praktikum() {
                   ? "↓"
                   : "↑"}
               </th>
-              <th className="">Kode Praktikum</th>
-              <th className="">Tanggal Praktikum</th>
+              <th className="">Kode Soal</th>
+              <th className="">Tanggal Soal</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
               <tr key={index}>
-                <td>{item.namaPraktikum}</td>
+                <td>{item.namaSoal}</td>
                 <td className="max-w-5">
-                  <p className="truncate">{item.kodePraktikum}</p>
+                  <p className="truncate">{item.kodeSoal}</p>
                 </td>
                 <td className="max-w-5">
                   <p className="">{item.tanggal}</p>
@@ -222,34 +226,39 @@ export default function Praktikum() {
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Edit Praktikum</AlertDialogTitle>
+                        <AlertDialogTitle>Edit Soal</AlertDialogTitle>
                         <AlertDialogDescription className="w-full">
                           <div className="">
                             <form>
                               <div className="edit-form-group-mahasiswa ">
-                                <label>Judul Praktikum:</label>
+                                <label>Judul Soal:</label>
                                 <input
                                   type="text"
-                                  name="namaPraktikum"
-                                  value={formData.namaPraktikum}
+                                  name="namaSoal"
+                                  value={formData.namaSoal}
                                   onChange={handleChange}
                                   required
                                 />
                               </div>
                               <div className="edit-form-group-mahasiswa">
-                                <label>Kode Praktikum:</label>
+                                <label>Kode Soal:</label>
                                 <input
                                   className="text-black"
-                                  name="kodePraktikum"
-                                  value={formData.kodePraktikum}
+                                  name="kodeSoal"
+                                  value={formData.kodeSoal}
                                   onChange={handleChange}
                                 />
                               </div>
                               <div className="edit-form-group-mahasiswa">
-                                <label>Tanggal Praktikum:</label>
+                                <label>Tanggal Soal:</label>
+                                <input type="date" onChange={handleChange} />
+                              </div>
+                              <div className="edit-form-group-mahasiswa">
+                                <label>File Soal:</label>
                                 <input
-                                  type="date"
+                                  type="file"
                                   onChange={handleChangeFile}
+                                  accept="application/pdf,application/vnd.ms-excel"
                                 />
                               </div>
                             </form>
@@ -277,8 +286,8 @@ export default function Praktikum() {
                     className="action-button delete"
                     onClick={() => {
                       Swal.fire({
-                        title: "Hapus Praktikum?",
-                        text: "Praktikum akan dihapus secara permanen!",
+                        title: "Hapus Soal?",
+                        text: "Soal akan dihapus secara permanen!",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonText: "Ya, hapus!",
@@ -292,7 +301,7 @@ export default function Praktikum() {
                           setData(newData);
                           Swal.fire(
                             "Berhasil!",
-                            "Praktikum berhasil dihapus!",
+                            "Soal berhasil dihapus!",
                             "success"
                           );
                         }

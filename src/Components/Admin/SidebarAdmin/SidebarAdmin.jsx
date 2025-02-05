@@ -18,6 +18,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { MdOutlineDriveFolderUpload } from "react-icons/md";
 const SidebarAdmin = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State untuk dropdown
@@ -87,6 +88,15 @@ const SidebarAdmin = () => {
         >
           <FaPencil className="menu-icon" />
           {isOpen && <span>Ujian</span>}
+        </li>
+        <li
+          className="menu-item"
+          onClick={() => {
+            window.location.href = "/admin/upload-soal";
+          }}
+        >
+          <MdOutlineDriveFolderUpload className="menu-icon" />
+          {isOpen && <span>Upload Soal</span>}
         </li>
         <Accordion type="single" collapsible className="pl-4">
           <AccordionItem

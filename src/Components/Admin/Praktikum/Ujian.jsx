@@ -3,7 +3,6 @@ import React, { useState } from "react";
 // import "../Pengguna/Mahasiswa/editMahasiswa.css";
 import EditPopupMahasiswa from "../Pengguna/Mahasiswa/EditPopupMahasiswa";
 import Swal from "sweetalert2";
-import { Textarea } from "@/components/ui/textarea";
 
 import {
   AlertDialog,
@@ -141,7 +140,7 @@ export default function Ujian() {
                     </div>
                     <div className="edit-form-group-kelas ">
                       <label>Kode Ujian:</label>
-                      <Textarea
+                      <input
                         className="text-black"
                         name="kodeUjian"
                         value={formData.kodeUjian}

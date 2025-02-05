@@ -14,6 +14,7 @@ import EditArtikel from "./Components/Admin/LandingPage/EditArtikel";
 import EditUlasan from "./Components/Admin/LandingPage/EditUlasan";
 import Praktikum from "./Components/Admin/Praktikum/Praktikum";
 import Ujian from "./Components/Admin/Praktikum/Ujian";
+import UploadSoal from "./Components/Admin/Praktikum/UploadSoal";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -60,6 +61,17 @@ const App = () => {
               <SidebarAdmin />
               <div className="admin-content">
                 <Praktikum></Praktikum>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/admin/upload-soal"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <UploadSoal></UploadSoal>
               </div>
             </div>
           }
