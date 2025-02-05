@@ -57,12 +57,12 @@ const App = () => {
           }
         />
         <Route
-          path="/admin/praktikum"
+          path="/admin/edit-dosen"
           element={
             <div className="admin-layout">
               <SidebarAdmin />
               <div className="admin-content">
-                <Praktikum></Praktikum>
+                <EditDosen />
               </div>
             </div>
           }
@@ -85,28 +85,6 @@ const App = () => {
               <SidebarAdmin />
               <div className="admin-content">
                 <Ujian></Ujian>
-              </div>
-            </div>
-          }
-        />
-        <Route
-          path="/admin/edit-dosen"
-          element={
-            <div className="admin-layout">
-              <SidebarAdmin />
-              <div className="admin-content">
-                <EditDosen />
-              </div>
-            </div>
-          }
-        />
-        <Route
-          path="/admin/edit-mahasiswa"
-          element={
-            <div className="admin-layout">
-              <SidebarAdmin />
-              <div className="admin-content">
-                <EditMahasiswa />
               </div>
             </div>
           }
