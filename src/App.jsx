@@ -112,6 +112,17 @@ const App = () => {
           }
         />
         <Route
+          path="/admin/edit-mahasiswa"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <EditMahasiswa />
+              </div>
+            </div>
+          }
+        />
+        <Route
           path="/admin/edit-artikel"
           element={
             <div className="admin-layout">
