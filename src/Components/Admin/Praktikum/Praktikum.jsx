@@ -16,6 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { CookiesProvider, useCookies } from "react-cookie";
 
 export default function Praktikum() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +24,7 @@ export default function Praktikum() {
   const [selectedData, setSelectedData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const [cookies, setCookie] = useCookies(["user"]);
 
   const [data, setData] = useState([
     {
@@ -32,7 +34,7 @@ export default function Praktikum() {
       tanggal: "25-Januari-2024",
     },
     {
-      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
+      namaPraktikum: "Praktikum Pajak Bumi Makanan",
       kodePraktikum: "xAE12",
       nilai: "98",
       tanggal: "25-Januari-2024",
@@ -100,11 +102,27 @@ export default function Praktikum() {
     console.log(e.target.files);
     setFile(URL.createObjectURL(e.target.files[0]));
   }
+  const [search, setSearch] = useState("");
+
+  const processedData = data.map((item) => ({
+    ...item,
+    highlight:
+      search &&
+      Object.values(item).some((value) =>
+        String(value).toLowerCase().includes(search.toLowerCase())
+      ),
+  }));
 
   return (
     <div className="kontrak-container">
       <div className="header">
         <h2>Data Praktikum</h2>
+        <p>{cookies.user ? cookies.user : "no user"}</p>
+        {processedData.map((item) => (
+          <li key={item.id} style={{ color: item.highlight ? "red" : "black" }}>
+            {item.namaPraktikum}
+          </li>
+        ))}
       </div>
       <div className="search-add-container">
         <div className="search-input-container">
@@ -113,6 +131,7 @@ export default function Praktikum() {
             id="search"
             className="search-input"
             placeholder="Cari Praktikum   🔎"
+            onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <AlertDialog>
