@@ -18,7 +18,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/Components/ui/accordion";
 import { MdOutlineDriveFolderUpload } from "react-icons/md";
 const SidebarAdmin = () => {
   const [isOpen, setIsOpen] = useState(true);
