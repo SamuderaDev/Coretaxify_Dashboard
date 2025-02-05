@@ -15,6 +15,8 @@ import EditUlasan from "./Components/Admin/LandingPage/EditUlasan";
 import Praktikum from "./Components/Admin/Praktikum/Praktikum";
 import Ujian from "./Components/Admin/Praktikum/Ujian";
 import UploadSoal from "./Components/Admin/Praktikum/UploadSoal";
+import KontrakBackup from "./Components/Admin/Kontrak/KontrakBackup";
+import PraktikumBackup from "./Components/Admin/Praktikum/PraktikumBackup";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -149,6 +151,28 @@ const App = () => {
               <SidebarAdmin />
               <div className="admin-content">
                 <EditUlasan></EditUlasan>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/admin/kontrak-backup"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <KontrakBackup></KontrakBackup>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/admin/praktikum-backup"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <PraktikumBackup></PraktikumBackup>
               </div>
             </div>
           }

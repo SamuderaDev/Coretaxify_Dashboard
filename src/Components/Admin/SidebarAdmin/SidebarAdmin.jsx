@@ -12,6 +12,7 @@ import { GiPieChart } from "react-icons/gi";
 import Logo from "../../../Assets/image/7.png"; // Pastikan ini menunjuk ke file logo Anda.
 import ProfileIcon from "../../../Assets/image/wulan.png"; // Gambar untuk profile.
 import { FaPencil } from "react-icons/fa6";
+import { LuDatabaseBackup } from "react-icons/lu";
 import {
   Accordion,
   AccordionContent,
@@ -204,6 +205,41 @@ const SidebarAdmin = () => {
                   }}
                 >
                   Ulasan
+                </li>
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        <Accordion type="single" collapsible className="pl-4">
+          <AccordionItem
+            value="item-1"
+            className="border-none hover:no-underline"
+          >
+            <AccordionTrigger className="w-full ">
+              <div className="flex">
+                <LuDatabaseBackup className="menu-icon" />
+                <span className={`text-[16px] ${isOpen ? "" : "hidden "}`}>
+                  Backup Data
+                </span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className={`${isOpen ? "" : "hidden"}`}>
+              <ul className="">
+                <li
+                  className="dropdown-item"
+                  onClick={() => {
+                    window.location.href = "/admin/kontrak-backup";
+                  }}
+                >
+                  Backup Kontrak
+                </li>
+                <li
+                  className="dropdown-item"
+                  onClick={() => {
+                    window.location.href = "/admin/praktikum-backup";
+                  }}
+                >
+                  Backup Praktikum
                 </li>
               </ul>
             </AccordionContent>

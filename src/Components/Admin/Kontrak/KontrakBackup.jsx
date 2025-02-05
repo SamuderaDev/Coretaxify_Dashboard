@@ -3,8 +3,9 @@ import "./kontrak.css";
 import TambahKontrak from "./TambahKontrak";
 import Swal from "sweetalert2";
 
-const Kontrak = () => {
+const KontrakBackup = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSelectAll, setSelectAll] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -21,7 +22,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "L001",
       status: "Active",
-      isSelected: "true",
+      isSelected: false,
     },
     {
       jenisKontrak: "Unit",
@@ -34,7 +35,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "U002",
       status: "Expired",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Unit",
@@ -47,7 +48,6 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "U003",
       status: "Active",
-      isSelected: "false",
     },
     {
       jenisKontrak: "Lisensi",
@@ -60,7 +60,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "L001",
       status: "Active",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Unit",
@@ -73,7 +73,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "U002",
       status: "Expired",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Unit",
@@ -86,7 +86,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "U003",
       status: "Active",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Lisensi",
@@ -99,7 +99,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "L001",
       status: "Active",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Unit",
@@ -112,7 +112,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "U002",
       status: "Expired",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Unit",
@@ -125,7 +125,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "U003",
       status: "Active",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Lisensi",
@@ -138,7 +138,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "L001",
       status: "Active",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Unit",
@@ -151,7 +151,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "U002",
       status: "Expired",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Unit",
@@ -164,7 +164,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "U003",
       status: "Active",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Lisensi",
@@ -177,7 +177,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "L001",
       status: "Active",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Unit",
@@ -190,7 +190,7 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "U002",
       status: "Expired",
-      isSelected: "false",
+      isSelected: false,
     },
     {
       jenisKontrak: "Unit",
@@ -203,12 +203,27 @@ const Kontrak = () => {
       faktur: "5",
       kodePembelian: "U003",
       status: "Active",
-      isSelected: "false",
+      isSelected: false,
     },
   ]);
 
   const handleData = (newData) => {
     setData([...data, newData]);
+  };
+
+  const handleSelectAll = () => {
+    setData((data) =>
+      data.map((item) => ({ ...item, isSelected: !item.isSelected }))
+    );
+  };
+  const toggleSelection = (kode) => {
+    setData((prevData) =>
+      prevData.map((item) =>
+        item.kodePembelian === kode
+          ? { ...item, isSelected: !item.isSelected }
+          : item
+      )
+    );
   };
 
   const handleSort = (key) => {
@@ -235,7 +250,7 @@ const Kontrak = () => {
   return (
     <div className="kontrak-container">
       <div className="header-kontrak">
-        <h2>Data Kontrak Instansi</h2>
+        <h2>Data Kontrak Instansi - BACKUP</h2>
       </div>
       <div className="search-add-container">
         <input
@@ -243,15 +258,21 @@ const Kontrak = () => {
           className="search-input"
           placeholder="Cari Data Instansi 🔎"
         />
-        <button className="add-button" onClick={() => setIsOpen(true)}>
-          + Tambah Data Kontrak
+        <button
+          className="bg-blue-700 p-2 rounded-md text-white"
+          onClick={handleSelectAll}
+        >
+          Select All
         </button>
+        {/* <button className="add-button" onClick={() => setIsOpen(true)}>
+          + Tambah Data Kontrak
+        </button> */}
       </div>
-      <TambahKontrak
+      {/* <TambahKontrak
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onSave={handleData}
-      />
+      /> */}
 
       <div className="table-container">
         <table>
@@ -268,7 +289,7 @@ const Kontrak = () => {
               <th>Kode Pembelian</th>
               <th>Status</th>
               <th>Action</th>
-              <th>Action</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -315,7 +336,13 @@ const Kontrak = () => {
                     Delete
                   </button>
                 </td>
-                <td>{item.isSelected}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    onChange={() => toggleSelection(item.kodePembelian)}
+                    checked={item.isSelected}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -368,4 +395,4 @@ const Kontrak = () => {
   );
 };
 
-export default Kontrak;
+export default KontrakBackup;

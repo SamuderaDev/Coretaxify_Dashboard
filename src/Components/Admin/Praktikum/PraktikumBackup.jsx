@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { CookiesProvider, useCookies } from "react-cookie";
 
-export default function UploadSoal() {
+export default function PraktikumBackup() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [selectedData, setSelectedData] = useState(null);
@@ -28,26 +28,50 @@ export default function UploadSoal() {
 
   const [data, setData] = useState([
     {
-      namaSoal: "Soal Pajak Bumi Bangunan",
-      kodeSoal: "xAE12",
+      id: "1",
+      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
+      kodePraktikum: "xAE12",
+      nilai: "98",
       tanggal: "25-Januari-2024",
+      isSelected: false,
     },
     {
-      namaSoal: "Soal Pajak Bumi Makanan",
-      kodeSoal: "xAE12",
+      id: "2",
+      namaPraktikum: "Praktikum Pajak Bumi Makanan",
+      kodePraktikum: "xAE12",
+      nilai: "98",
       tanggal: "25-Januari-2024",
+      isSelected: false,
     },
     {
-      namaSoal: "Soal Pajak Bumi Bangunan",
-      kodeSoal: "xAE12",
+      id: "3",
+      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
+      kodePraktikum: "xAE12",
+      nilai: "98",
       tanggal: "25-Januari-2024",
+      isSelected: false,
     },
     {
-      namaSoal: "Soal Pajak Bumi Bangunan",
-      kodeSoal: "xAE12",
+      id: "4",
+      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
+      kodePraktikum: "xAE12",
+      nilai: "98",
       tanggal: "25-Januari-2024",
+      isSelected: false,
     },
   ]);
+  const handleSelectAll = () => {
+    setData((data) =>
+      data.map((item) => ({ ...item, isSelected: !item.isSelected }))
+    );
+  };
+  const toggleSelection = (kode) => {
+    setData((prevData) =>
+      prevData.map((item) =>
+        item.id === kode ? { ...item, isSelected: !item.isSelected } : item
+      )
+    );
+  };
 
   const handleSort = (key) => {
     let direction = "ascending";
@@ -80,10 +104,10 @@ export default function UploadSoal() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [formData, setFormData] = useState({
-    namaSoal: "",
-    kodeSoal: "",
+    namaPraktikum: "",
+    kodePraktikum: "",
+    nilai: "",
     tanggal: "",
-    file: "",
   });
 
   const handleChange = (e) => {
@@ -95,7 +119,6 @@ export default function UploadSoal() {
     // Logic to save the data
     onClose();
   };
-  
   const [file, setFile] = useState();
   function handleChangeFile(e) {
     console.log(e.target.files);
@@ -115,11 +138,11 @@ export default function UploadSoal() {
   return (
     <div className="kontrak-container">
       <div className="header">
-        <h2>Data Soal</h2>
+        <h2>Data Praktikum - BACKUP</h2>
         {/* <p>{cookies.user ? cookies.user : "no user"}</p>
         {processedData.map((item) => (
           <li key={item.id} style={{ color: item.highlight ? "red" : "black" }}>
-            {item.namaSoal}
+            {item.namaPraktikum}
           </li>
         ))} */}
       </div>
@@ -129,52 +152,50 @@ export default function UploadSoal() {
             type="text"
             id="search"
             className="search-input"
-            placeholder="Cari Soal   🔎"
+            placeholder="Cari Praktikum   🔎"
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <AlertDialog>
+        <button
+          className="bg-blue-700 p-2 rounded-md text-white"
+          onClick={handleSelectAll}
+        >
+          Select All
+        </button>
+        {/* <AlertDialog>
           <AlertDialogTrigger>
             <div className="bg-blue-800 p-2 rounded-lg text-white">
-              + Tambah Soal
+              + Tambah Praktikum
             </div>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Tambah Soal</AlertDialogTitle>
+              <AlertDialogTitle>Tambah Praktikum</AlertDialogTitle>
               <AlertDialogDescription className="w-full">
                 <div className="">
                   <form>
                     <div className="edit-form-group-mahasiswa ">
-                      <label>Judul Soal:</label>
+                      <label>Judul Praktikum:</label>
                       <input
                         type="text"
-                        name="namaSoal"
-                        value={formData.namaSoal}
+                        name="namaPraktikum"
+                        value={formData.namaPraktikum}
                         onChange={handleChange}
                         required
                       />
                     </div>
                     <div className="edit-form-group-mahasiswa">
-                      <label>Kode Soal:</label>
+                      <label>Kode Praktikum:</label>
                       <input
                         className="text-black"
-                        name="kodeSoal"
-                        value={formData.kodeSoal}
+                        name="kodePraktikum"
+                        value={formData.kodePraktikum}
                         onChange={handleChange}
                       />
                     </div>
                     <div className="edit-form-group-mahasiswa">
-                      <label>Tanggal Soal:</label>
+                      <label>Tanggal Praktikum:</label>
                       <input type="date" onChange={handleChangeFile} />
-                    </div>
-                    <div className="edit-form-group-mahasiswa">
-                      <label>File Soal:</label>
-                      <input
-                        type="file"
-                        onChange={handleChangeFile}
-                        accept="application/pdf,application/vnd.ms-excel"
-                      />
                     </div>
                   </form>
                 </div>
@@ -189,15 +210,15 @@ export default function UploadSoal() {
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
-        </AlertDialog>
+        </AlertDialog> */}
       </div>
       <div className="table-container">
         <table>
           <thead>
             <tr>
-              <th onClick={() => handleSort("namaSoal")}>
-                Judul Soal{" "}
-                {sortConfig.key === "namaSoal"
+              <th onClick={() => handleSort("namaPraktikum")}>
+                Judul Praktikum{" "}
+                {sortConfig.key === "namaPraktikum"
                   ? sortConfig.direction === "ascending"
                     ? "↑"
                     : "↓"
@@ -205,17 +226,18 @@ export default function UploadSoal() {
                   ? "↓"
                   : "↑"}
               </th>
-              <th className="">Kode Soal</th>
-              <th className="">Tanggal Soal</th>
+              <th className="">Kode Praktikum</th>
+              <th className="">Tanggal Praktikum</th>
+              <th></th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
               <tr key={index}>
-                <td>{item.namaSoal}</td>
+                <td>{item.namaPraktikum}</td>
                 <td className="max-w-5">
-                  <p className="truncate">{item.kodeSoal}</p>
+                  <p className="truncate">{item.kodePraktikum}</p>
                 </td>
                 <td className="max-w-5">
                   <p className="">{item.tanggal}</p>
@@ -227,39 +249,34 @@ export default function UploadSoal() {
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Edit Soal</AlertDialogTitle>
+                        <AlertDialogTitle>Edit Praktikum</AlertDialogTitle>
                         <AlertDialogDescription className="w-full">
                           <div className="">
                             <form>
                               <div className="edit-form-group-mahasiswa ">
-                                <label>Judul Soal:</label>
+                                <label>Judul Praktikum:</label>
                                 <input
                                   type="text"
-                                  name="namaSoal"
-                                  value={formData.namaSoal}
+                                  name="namaPraktikum"
+                                  value={formData.namaPraktikum}
                                   onChange={handleChange}
                                   required
                                 />
                               </div>
                               <div className="edit-form-group-mahasiswa">
-                                <label>Kode Soal:</label>
+                                <label>Kode Praktikum:</label>
                                 <input
                                   className="text-black"
-                                  name="kodeSoal"
-                                  value={formData.kodeSoal}
+                                  name="kodePraktikum"
+                                  value={formData.kodePraktikum}
                                   onChange={handleChange}
                                 />
                               </div>
                               <div className="edit-form-group-mahasiswa">
-                                <label>Tanggal Soal:</label>
-                                <input type="date" onChange={handleChange} />
-                              </div>
-                              <div className="edit-form-group-mahasiswa">
-                                <label>File Soal:</label>
+                                <label>Tanggal Praktikum:</label>
                                 <input
-                                  type="file"
+                                  type="date"
                                   onChange={handleChangeFile}
-                                  accept="application/pdf,application/vnd.ms-excel"
                                 />
                               </div>
                             </form>
@@ -287,8 +304,8 @@ export default function UploadSoal() {
                     className="action-button delete"
                     onClick={() => {
                       Swal.fire({
-                        title: "Hapus Soal?",
-                        text: "Soal akan dihapus secara permanen!",
+                        title: "Hapus Praktikum?",
+                        text: "Praktikum akan dihapus secara permanen!",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonText: "Ya, hapus!",
@@ -302,7 +319,7 @@ export default function UploadSoal() {
                           setData(newData);
                           Swal.fire(
                             "Berhasil!",
-                            "Soal berhasil dihapus!",
+                            "Praktikum berhasil dihapus!",
                             "success"
                           );
                         }
@@ -311,6 +328,13 @@ export default function UploadSoal() {
                   >
                     Delete
                   </button>
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    onChange={() => toggleSelection(item.id)}
+                    checked={item.isSelected}
+                  />
                 </td>
               </tr>
             ))}
