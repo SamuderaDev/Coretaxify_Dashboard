@@ -79,6 +79,17 @@ const App = () => {
           }
         />
         <Route
+          path="/admin/praktikum"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <Praktikum></Praktikum>
+              </div>
+            </div>
+          }
+        />
+        <Route
           path="/admin/ujian"
           element={
             <div className="admin-layout">
