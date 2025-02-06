@@ -111,17 +111,7 @@ tr:hover td {
           opacity: 0.8;
 }
 
-.pagination-container {
-          position: sticky;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          background: white;
-          padding: 5px 0;
-          text-align: center;
-          box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-          z-index: 999;
-}
+
 
 .pagination-info {
           text-align: left;

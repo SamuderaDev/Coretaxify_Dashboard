@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import { IoReload } from "react-icons/io5"; // Import ikon reload
 import {
           AlertDialog,
           AlertDialogAction,
@@ -54,6 +55,15 @@ export default function DosenKelas() {
                     kodeKelas: "",
           });
 
+          const generateRandomCode = () => {
+                    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    let result = "";
+                    for (let i = 0; i < 5; i++) {
+                              result += characters.charAt(Math.floor(Math.random() * characters.length));
+                    }
+                    return result;
+          };
+
           const handleChange = (e) => {
                     const { name, value } = e.target;
                     setFormData({ ...formData, [name]: value });
@@ -68,7 +78,11 @@ export default function DosenKelas() {
                     };
                     setData([...data, newKelas]);
                     setIsAddOpen(false);
-                    setFormData({ nama: "", kodeKelas: "" }); // Reset form setelah menyimpan
+                    setFormData({ nama: "", kodeKelas: "" }); 
+          };
+
+          const handleReloadCode = () => {
+                    setFormData({ ...formData, kodeKelas: generateRandomCode() });
           };
 
           const handleSort = (key) => {
@@ -89,6 +103,7 @@ export default function DosenKelas() {
                     });
                     setData(sortedData);
           };
+
 
           const handleEditClick = (index) => {
                     setSelectedData(data[index]);
@@ -128,8 +143,11 @@ export default function DosenKelas() {
                                                   />
                                         </div>
                                         <button
-                                                  className="bg-blue-700 p-2 rounded-md text-white"
-                                                  onClick={() => setIsAddOpen(true)}
+                                                  className="bg-blue-800 p-2 rounded-md text-white hover:bg-blue-900"
+                                                  onClick={() => {
+                                                            setIsAddOpen(true);
+                                                            setFormData({ ...formData, kodeKelas: generateRandomCode() }); 
+                                                  }}
                                         >
                                                   Tambah Kelas
                                         </button>
@@ -237,53 +255,7 @@ export default function DosenKelas() {
                                                             ))}
                                                   </tbody>
                                         </table>
-                                        {isOpen && (
-                                                  <EditPopupMahasiswa
-                                                            onClose={() => setIsOpen(false)}
-                                                            data={selectedData}
-                                                  />
-                                        )}
-                                        <AlertDialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-                                                  <AlertDialogContent>
-                                                            <AlertDialogHeader>
-                                                                      <AlertDialogTitle>Tambah Kelas</AlertDialogTitle>
-                                                                      <AlertDialogDescription className="w-full">
-                                                                                <div className="">
-                                                                                          <form>
-                                                                                                    <div className="edit-form-group-mahasiswa">
-                                                                                                              <label>Nama:</label>
-                                                                                                              <input
-                                                                                                                        type="text"
-                                                                                                                        name="nama"
-                                                                                                                        value={formData.nama}
-                                                                                                                        onChange={handleChange}
-                                                                                                                        required
-                                                                                                              />
-                                                                                                    </div>
-                                                                                                    <div className="edit-form-group-mahasiswa">
-                                                                                                              <label>Kode Kelas:</label>
-                                                                                                              <input
-                                                                                                                        className="text-black"
-                                                                                                                        name="kodeKelas"
-                                                                                                                        value={formData.kodeKelas}
-                                                                                                                        onChange={handleChange}
-                                                                                                              />
-                                                                                                    </div>
-                                                                                          </form>
-                                                                                </div>
-                                                                      </AlertDialogDescription>
-                                                            </AlertDialogHeader>
-                                                            <AlertDialogFooter>
-                                                                      <AlertDialogCancel className="bg-red-600 text-white">
-                                                                                Batal
-                                                                      </AlertDialogCancel>
-                                                                      <AlertDialogAction className="bg-green-600" onClick={handleSave}>
-                                                                                Simpan
-                                                                      </AlertDialogAction>
-                                                            </AlertDialogFooter>
-                                                  </AlertDialogContent>
-                                        </AlertDialog>
-                                        <div className="pagination-container">
+                                        <div className="pagination-container sticky">
                                                   <div className="pagination-info">
                                                             {`Showing ${indexOfFirstItem + 1} to ${Math.min(
                                                                       indexOfLastItem,
@@ -321,7 +293,62 @@ export default function DosenKelas() {
                                                   </div>
                                         </div>
                               </div>
-                             
+                              {isOpen && (
+                                        <EditPopupMahasiswa
+                                                  onClose={() => setIsOpen(false)}
+                                                  data={selectedData}
+                                        />
+                              )}
+                              <AlertDialog open={isAddOpen} onOpenChange={setIsAddOpen}>
+                                        <AlertDialogContent>
+                                                  <AlertDialogHeader>
+                                                            <AlertDialogTitle>Tambah Kelas</AlertDialogTitle>
+                                                            <AlertDialogDescription className="w-full">
+                                                                      <div className="">
+                                                                                <form>
+                                                                                          <div className="edit-form-group-mahasiswa ">
+                                                                                                    <label>Nama:</label>
+                                                                                                    <input
+                                                                                                              type="text"
+                                                                                                              name="nama"
+                                                                                                              value={formData.nama}
+                                                                                                              onChange={handleChange}
+                                                                                                              required
+                                                                                                    />
+                                                                                          </div>
+                                                                                          <div className="edit-form-group-mahasiswa">
+                                                                                                    <label>Kode Kelas:</label>
+                                                                                                    <div className="flex items-center gap-2">
+                                                                                                              <input
+                                                                                                                        className="text-black"
+                                                                                                                        name="kodeKelas"
+                                                                                                                        value={formData.kodeKelas}
+                                                                                                                        onChange={handleChange}
+                                                                                                                        readOnly
+                                                                                                              />
+                                                                                                              <button
+                                                                                                                        type="button"
+                                                                                                                        className="p-3 bg-purple-800 rounded-md hover:bg-purple-900"
+                                                                                                                        onClick={handleReloadCode}
+                                                                                                              >
+                                                                                                                        <IoReload className="text-lg text-white " />
+                                                                                                              </button>
+                                                                                                    </div>
+                                                                                          </div>
+                                                                                </form>
+                                                                      </div>
+                                                            </AlertDialogDescription>
+                                                  </AlertDialogHeader>
+                                                  <AlertDialogFooter>
+                                                            <AlertDialogCancel className="bg-red-600 text-white hover:bg-red-800 hover:text-white">
+                                                                      Batal
+                                                            </AlertDialogCancel>
+                                                            <AlertDialogAction className="bg-green-600" onClick={handleSave}>
+                                                                      Simpan
+                                                            </AlertDialogAction>
+                                                  </AlertDialogFooter>
+                                        </AlertDialogContent>
+                              </AlertDialog>
                     </div>
           );
 }

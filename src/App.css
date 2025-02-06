@@ -131,6 +131,33 @@ li {
   font-weight: 500;
 }
 
+.pagination-container {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  padding: 5px 0;
+  text-align: center;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 0;
+}
+
+.pagination-info {
+  text-align: left;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 3px;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: end;
+  margin-top: 0.5rem;
+}
+
 img,
 video {
   width: 100%;
