@@ -167,7 +167,7 @@ const SidebarAdmin = () => {
         <li
           className="menu-item"
           onClick={() => {
-            window.location.href = "/admin/ujian";
+            window.location.href = `/${cookies.role}/ujian`;
           }}
         >
           <FaPencil className="menu-icon" />

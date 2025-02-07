@@ -23,6 +23,7 @@ import KontrakBackup from "./Components/Admin/Kontrak/KontrakBackup";
 import PraktikumBackup from "./Components/Admin/Praktikum/PraktikumBackup";
 import MahsiswaKelas from "./Components/Mahasiswa/Kelas/MahasiswaKelas";
 import MahasiswaPraktikum from "./Components/Mahasiswa/Praktikum/MahasiswaPraktikum";
+import MahasiswaUjian from "./Components/Mahasiswa/Praktikum/MahasiswaUjian";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -237,6 +238,17 @@ const App = () => {
               <SidebarAdmin />
               <div className="admin-content">
                 <MahasiswaPraktikum></MahasiswaPraktikum>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/mahasiswa/ujian"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <MahasiswaUjian></MahasiswaUjian>
               </div>
             </div>
           }
