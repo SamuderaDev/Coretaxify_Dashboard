@@ -332,7 +332,17 @@ const SidebarAdmin = () => {
             </Accordion>
           </>
         ) : (
-          <></>
+          <>
+            <li
+              className="menu-item"
+              onClick={() => {
+                window.location.href = "/mahasiswa/kelas";
+              }}
+            >
+              <FaUsers className="menu-icon" />
+              <span className={`text-[16px]`}>Kelas</span>
+            </li>
+          </>
         )}
       </ul>
 
@@ -352,7 +362,7 @@ const SidebarAdmin = () => {
           )}
         </div>
         {isProfileDropdownOpen && isOpen && (
-          <ul className="profile-dropdown-menu">
+          <ul className="w-full mt-2 p-0">
             <li
               className="dropdown-item"
               onClick={() => {

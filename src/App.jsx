@@ -21,6 +21,7 @@ import Ujian from "./Components/Admin/Praktikum/Ujian";
 import UploadSoal from "./Components/Admin/Praktikum/UploadSoal";
 import KontrakBackup from "./Components/Admin/Kontrak/KontrakBackup";
 import PraktikumBackup from "./Components/Admin/Praktikum/PraktikumBackup";
+import MahsiswaKelas from "./Components/Mahasiswa/Kelas/MahasiswaKelas";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -38,7 +39,7 @@ const App = () => {
   ) : (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />  
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
@@ -213,6 +214,17 @@ const App = () => {
               <SidebarAdmin />
               <div className="admin-content">
                 <DosenKelas />
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/mahasiswa/kelas"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <MahsiswaKelas></MahsiswaKelas>
               </div>
             </div>
           }
