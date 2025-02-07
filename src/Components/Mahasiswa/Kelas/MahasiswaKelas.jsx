@@ -146,7 +146,47 @@ export default function MahsiswaKelas() {
           />
         </div>
       </div>
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-3  w-full gap-5">
+        <div className="shadow-md border-2 rounded-md min-h-64 flex flex-col relative bg-white">
+          <div className="w-full bg-purple-500 h-fit rounded-t-md p-4 text-white">
+            <h3 className="text-xl font-bold">KELAS A</h3>
+            <h4 className="text-lg">Kode Kelas</h4>
+          </div>
+          <div className="z-10 top-5 left-64 absolute">
+            <img src={icon_class} alt="" />
+          </div>
+          <div className="w-full p-5 h-[8.5rem] border-b-2 border-black">
+            <h4 className="text-lg font-bold">- PT Cakra </h4>
+            <p className="text-sm">Deadline Dec 27, 2024</p>
+          </div>
+          <div className="w-full p-2 pl-3 py-5 flex items-center gap-3 ">
+            <LuClock className="text-2xl" />
+            <p className="text-sm ">
+              <span className="font-bold">Kelas dibuat pada : </span>
+              August, 27 2024
+            </p>
+          </div>
+        </div>
+        <div className="shadow-md border-2 rounded-md min-h-64 flex flex-col relative ">
+          <div className="w-full bg-purple-500 h-fit rounded-t-md p-4 text-white">
+            <h3 className="text-xl font-bold">KELAS A</h3>
+            <h4 className="text-lg">Kode Kelas</h4>
+          </div>
+          <div className="z-10 top-5 left-64 absolute">
+            <img src={icon_class} alt="" />
+          </div>
+          <div className="w-full p-5 h-[8.5rem] border-b-2 border-black">
+            <h4 className="text-lg font-bold">- PT Cakra </h4>
+            <p className="text-sm">Deadline Dec 27, 2024</p>
+          </div>
+          <div className="w-full p-2 pl-3 py-5 flex items-center gap-3 ">
+            <LuClock className="text-2xl" />
+            <p className="text-sm ">
+              <span className="font-bold">Kelas dibuat pada : </span>
+              August, 27 2024
+            </p>
+          </div>
+        </div>
         <div className="shadow-md border-2 rounded-md min-h-64 flex flex-col relative ">
           <div className="w-full bg-purple-500 h-fit rounded-t-md p-4 text-white">
             <h3 className="text-xl font-bold">KELAS A</h3>

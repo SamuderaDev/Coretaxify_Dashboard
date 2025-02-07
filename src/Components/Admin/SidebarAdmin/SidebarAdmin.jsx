@@ -132,7 +132,9 @@ const SidebarAdmin = () => {
           Login
         </button>
         <li
-          className="menu-item"
+          className={`menu-item ${
+            cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
+          }`}
           onClick={() => {
             window.location.href = "/admin";
           }}
@@ -156,7 +158,7 @@ const SidebarAdmin = () => {
         <li
           className="menu-item"
           onClick={() => {
-            window.location.href = "/admin/praktikum";
+            window.location.href = `/${cookies.role}/praktikum`;
           }}
         >
           <FaLaptopCode className="menu-icon" />
@@ -172,7 +174,9 @@ const SidebarAdmin = () => {
           {isOpen && <span>Ujian</span>}
         </li>
         <li
-          className="menu-item"
+          className={`menu-item ${
+            cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
+          }`}
           onClick={() => {
             window.location.href = "/admin/upload-soal";
           }}
@@ -331,7 +335,7 @@ const SidebarAdmin = () => {
               </AccordionItem>
             </Accordion>
           </>
-        ) : (
+        ) : cookies.role == "mahasiswa" ? (
           <>
             <li
               className="menu-item"
@@ -343,6 +347,8 @@ const SidebarAdmin = () => {
               <span className={`text-[16px]`}>Kelas</span>
             </li>
           </>
+        ) : (
+          <></>
         )}
       </ul>
 
@@ -385,5 +391,4 @@ const SidebarAdmin = () => {
     </div>
   );
 };
-
 export default SidebarAdmin;
