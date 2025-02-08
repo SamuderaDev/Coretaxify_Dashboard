@@ -156,13 +156,19 @@ const SidebarAdmin = () => {
           <></>
         )}
         <li
-          className="menu-item"
+          className={`menu-item`}
           onClick={() => {
-            window.location.href = `/${cookies.role}/praktikum`;
+            if (cookies.role == "admin") {
+              window.location.href = "/admin/coretaxify";
+            } else {
+              window.location.href = `/${cookies.role}/praktikum`;
+            }
           }}
         >
           <FaLaptopCode className="menu-icon" />
-          {isOpen && <span>Praktikum</span>}
+          {isOpen && (
+            <span>{cookies.role == "admin" ? "Coretaxify" : "Praktikum"}</span>
+          )}
         </li>
         <li
           className="menu-item"
@@ -232,6 +238,14 @@ const SidebarAdmin = () => {
                       }}
                     >
                       Kelas
+                    </li>
+                    <li
+                      className={`dropdown-item`}
+                      onClick={() => {
+                        window.location.href = `/${cookies.role}/praktikum`;
+                      }}
+                    >
+                      {isOpen && <span>Praktikum</span>}
                     </li>
                   </ul>
                 </AccordionContent>
