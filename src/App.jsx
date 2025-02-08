@@ -7,7 +7,7 @@ import ResetPassword from "./Components/Auth/ResetPassword/ResetPassword";
 import DashboardAdmin from "./Components/Admin/Dashboard/DashboardAdmin";
 import Kontrak from "./Components/Admin/Kontrak/Kontrak";
 import DashboardDosen from "./Components/Dosen/Dashboard/DashboardDosen";
-import DosenKelas from "./Components/Dosen/Kelas/DosenKelas";
+import DosenTugas from "./Components/Dosen/Kelas/DosenKelas";
 import EditDosen from "./Components/Admin/Pengguna/Dosen/EditDosen";
 import EditMahasiswa from "./Components/Admin/Pengguna/Mahasiswa/EditMahasiswa";
 import EditAdmin from "./Components/Admin/Pengguna/Admin/EditAdmin";
@@ -210,12 +210,12 @@ const App = () => {
           }
         />
         <Route
-          path="/dosen/kelas"
+          path="/dosen/tugas"
           element={
             <div className="admin-layout">
               <SidebarAdmin />
               <div className="admin-content">
-                <DosenKelas />
+                <DosenTugas />
               </div>
             </div>
           }
