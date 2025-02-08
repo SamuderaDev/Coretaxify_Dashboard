@@ -24,6 +24,10 @@ import PraktikumBackup from "./Components/Admin/Praktikum/PraktikumBackup";
 import MahsiswaKelas from "./Components/Mahasiswa/Kelas/MahasiswaKelas";
 import MahasiswaPraktikum from "./Components/Mahasiswa/Praktikum/MahasiswaPraktikum";
 import MahasiswaUjian from "./Components/Mahasiswa/Praktikum/MahasiswaUjian";
+import EditPengajar from "./Components/AdminPsc/Pengguna/Pengajar/EditPengajar";
+import EditKelasPsc from "./Components/AdminPsc/Pengguna/Kelas/EditKelasPsc";
+import UjianPsc from "./Components/AdminPsc/Pengguna/Praktikum/UjianPsc";
+import EditMahasiswaPsc from "./Components/AdminPsc/Pengguna/Mahasiswa/EditMahasiswaPsc";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -249,6 +253,50 @@ const App = () => {
               <SidebarAdmin />
               <div className="admin-content">
                 <MahasiswaUjian></MahasiswaUjian>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/admin-psc/edit-pengajar"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <EditPengajar></EditPengajar>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/admin-psc/edit-kelas"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <EditKelasPsc></EditKelasPsc>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/admin-psc/edit-ujian"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <UjianPsc></UjianPsc>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/admin-psc/edit-mahasiswa"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <EditMahasiswaPsc></EditMahasiswaPsc>
               </div>
             </div>
           }
