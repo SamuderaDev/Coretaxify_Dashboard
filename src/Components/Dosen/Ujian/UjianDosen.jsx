@@ -28,6 +28,7 @@ export default function UjianDosen() {
                               id: "1",
                               namaUjian: "Ujian 1",
                               kodeUjian: "xAE12",
+                              tipeUjian: "BNSP",
                               supportingFile: "file.pdf",
                               deadline: "2021-12-12",
                     },
@@ -35,6 +36,7 @@ export default function UjianDosen() {
                               id: "2",
                               namaUjian: "Ujian 2",
                               kodeUjian: "xAE12",
+                              tipeUjian: "Reguler",
                               supportingFile: "file.pdf",
                               deadline: "2021-12-12",
                     },
@@ -42,6 +44,7 @@ export default function UjianDosen() {
                               id: "3",
                               namaUjian: "Ujian 2",
                               kodeUjian: "xAE12",
+                              tipeUjian: "Reguler",
                               supportingFile: "file.pdf",
                               deadline: "2021-12-12",
                     },
@@ -49,6 +52,7 @@ export default function UjianDosen() {
                               id: "4",
                               namaUjian: "Ujian 3",
                               kodeUjian: "xAE12",
+                              tipeUjian: "Reguler",
                               supportingFile: "file.pdf",
                               deadline: "2021-12-12",
                     },
@@ -57,6 +61,7 @@ export default function UjianDosen() {
           const [formData, setFormData] = useState({
                     namaUjian: "",
                     kodeUjian: "",
+                    tipeUjian: "",
                     supportingFile: null,
                     deadline: "",
           });
@@ -90,13 +95,14 @@ export default function UjianDosen() {
                               id: String(data.length + 1),
                               namaUjian: formData.namaUjian,
                               kodeUjian: formData.kodeUjian,
+                              tipeUjian: formData.tipeUjian,
                               supportingFile: formData.supportingFile ? formData.supportingFile.name : "No file",
                               deadline: formData.deadline,
                     };
 
                     setData([...data, newTugas]);
                     setIsAddOpen(false);
-                    setFormData({ namaUjian: "", kodeUjian: "", supportingFile: null, deadline: "" });
+                    setFormData({ namaUjian: "", kodeUjian: "", tipeUjian: "", supportingFile: null, deadline: "" });
 
                     Swal.fire("Berhasil!", "Ujian berhasil ditambahkan!", "success");
           };
@@ -187,6 +193,7 @@ export default function UjianDosen() {
                                                                                                     : "↑"}
                                                                       </th>
                                                                       <th>Kode Ujian</th>
+                                                                      <th>Tipe Ujian</th>
                                                                       <th>File Support</th>
                                                                       <th>Deadline</th>
                                                                       <th>Action</th>
@@ -198,6 +205,7 @@ export default function UjianDosen() {
                                                                                 <td>{indexOfFirstItem + index + 1}</td>
                                                                                 <td>{item.namaUjian}</td>
                                                                                 <td>{item.kodeUjian}</td>
+                                                                                <td>{item.tipeUjian}</td>
                                                                                 <td>{item.supportingFile}</td>
                                                                                 <td>{item.deadline}</td>
                                                                                 <td>
@@ -209,7 +217,7 @@ export default function UjianDosen() {
                                                                                                               <AlertDialogHeader>
                                                                                                                         <AlertDialogTitle>Edit Kelas</AlertDialogTitle>
                                                                                                                         <AlertDialogDescription className="w-full">
-                                                                                                                                  <div className="">
+                                                                                                                                  <div className="overflow-y-auto max-h-100">
                                                                                                                                             <form>
                                                                                                                                                       <div className="edit-form-group-mahasiswa ">
                                                                                                                                                                 <label>Nama Ujian:</label>
@@ -229,6 +237,18 @@ export default function UjianDosen() {
                                                                                                                                                                           value={formData.kodeUjian}
                                                                                                                                                                           onChange={handleChange}
                                                                                                                                                                 />
+                                                                                                                                                      </div>
+                                                                                                                                                      <div className="edit-form-group-mahasiswa">
+                                                                                                                                                                <label>Tipe Ujian:</label>
+                                                                                                                                                                <select
+                                                                                                                                                                          className="text-black"
+                                                                                                                                                                          name="tipeUjian"
+                                                                                                                                                                          value={formData.tipeUjian}
+                                                                                                                                                                          onChange={handleChange}
+                                                                                                                                                                >
+                                                                                                                                                                          <option value="BNSP">BNSP</option>
+                                                                                                                                                                          <option value="Reguler">Reguler</option>
+                                                                                                                                                                </select>
                                                                                                                                                       </div>
                                                                                                                                                       <div className="edit-form-group-mahasiswa">
                                                                                                                                                                 <label>File Support:</label>
@@ -376,6 +396,19 @@ export default function UjianDosen() {
                                                                                                                         <IoReload className="text-lg text-white " />
                                                                                                               </button>
                                                                                                     </div>
+                                                                                          </div>
+                                                                                          <div className="edit-form-group-mahasiswa">
+                                                                                                    <label>Tipe Ujian:</label>
+                                                                                                    <select
+                                                                                                              className="text-black"
+                                                                                                              name="tipeUjian"
+                                                                                                              value={formData.tipeUjian}
+                                                                                                              onChange={handleChange}
+                                                                                                              required
+                                                                                                    >
+                                                                                                              <option value="BNSP">BNSP</option>
+                                                                                                              <option value="UTS">Reguler</option>
+                                                                                                    </select>
                                                                                           </div>
                                                                                           <div className="edit-form-group-mahasiswa">
                                                                                                     <label>File Support:</label>
