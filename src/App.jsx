@@ -8,7 +8,10 @@ import DashboardAdmin from "./Components/Admin/Dashboard/DashboardAdmin";
 import Kontrak from "./Components/Admin/Kontrak/Kontrak";
 import DashboardDosen from "./Components/Dosen/Dashboard/DashboardDosen";
 import DosenTugas from "./Components/Dosen/Kelas/DosenKelas";
+import DosenCardKelas from "./Components/Dosen/Kelas/DosenCardKelas";
+import UjianDosen from "./Components/Dosen/Ujian/UjianDosen";
 import EditDosen from "./Components/Admin/Pengguna/Dosen/EditDosen";
+import PenilaianDosen from "./Components/Dosen/Penilaian/PenilaianDosen";
 import EditMahasiswa from "./Components/Admin/Pengguna/Mahasiswa/EditMahasiswa";
 import EditAdmin from "./Components/Admin/Pengguna/Admin/EditAdmin";
 import EditKelas from "./Components/Admin/Pengguna/Kelas/EditKelas";
@@ -214,12 +217,45 @@ const App = () => {
           }
         />
         <Route
-          path="/dosen/tugas"
+          path="/dosen/kelas"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <DosenCardKelas></DosenCardKelas>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/dosen/kelas/tugas"
           element={
             <div className="admin-layout">
               <SidebarAdmin />
               <div className="admin-content">
                 <DosenTugas />
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/dosen/penilaian"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <PenilaianDosen></PenilaianDosen>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/dosen/ujian"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <UjianDosen></UjianDosen>
               </div>
             </div>
           }
