@@ -9,4 +9,5 @@ export const RoutesApi = {
   login: url + "api/login",
   tasksAdmin: url + `api/${role.admin}/tasks`,
   contractAdmin: url + `api/${role.admin}/contract`,
+  uniAdmin: url + `api/${role.admin}/universities`,
 };

@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { CookiesProvider, useCookies } from "react-cookie";
 import axios from "axios";
 import { RoutesApi } from "@/Routes";
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
 import ClipLoader from "react-spinners/ClipLoader";
 
 
@@ -15,6 +15,7 @@ const Kontrak = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [cookies, setCookie] = useCookies(["user"]);
+
     const { isLoading, isError, data, error } = useQuery({
         queryKey: ['contracts'],
         queryFn: async () => {
@@ -27,6 +28,19 @@ const Kontrak = () => {
             return data.data
         },
     })
+    const { isLoading: isLoadingUni, isError: isErrorUni, data: dataUni, error: errorUni } = useQuery({
+        queryKey: ['univerities'],
+        queryFn: async () => {
+            const { data } = await axios.get(RoutesApi.uniAdmin, {
+                headers: {
+                    Authorization: `Bearer ${cookies.token}`
+                }
+            })
+            console.log(data.data)
+            return data.data
+        },
+    })
+
 
     // const [data, setData] = useState([
     //     { jenisKontrak: "Lisensi", instansi: "Poltek Jos", mahasiswa: 50, periodeAwal: "2023-01-01", periodeAkhir: "2023-12-31", spt: "5", bupot: "5", faktur: "5", kodePembelian: "L001", status: "Active" },
@@ -80,6 +94,15 @@ const Kontrak = () => {
             // <div className="h-full w-full text-2xl italic font-bold text-center flex items-center justify-center">Loading...</div>
         )
     }
+    if (isLoadingUni) {
+        return (
+
+            <div className="loading">
+                <ClipLoader color="#7502B5" size={50} />
+            </div>
+            // <div className="h-full w-full text-2xl italic font-bold text-center flex items-center justify-center">Loading...</div>
+        )
+    }
 
     return (
         <div className="kontrak-container">
@@ -90,7 +113,7 @@ const Kontrak = () => {
                 <input type="text" className="search-input" placeholder="Cari Data Instansi 🔎" />
                 <button className="add-button" onClick={() => setIsOpen(true)}>+ Tambah Data Kontrak</button>
             </div>
-            <TambahKontrak isOpen={isOpen} onClose={() => setIsOpen(false)} onSave={handleData} />
+            <TambahKontrak UniData={dataUni} isOpen={isOpen} onClose={() => setIsOpen(false)} onSave={handleData} />
 
             <div className="table-container">
                 <table>
