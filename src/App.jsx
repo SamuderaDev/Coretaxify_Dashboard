@@ -32,7 +32,7 @@ const App = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 0);
   }, []);
   return loading ? (
     <div className="loading">
