@@ -120,21 +120,19 @@ const SidebarAdmin = () => {
             />
           )}
           <FaBars
-            className={`menu-toggle w-full pr-6 mt-2 ${
-              isOpen ? "hidden" : ""
-            } `}
+            className={`menu-toggle w-full pr-6 mt-2 ${isOpen ? "hidden" : ""
+              } `}
             onClick={toggleSidebar}
           />
         </div>
       )}
       <ul className="sidebar-menu">
-        <button className="p-2 bg-blue-400" onClick={() => mutation.mutate()}>
+        {/* <button className="p-2 bg-blue-400" onClick={() => mutation.mutate()}>
           Login
-        </button>
+        </button> */}
         <li
-          className={`menu-item ${
-            cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
-          }`}
+          className={`menu-item ${cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
+            }`}
           onClick={() => {
             window.location.href = "/admin";
           }}
@@ -174,9 +172,8 @@ const SidebarAdmin = () => {
           {isOpen && <span>Ujian</span>}
         </li>
         <li
-          className={`menu-item ${
-            cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
-          }`}
+          className={`menu-item ${cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
+            }`}
           onClick={() => {
             window.location.href = "/admin/upload-soal";
           }}
@@ -360,9 +357,8 @@ const SidebarAdmin = () => {
             <>
               <span>Profile</span>
               <FaChevronDown
-                className={`dropdown-icon ${
-                  isProfileDropdownOpen ? "rotate" : ""
-                }`}
+                className={`dropdown-icon ${isProfileDropdownOpen ? "rotate" : ""
+                  }`}
               />
             </>
           )}
