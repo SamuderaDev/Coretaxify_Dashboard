@@ -33,8 +33,10 @@ const PenilaianDosen = ({ sidebarOpen }) => {
                                                             <div className="p-4">
                                                                       <ul className="text-gray-700 text-sm space-y-2">
                                                                                 <li>
-                                                                                          <strong className="text-indigo-700">{kelas.perusahaan}</strong>
-                                                                                          <p className="text-gray-500">Deadline {kelas.deadline}</p>
+                                                                                          <strong className="text-indigo-700 block">• {kelas.perusahaan}</strong>
+                                                                                          <p className="text-gray-500 p-2">Deadline {kelas.deadline}</p>
+                                                                                          <strong className="text-indigo-700" >• {kelas.perusahaan}</strong>
+                                                                                          <p className="text-gray-500 p-2">Deadline {kelas.deadline}</p>
                                                                                 </li>
                                                                       </ul>
                                                             </div>
@@ -47,7 +49,7 @@ const PenilaianDosen = ({ sidebarOpen }) => {
                                                             <img
                                                                       src={Wulan}
                                                                       alt="Icon"
-                                                                      className="absolute bottom-[105px] right-4 w-12 h-12 rounded-full border-2 border-white shadow-md"
+                                                                      className="absolute bottom-[155px] right-6 w-20 h-20 rounded-full border-2 border-white shadow-md"
                                                             />
                                                   </div>
                                         ))}
