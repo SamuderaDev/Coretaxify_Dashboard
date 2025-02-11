@@ -111,21 +111,6 @@ tr:hover td {
           opacity: 0.8;
 }
 
-.pagination-container {
-          position: sticky;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          background: white;
-          /* Pastikan pagination terlihat */
-          padding: 5px 0;
-          text-align: center;
-          box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-          /* Tambahkan bayangan */
-          z-index: 999;
-          /* Pastikan tetap di atas */
-}
-
 .pagination-info {
           text-align: left;
           font-size: 14px;

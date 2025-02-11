@@ -1,9 +1,8 @@
 // import React from "react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import "../Pengguna/Mahasiswa/editMahasiswa.css";
 import EditPopupMahasiswa from "../Pengguna/Mahasiswa/EditPopupMahasiswa";
 import Swal from "sweetalert2";
-import { Textarea } from "@/components/ui/textarea";
 
 import {
   AlertDialog,
@@ -15,8 +14,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/Components/ui/alert-dialog";
 import { CookiesProvider, useCookies } from "react-cookie";
+import { useQuery } from '@tanstack/react-query'
+import axios from "axios";
+import { RoutesApi } from "@/Routes";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Praktikum() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,32 +29,50 @@ export default function Praktikum() {
   const itemsPerPage = 10;
   const [cookies, setCookie] = useCookies(["user"]);
 
-  const [data, setData] = useState([
-    {
-      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-      kodePraktikum: "xAE12",
-      nilai: "98",
-      tanggal: "25-Januari-2024",
+
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ['tasks'],
+    queryFn: async () => {
+      const { data } = await axios.get(RoutesApi.tasksAdmin, {
+        headers: {
+          Authorization: `Bearer ${cookies.token}`
+        }
+      })
+      console.log(data.data)
+      return data.data
     },
-    {
-      namaPraktikum: "Praktikum Pajak Bumi Makanan",
-      kodePraktikum: "xAE12",
-      nilai: "98",
-      tanggal: "25-Januari-2024",
-    },
-    {
-      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-      kodePraktikum: "xAE12",
-      nilai: "98",
-      tanggal: "25-Januari-2024",
-    },
-    {
-      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-      kodePraktikum: "xAE12",
-      nilai: "98",
-      tanggal: "25-Januari-2024",
-    },
-  ]);
+  })
+
+  // const [data, setData] = useState([
+  //   {
+  //     namaPraktikum: "Praktikum Pajak Bumi Bangunan",
+  //     kodePraktikum: "xAE12",
+  //     nilai: "98",
+  //     tanggal: "25-Januari-2024",
+  //   },
+  //   {
+  //     namaPraktikum: "Praktikum Pajak Bumi Makanan",
+  //     kodePraktikum: "xAE12",
+  //     nilai: "98",
+  //     tanggal: "25-Januari-2024",
+  //   },
+  //   {
+  //     namaPraktikum: "Praktikum Pajak Bumi Bangunan",
+  //     kodePraktikum: "xAE12",
+  //     nilai: "98",
+  //     tanggal: "25-Januari-2024",
+  //   },
+  //   {
+  //     namaPraktikum: "Praktikum Pajak Bumi Bangunan",
+  //     kodePraktikum: "xAE12",
+  //     nilai: "98",
+  //     tanggal: "25-Januari-2024",
+  //   },
+  // ]);
+
+  useEffect(() => {
+    console.log(data)
+  }, [])
 
   const handleSort = (key) => {
     let direction = "ascending";
@@ -79,7 +100,7 @@ export default function Praktikum() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  // const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -106,17 +127,29 @@ export default function Praktikum() {
   }
   const [search, setSearch] = useState("");
 
-  const processedData = data.map((item) => ({
-    ...item,
-    highlight:
-      search &&
-      Object.values(item).some((value) =>
-        String(value).toLowerCase().includes(search.toLowerCase())
-      ),
-  }));
+  // const processedData = data.map((item) => ({
+  //   ...item,
+  //   highlight:
+  //     search &&
+  //     Object.values(item).some((value) =>
+  //       String(value).toLowerCase().includes(search.toLowerCase())
+  //     ),
+  // }));
+
+  if (isLoading) {
+    return (
+
+      <div className="loading">
+        <ClipLoader color="#7502B5" size={50} />
+      </div>
+      // <div className="h-full w-full text-2xl italic font-bold text-center flex items-center justify-center">Loading...</div>
+    )
+  }
 
   return (
+
     <div className="kontrak-container">
+
       <div className="header">
         <h2>Data Praktikum</h2>
         {/* <p>{cookies.user ? cookies.user : "no user"}</p>
@@ -190,15 +223,15 @@ export default function Praktikum() {
         <table>
           <thead>
             <tr>
-              <th onClick={() => handleSort("namaPraktikum")}>
+              <th onClick={() => handleSort("name")}>
                 Judul Praktikum{" "}
-                {sortConfig.key === "namaPraktikum"
+                {sortConfig.key === "name"
                   ? sortConfig.direction === "ascending"
                     ? "↑"
                     : "↓"
                   : sortConfig.direction === "descending"
-                  ? "↓"
-                  : "↑"}
+                    ? "↓"
+                    : "↑"}
               </th>
               <th className="">Kode Praktikum</th>
               <th className="">Tanggal Praktikum</th>
@@ -207,13 +240,14 @@ export default function Praktikum() {
           </thead>
           <tbody>
             {data.map((item, index) => (
-              <tr key={index}>
-                <td>{item.namaPraktikum}</td>
+              <tr >
+                <td>{item.name}</td>
                 <td className="max-w-5">
-                  <p className="truncate">{item.kodePraktikum}</p>
+                  {/* <p className="truncate">{item.kodePraktikum}</p> */}
+                  <p className="truncate">Xae12</p>
                 </td>
                 <td className="max-w-5">
-                  <p className="">{item.tanggal}</p>
+                  <p className="">{item.updated_at = item.updated_at.split(" ")[0]}</p>
                 </td>
                 <td>
                   <AlertDialog>
@@ -307,12 +341,12 @@ export default function Praktikum() {
           </tbody>
         </table>
         <div className="">
-          <div className="pagination-info">
+          {/* <div className="pagination-info">
             {`Showing ${indexOfFirstItem + 1} to ${Math.min(
               indexOfLastItem,
               data.length
             )} of ${data.length} entries`}
-          </div>
+          </div> */}
 
           <div className="pagination">
             <button
@@ -322,31 +356,29 @@ export default function Praktikum() {
             >
               &lt;
             </button>
-            {Array.from(
+            {/* {Array.from(
               { length: Math.ceil(data.length / itemsPerPage) },
               (_, index) => (
                 <button
                   key={index + 1}
-                  className={`page-item ${
-                    currentPage === index + 1 ? "active" : ""
-                  }`}
+                  className={`page-item ${currentPage === index + 1 ? "active" : ""
+                    }`}
                   onClick={() => paginate(index + 1)}
                 >
                   {index + 1}
                 </button>
               )
-            )}
-            <button
-              className={`page-item ${
-                currentPage === Math.ceil(data.length / itemsPerPage)
-                  ? "disabled"
-                  : ""
-              }`}
+            )} */}
+            {/* <button
+              className={`page-item ${currentPage === Math.ceil(data.length / itemsPerPage)
+                ? "disabled"
+                : ""
+                }`}
               onClick={() => paginate(currentPage + 1)}
               disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
             >
               &gt;
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

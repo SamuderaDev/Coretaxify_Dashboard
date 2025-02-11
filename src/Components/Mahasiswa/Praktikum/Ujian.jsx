@@ -3,7 +3,6 @@ import React, { useState } from "react";
 // import "../Pengguna/Mahasiswa/editMahasiswa.css";
 import EditPopupMahasiswa from "../Pengguna/Mahasiswa/EditPopupMahasiswa";
 import Swal from "sweetalert2";
-import { Textarea } from "@/Components/ui/textarea";
 
 import {
   AlertDialog,
@@ -17,7 +16,7 @@ import {
   AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
 
-export default function EditUlasan() {
+export default function Ujian() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [selectedData, setSelectedData] = useState(null);
@@ -26,22 +25,28 @@ export default function EditUlasan() {
 
   const [data, setData] = useState([
     {
-      user: "Hendra",
-      ulasan:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam facere quibusdam, consequatur eum dignissimos, id maiores expedita accusantium deserunt perspiciatis ratione? Officiis unde non totam enim animi laboriosam sequi consectetur? Doloribus ducimus modi eveniet aperiam veritatis quod earum illum facilis.",
-      rating: "4",
+      namaUjian: "Ujian Pajak Bumi Bangunan",
+      kodeUjian: "xAE12",
+      nilai: "98",
+      tanggal: "25-Januari-2024",
     },
     {
-      user: "Udin",
-      ulasan:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam facere quibusdam, consequatur eum dignissimos, id maiores expedita accusantium deserunt perspiciatis ratione? Officiis unde non totam enim animi laboriosam sequi consectetur? Doloribus ducimus modi eveniet aperiam veritatis quod earum illum facilis.",
-      rating: "3",
+      namaUjian: "Ujian Pajak Bumi Bangunan",
+      kodeUjian: "xAE12",
+      nilai: "98",
+      tanggal: "25-Januari-2024",
     },
     {
-      user: "Galeh",
-      ulasan:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam facere quibusdam, consequatur eum dignissimos, id maiores expedita accusantium deserunt perspiciatis ratione? Officiis unde non totam enim animi laboriosam sequi consectetur? Doloribus ducimus modi eveniet aperiam veritatis quod earum illum facilis.",
-      rating: "5",
+      namaUjian: "Ujian Pajak Bumi Bangunan",
+      kodeUjian: "xAE12",
+      nilai: "98",
+      tanggal: "25-Januari-2024",
+    },
+    {
+      namaUjian: "Ujian Pajak Bumi Bangunan",
+      kodeUjian: "xAE12",
+      nilai: "98",
+      tanggal: "25-Januari-2024",
     },
   ]);
 
@@ -76,9 +81,10 @@ export default function EditUlasan() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [formData, setFormData] = useState({
-    user: "",
-    ulasan: "",
-    rating: "",
+    namaUjian: "",
+    kodeUjian: "",
+    nilai: "",
+    tanggal: "",
   });
 
   const handleChange = (e) => {
@@ -99,7 +105,7 @@ export default function EditUlasan() {
   return (
     <div className="kontrak-container">
       <div className="header">
-        <h2>Data Ulasan</h2>
+        <h2>Data Ujian</h2>
       </div>
       <div className="search-add-container">
         <div className="search-input-container">
@@ -107,63 +113,43 @@ export default function EditUlasan() {
             type="text"
             id="search"
             className="search-input"
-            placeholder="Cari Ulasan    🔎"
+            placeholder="Cari Ujian   🔎"
           />
         </div>
         <AlertDialog>
           <AlertDialogTrigger>
-            <div className="bg-blue-800 p-2 rounded-lg text-white">
-              + Tambah Ulasan
+            <div className="bg-blue-700 p-2 rounded-lg text-white ">
+              + Tambah Ujian
             </div>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Tambah Ulasan</AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogTitle>Tambah Ujian</AlertDialogTitle>
+              <AlertDialogDescription className="w-full">
                 <div className="">
                   <form>
-                    <div className="edit-form-group-mahasiswa ">
-                      <label>Nama Pengguna :</label>
+                    <div className="edit-form-group-kelas ">
+                      <label>Judul Ujian:</label>
                       <input
                         type="text"
-                        name="user"
-                        value={formData.user}
+                        name="namaUjian"
+                        value={formData.namaUjian}
                         onChange={handleChange}
                         required
                       />
                     </div>
-                    <div className="edit-form-group-mahasiswa">
-                      <label>Ulasan:</label>
-                      <Textarea
-                        className="text-black"
-                        name="ulasan"
-                        value={formData.ulasan}
-                        onChange={handleChange}
-                      />
-
-                      {/* <input
-                                  type="text"
-                                  name="ulasan"
-                                  value={formData.ulasan}
-                                  onChange={handleChange}
-                                  required
-                                /> */}
-                    </div>
-                    <div className="edit-form-group-mahasiswa">
-                      <label>Rating:</label>
+                    <div className="edit-form-group-kelas ">
+                      <label>Kode Ujian:</label>
                       <input
-                        min={0}
-                        type="number"
-                        name="rating"
-                        value={formData.rating}
+                        className="text-black"
+                        name="kodeUjian"
+                        value={formData.kodeUjian}
                         onChange={handleChange}
-                        required
                       />
                     </div>
-                    <div className="edit-form-group-mahasiswa">
-                      <label>Profile Picture:</label>
-                      <input type="file" onChange={handleChangeFile} />
-                      <img src={file} />
+                    <div className="edit-form-group-kelas ">
+                      <label>Tanggal Ujian:</label>
+                      <input type="date" onChange={handleChangeFile} />
                     </div>
                   </form>
                 </div>
@@ -184,9 +170,9 @@ export default function EditUlasan() {
         <table>
           <thead>
             <tr>
-              <th className="max-w-10" onClick={() => handleSort("user")}>
-                Judul Ulasan{" "}
-                {sortConfig.key === "user"
+              <th onClick={() => handleSort("namaUjian")}>
+                Judul Ujian{" "}
+                {sortConfig.key === "namaUjian"
                   ? sortConfig.direction === "ascending"
                     ? "↑"
                     : "↓"
@@ -194,86 +180,57 @@ export default function EditUlasan() {
                   ? "↓"
                   : "↑"}
               </th>
-              <th className="">Ulasan</th>
-              <th className="max-w-10" onClick={() => handleSort("rating")}>
-                Rating Ulasan{" "}
-                {sortConfig.key === "rating"
-                  ? sortConfig.direction === "ascending"
-                    ? "↑"
-                    : "↓"
-                  : sortConfig.direction === "descending"
-                  ? "↓"
-                  : "↑"}
-              </th>
-              <th className=""></th>
+              <th className="">Kode Ujian</th>
+              <th className="">Tanggal Ujian</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
               <tr key={index}>
-                <td>{item.user}</td>
+                <td>{item.namaUjian}</td>
                 <td className="max-w-5">
-                  <p className="truncate">{item.ulasan}</p>
+                  <p className="truncate">{item.kodeUjian}</p>
                 </td>
-                <td className="">
-                  <p className="truncate">{item.rating}</p>
+                <td className="max-w-5">
+                  <p className="">{item.tanggal}</p>
                 </td>
-                <td className="">
+                <td>
                   <AlertDialog>
                     <AlertDialogTrigger className="action-button edit">
                       Edit
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Edit Ulasan</AlertDialogTitle>
+                        <AlertDialogTitle>Edit Ujian</AlertDialogTitle>
                         <AlertDialogDescription className="w-full">
                           <div className="">
                             <form>
                               <div className="edit-form-group-mahasiswa ">
-                                <label>Nama Pengguna :</label>
+                                <label>Judul Ujian:</label>
                                 <input
                                   type="text"
-                                  name="user"
-                                  value={formData.user}
+                                  name="namaUjian"
+                                  value={formData.namaUjian}
                                   onChange={handleChange}
                                   required
                                 />
                               </div>
                               <div className="edit-form-group-mahasiswa">
-                                <label>Ulasan:</label>
-                                <Textarea
+                                <label>Kode Ujian:</label>
+                                <input
                                   className="text-black"
-                                  name="ulasan"
-                                  value={formData.ulasan}
+                                  name="kodeUjian"
+                                  value={formData.kodeUjian}
                                   onChange={handleChange}
-                                />
-
-                                {/* <input
-                                  type="text"
-                                  name="ulasan"
-                                  value={formData.ulasan}
-                                  onChange={handleChange}
-                                  required
-                                /> */}
-                              </div>
-                              <div className="edit-form-group-mahasiswa">
-                                <label>Rating:</label>
-                                <input
-                                  min={0}
-                                  type="number"
-                                  name="rating"
-                                  value={formData.rating}
-                                  onChange={handleChange}
-                                  required
                                 />
                               </div>
                               <div className="edit-form-group-mahasiswa">
-                                <label>Profile Picture:</label>
+                                <label>Tanggal Ujian:</label>
                                 <input
-                                  type="file"
+                                  type="date"
                                   onChange={handleChangeFile}
                                 />
-                                <img src={file} />
                               </div>
                             </form>
                           </div>
@@ -283,7 +240,7 @@ export default function EditUlasan() {
                         <AlertDialogCancel className="bg-red-600 text-white">
                           Kembali
                         </AlertDialogCancel>
-                        <AlertDialogAction className="bg-green-600">
+                        <AlertDialogAction className="bg-green-600 ">
                           Simpan
                         </AlertDialogAction>
                       </AlertDialogFooter>
@@ -300,8 +257,8 @@ export default function EditUlasan() {
                     className="action-button delete"
                     onClick={() => {
                       Swal.fire({
-                        title: "Hapus Ulasan?",
-                        text: "Ulasan akan dihapus secara permanen!",
+                        title: "Hapus Ujian?",
+                        text: "Ujian akan dihapus secara permanen!",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonText: "Ya, hapus!",
@@ -315,7 +272,7 @@ export default function EditUlasan() {
                           setData(newData);
                           Swal.fire(
                             "Berhasil!",
-                            "Ulasan berhasil dihapus!",
+                            "Ujian berhasil dihapus!",
                             "success"
                           );
                         }

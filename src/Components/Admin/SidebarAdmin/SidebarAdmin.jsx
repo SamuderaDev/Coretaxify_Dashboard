@@ -120,19 +120,19 @@ const SidebarAdmin = () => {
             />
           )}
           <FaBars
-            className={`menu-toggle w-full pr-6 mt-2 ${
-              isOpen ? "hidden" : ""
-            } `}
+            className={`menu-toggle w-full pr-6 mt-2 ${isOpen ? "hidden" : ""
+              } `}
             onClick={toggleSidebar}
           />
         </div>
       )}
       <ul className="sidebar-menu">
-        <button className="p-2 bg-blue-400" onClick={() => mutation.mutate()}>
+        {/* <button className="p-2 bg-blue-400" onClick={() => mutation.mutate()}>
           Login
-        </button>
+        </button> */}
         <li
-          className="menu-item"
+          className={`menu-item ${cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
+            }`}
           onClick={() => {
             window.location.href = "/admin";
           }}
@@ -156,7 +156,7 @@ const SidebarAdmin = () => {
         <li
           className="menu-item"
           onClick={() => {
-            window.location.href = "/admin/praktikum";
+            window.location.href = `/${cookies.role}/praktikum`;
           }}
         >
           <FaLaptopCode className="menu-icon" />
@@ -165,14 +165,15 @@ const SidebarAdmin = () => {
         <li
           className="menu-item"
           onClick={() => {
-            window.location.href = "/admin/ujian";
+            window.location.href = `/${cookies.role}/ujian`;
           }}
         >
           <FaPencil className="menu-icon" />
           {isOpen && <span>Ujian</span>}
         </li>
         <li
-          className="menu-item"
+          className={`menu-item ${cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
+            }`}
           onClick={() => {
             window.location.href = "/admin/upload-soal";
           }}
@@ -331,6 +332,18 @@ const SidebarAdmin = () => {
               </AccordionItem>
             </Accordion>
           </>
+        ) : cookies.role == "mahasiswa" ? (
+          <>
+            <li
+              className="menu-item"
+              onClick={() => {
+                window.location.href = "/mahasiswa/kelas";
+              }}
+            >
+              <FaUsers className="menu-icon" />
+              <span className={`text-[16px]`}>Kelas</span>
+            </li>
+          </>
         ) : (
           <></>
         )}
@@ -344,15 +357,14 @@ const SidebarAdmin = () => {
             <>
               <span>Profile</span>
               <FaChevronDown
-                className={`dropdown-icon ${
-                  isProfileDropdownOpen ? "rotate" : ""
-                }`}
+                className={`dropdown-icon ${isProfileDropdownOpen ? "rotate" : ""
+                  }`}
               />
             </>
           )}
         </div>
         {isProfileDropdownOpen && isOpen && (
-          <ul className="profile-dropdown-menu">
+          <ul className="w-full mt-2 p-0">
             <li
               className="dropdown-item"
               onClick={() => {
@@ -375,5 +387,4 @@ const SidebarAdmin = () => {
     </div>
   );
 };
-
 export default SidebarAdmin;

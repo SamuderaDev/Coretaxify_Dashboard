@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // import "../Pengguna/Mahasiswa/editMahasiswa.css";
 import EditPopupMahasiswa from "../Pengguna/Mahasiswa/EditPopupMahasiswa";
 import Swal from "sweetalert2";
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "@/Components/ui/textarea";
 
 import {
   AlertDialog,
@@ -15,7 +15,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/Components/ui/alert-dialog";
 
 export default function EditArtikel() {
   const [isOpen, setIsOpen] = useState(false);
