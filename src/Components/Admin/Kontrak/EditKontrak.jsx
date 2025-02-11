@@ -5,10 +5,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { RoutesApi } from "@/Routes";
 import { CookiesProvider, useCookies } from "react-cookie";
-import { useToast } from "@/hooks/use-toast";
 
-const TambahKontrak = ({ isOpen, onClose, onSave, UniData, setOpen}) => {
-  const { toast } = useToast();
+const EditKontrak = ({ isOpen, onClose, onSave, UniData, id }) => {
   const [formData, setFormData] = useState({
     jenisKontrak: "",
     instansi: "",
@@ -65,8 +63,8 @@ const TambahKontrak = ({ isOpen, onClose, onSave, UniData, setOpen}) => {
       console.log(response.data.token);
       axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
       console.log(cookies.token);
-      const data = await axios.post(
-        RoutesApi.contractAdmin,
+      const data = await axios.put(
+        RoutesApi.contractAdmin + `/${id}`,
         {
           //   university_id: 1,
           //   contract_type: "LICENSE",
@@ -101,9 +99,11 @@ const TambahKontrak = ({ isOpen, onClose, onSave, UniData, setOpen}) => {
     },
     onSuccess: (data) => {
       console.log(data);
-      window.location.reload();
+      const role = data.data.user.roles[0].name;
+      setCookie("token", data.data.token, { path: "/" });
+      setCookie("role", role, { path: "/" });
 
-      // window.location.href = "/" + role;
+      window.location.href = "/" + role;
       // alert("Login successful!");
       // queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
@@ -121,10 +121,10 @@ const TambahKontrak = ({ isOpen, onClose, onSave, UniData, setOpen}) => {
 
     let prefix = "";
     switch (jenis) {
-      case "Lisensi":
+      case "LICENSE":
         prefix = "L";
         break;
-      case "Unit":
+      case "UNIT":
         prefix = "U";
         break;
       case "BNSP":
@@ -289,4 +289,4 @@ const TambahKontrak = ({ isOpen, onClose, onSave, UniData, setOpen}) => {
   );
 };
 
-export default TambahKontrak;
+export default EditKontrak;
