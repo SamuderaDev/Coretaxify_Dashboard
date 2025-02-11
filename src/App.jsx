@@ -12,6 +12,8 @@ import DosenCardKelas from "./Components/Dosen/Kelas/DosenCardKelas";
 import UjianDosen from "./Components/Dosen/Ujian/UjianDosen";
 import EditDosen from "./Components/Admin/Pengguna/Dosen/EditDosen";
 import PenilaianDosen from "./Components/Dosen/Penilaian/PenilaianDosen";
+import DetailPenilaian from "./Components/Dosen/Penilaian/DetailPenilaianDosen";
+import DetailTugasPenilaianDosen from "./Components/Dosen/Penilaian/DetailTugasPenilaianDosen";
 import EditMahasiswa from "./Components/Admin/Pengguna/Mahasiswa/EditMahasiswa";
 import EditAdmin from "./Components/Admin/Pengguna/Admin/EditAdmin";
 import EditKelas from "./Components/Admin/Pengguna/Kelas/EditKelas";
@@ -241,6 +243,28 @@ const App = () => {
               <SidebarAdmin />
               <div className="admin-content">
                 <PenilaianDosen></PenilaianDosen>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/dosen/penilaian/detail-tugas"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <DetailTugasPenilaianDosen></DetailTugasPenilaianDosen>
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/dosen/penilaian/detail-tugas/detail-penilaian"
+          element={
+            <div className="admin-layout">
+              <SidebarAdmin />
+              <div className="admin-content">
+                <DetailPenilaian></DetailPenilaian>
               </div>
             </div>
           }

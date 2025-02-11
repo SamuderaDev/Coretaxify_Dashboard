@@ -24,7 +24,7 @@ const PenilaianDosen = ({ sidebarOpen }) => {
                                                   <div
                                                             key={kelas.id}
                                                             className="relative  shadow-lg rounded-lg w-100 md:w-96 p-4 cursor-pointer"
-                                                            onClick={() => navigate("/dosen/kelas/tugas")}
+                                                            onClick={() => navigate("/dosen/penilaian/detail-tugas")}
                                                   >
                                                             <div className="bg-purple-700 text-white p-4 rounded-t-lg w-150">
                                                                       <h3 className="font-bold text-lg">{kelas.nama}</h3>
@@ -34,7 +34,9 @@ const PenilaianDosen = ({ sidebarOpen }) => {
                                                                       <ul className="text-gray-700 text-sm space-y-2">
                                                                                 <li>
                                                                                           <strong className="text-indigo-700">{kelas.perusahaan}</strong>
-                                                                                          <p className="text-gray-500">Deadline {kelas.deadline}</p>
+                                                                                          <p className="text-gray-500 p-4">Deadline {kelas.deadline}</p>
+                                                                                          <strong className="text-indigo-700">{kelas.perusahaan}</strong>
+                                                                                          <p className="text-gray-500 p-4">Deadline {kelas.deadline}</p>
                                                                                 </li>
                                                                       </ul>
                                                             </div>
@@ -47,7 +49,7 @@ const PenilaianDosen = ({ sidebarOpen }) => {
                                                             <img
                                                                       src={Wulan}
                                                                       alt="Icon"
-                                                                      className="absolute bottom-[105px] right-4 w-12 h-12 rounded-full border-2 border-white shadow-md"
+                                                                      className="absolute bottom-[200px] right-4 w-12 h-12 rounded-full border-2 border-white shadow-md"
                                                             />
                                                   </div>
                                         ))}
