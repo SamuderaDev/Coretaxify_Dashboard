@@ -7,6 +7,7 @@ import axios from "axios";
 import { RoutesApi } from "@/Routes";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Route, Routes } from "react-router";
 
 const Kontrak = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,12 +15,13 @@ const Kontrak = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [cookies, setCookie] = useCookies(["user"]);
-  
+  const [url, setUrl] = useState(RoutesApi.contractAdmin);
 
+  //   const { isLoading, isError, data, error } = useQuery({
   const { isLoading, isError, data, error } = useQuery({
-    queryKey: ["contracts"],
+    queryKey: ["contracts", url],
     queryFn: async () => {
-      const { data } = await axios.get(RoutesApi.contractAdmin, {
+      const { data } = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
         },
@@ -203,13 +205,17 @@ const Kontrak = () => {
 
           <div className="pagination">
             <button
-              className={`page-item ${data.meta.currentPage === 1 ? "disabled" : ""}`}
-            //   onClick={/)}
+              className={`page-item ${
+                data.meta.currentPage === 1 ? "disabled" : ""
+              }`}
+              onClick={() => {
+                setUrl(data.links.prev);
+              }}
               disabled={data.meta.currentPage === 1}
             >
               &lt;
             </button>
-            <button className="page-ite">{data.meta.current_page}</button>
+            <button className="page-item">{data.meta.current_page}</button>
             {/* {Array.from({ length: Math.ceil(data.length / itemsPerPage) }, (_, index) => (
                             <button key={index + 1} className={`page-item ${currentPage === index + 1 ? "active" : ""}`} onClick={() => paginate(index + 1)}>
                                 {index + 1}
@@ -221,8 +227,11 @@ const Kontrak = () => {
                   ? "disabled"
                   : ""
               }`}
-              onClick={() => paginate(currentPage + 1)}
-              disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
+              onClick={() => {
+                console.log(data.links.next);
+                setUrl(data.links.next);
+              }}
+              //   disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
             >
               &gt;
             </button>
