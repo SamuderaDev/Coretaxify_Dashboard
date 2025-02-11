@@ -1,5 +1,5 @@
 // import React from "react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // import "../Pengguna/Mahasiswa/editMahasiswa.css";
 import EditPopupMahasiswa from "../Pengguna/Mahasiswa/EditPopupMahasiswa";
 import Swal from "sweetalert2";
@@ -14,14 +14,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/Components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import { CookiesProvider, useCookies } from "react-cookie";
-import { useQuery } from '@tanstack/react-query'
-import axios from "axios";
-import { RoutesApi } from "@/Routes";
-import ClipLoader from "react-spinners/ClipLoader";
 
-export default function Praktikum() {
+export default function UploadSoal() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [selectedData, setSelectedData] = useState(null);
@@ -29,50 +25,28 @@ export default function Praktikum() {
   const itemsPerPage = 10;
   const [cookies, setCookie] = useCookies(["user"]);
 
-
-  const { isLoading, isError, data, error } = useQuery({
-    queryKey: ['tasks'],
-    queryFn: async () => {
-      const { data } = await axios.get(RoutesApi.tasksAdmin, {
-        headers: {
-          Authorization: `Bearer ${cookies.token}`
-        }
-      })
-      console.log(data.data)
-      return data.data
+  const [data, setData] = useState([
+    {
+      namaSoal: "Soal Pajak Bumi Bangunan",
+      kodeSoal: "xAE12",
+      tanggal: "25-Januari-2024",
     },
-  })
-
-  // const [data, setData] = useState([
-  //   {
-  //     namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-  //     kodePraktikum: "xAE12",
-  //     nilai: "98",
-  //     tanggal: "25-Januari-2024",
-  //   },
-  //   {
-  //     namaPraktikum: "Praktikum Pajak Bumi Makanan",
-  //     kodePraktikum: "xAE12",
-  //     nilai: "98",
-  //     tanggal: "25-Januari-2024",
-  //   },
-  //   {
-  //     namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-  //     kodePraktikum: "xAE12",
-  //     nilai: "98",
-  //     tanggal: "25-Januari-2024",
-  //   },
-  //   {
-  //     namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-  //     kodePraktikum: "xAE12",
-  //     nilai: "98",
-  //     tanggal: "25-Januari-2024",
-  //   },
-  // ]);
-
-  useEffect(() => {
-    console.log(data)
-  }, [])
+    {
+      namaSoal: "Soal Pajak Bumi Makanan",
+      kodeSoal: "xAE12",
+      tanggal: "25-Januari-2024",
+    },
+    {
+      namaSoal: "Soal Pajak Bumi Bangunan",
+      kodeSoal: "xAE12",
+      tanggal: "25-Januari-2024",
+    },
+    {
+      namaSoal: "Soal Pajak Bumi Bangunan",
+      kodeSoal: "xAE12",
+      tanggal: "25-Januari-2024",
+    },
+  ]);
 
   const handleSort = (key) => {
     let direction = "ascending";
@@ -100,15 +74,15 @@ export default function Praktikum() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [formData, setFormData] = useState({
-    namaPraktikum: "",
-    kodePraktikum: "",
-    nilai: "",
+    namaSoal: "",
+    kodeSoal: "",
     tanggal: "",
+    file: "",
   });
 
   const handleChange = (e) => {
@@ -120,6 +94,7 @@ export default function Praktikum() {
     // Logic to save the data
     onClose();
   };
+  
   const [file, setFile] = useState();
   function handleChangeFile(e) {
     console.log(e.target.files);
@@ -127,35 +102,23 @@ export default function Praktikum() {
   }
   const [search, setSearch] = useState("");
 
-  // const processedData = data.map((item) => ({
-  //   ...item,
-  //   highlight:
-  //     search &&
-  //     Object.values(item).some((value) =>
-  //       String(value).toLowerCase().includes(search.toLowerCase())
-  //     ),
-  // }));
-
-  if (isLoading) {
-    return (
-
-      <div className="loading">
-        <ClipLoader color="#7502B5" size={50} />
-      </div>
-      // <div className="h-full w-full text-2xl italic font-bold text-center flex items-center justify-center">Loading...</div>
-    )
-  }
+  const processedData = data.map((item) => ({
+    ...item,
+    highlight:
+      search &&
+      Object.values(item).some((value) =>
+        String(value).toLowerCase().includes(search.toLowerCase())
+      ),
+  }));
 
   return (
-
     <div className="kontrak-container">
-
       <div className="header">
-        <h2>Data Praktikum</h2>
+        <h2>Data Soal</h2>
         {/* <p>{cookies.user ? cookies.user : "no user"}</p>
         {processedData.map((item) => (
           <li key={item.id} style={{ color: item.highlight ? "red" : "black" }}>
-            {item.namaPraktikum}
+            {item.namaSoal}
           </li>
         ))} */}
       </div>
@@ -165,44 +128,52 @@ export default function Praktikum() {
             type="text"
             id="search"
             className="search-input"
-            placeholder="Cari Praktikum   🔎"
+            placeholder="Cari Soal   🔎"
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <AlertDialog>
           <AlertDialogTrigger>
             <div className="bg-blue-800 p-2 rounded-lg text-white">
-              + Tambah Praktikum
+              + Tambah Soal
             </div>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Tambah Praktikum</AlertDialogTitle>
+              <AlertDialogTitle>Tambah Soal</AlertDialogTitle>
               <AlertDialogDescription className="w-full">
                 <div className="">
                   <form>
                     <div className="edit-form-group-mahasiswa ">
-                      <label>Judul Praktikum:</label>
+                      <label>Judul Soal:</label>
                       <input
                         type="text"
-                        name="namaPraktikum"
-                        value={formData.namaPraktikum}
+                        name="namaSoal"
+                        value={formData.namaSoal}
                         onChange={handleChange}
                         required
                       />
                     </div>
                     <div className="edit-form-group-mahasiswa">
-                      <label>Kode Praktikum:</label>
+                      <label>Kode Soal:</label>
                       <input
                         className="text-black"
-                        name="kodePraktikum"
-                        value={formData.kodePraktikum}
+                        name="kodeSoal"
+                        value={formData.kodeSoal}
                         onChange={handleChange}
                       />
                     </div>
                     <div className="edit-form-group-mahasiswa">
-                      <label>Tanggal Praktikum:</label>
+                      <label>Tanggal Soal:</label>
                       <input type="date" onChange={handleChangeFile} />
+                    </div>
+                    <div className="edit-form-group-mahasiswa">
+                      <label>File Soal:</label>
+                      <input
+                        type="file"
+                        onChange={handleChangeFile}
+                        accept="application/pdf,application/vnd.ms-excel"
+                      />
                     </div>
                   </form>
                 </div>
@@ -223,31 +194,30 @@ export default function Praktikum() {
         <table>
           <thead>
             <tr>
-              <th onClick={() => handleSort("name")}>
-                Judul Praktikum{" "}
-                {sortConfig.key === "name"
+              <th onClick={() => handleSort("namaSoal")}>
+                Judul Soal{" "}
+                {sortConfig.key === "namaSoal"
                   ? sortConfig.direction === "ascending"
                     ? "↑"
                     : "↓"
                   : sortConfig.direction === "descending"
-                    ? "↓"
-                    : "↑"}
+                  ? "↓"
+                  : "↑"}
               </th>
-              <th className="">Kode Praktikum</th>
-              <th className="">Tanggal Praktikum</th>
+              <th className="">Kode Soal</th>
+              <th className="">Tanggal Soal</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
-              <tr >
-                <td>{item.name}</td>
+              <tr key={index}>
+                <td>{item.namaSoal}</td>
                 <td className="max-w-5">
-                  {/* <p className="truncate">{item.kodePraktikum}</p> */}
-                  <p className="truncate">Xae12</p>
+                  <p className="truncate">{item.kodeSoal}</p>
                 </td>
                 <td className="max-w-5">
-                  <p className="">{item.updated_at = item.updated_at.split(" ")[0]}</p>
+                  <p className="">{item.tanggal}</p>
                 </td>
                 <td>
                   <AlertDialog>
@@ -256,34 +226,39 @@ export default function Praktikum() {
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Edit Praktikum</AlertDialogTitle>
+                        <AlertDialogTitle>Edit Soal</AlertDialogTitle>
                         <AlertDialogDescription className="w-full">
                           <div className="">
                             <form>
                               <div className="edit-form-group-mahasiswa ">
-                                <label>Judul Praktikum:</label>
+                                <label>Judul Soal:</label>
                                 <input
                                   type="text"
-                                  name="namaPraktikum"
-                                  value={formData.namaPraktikum}
+                                  name="namaSoal"
+                                  value={formData.namaSoal}
                                   onChange={handleChange}
                                   required
                                 />
                               </div>
                               <div className="edit-form-group-mahasiswa">
-                                <label>Kode Praktikum:</label>
+                                <label>Kode Soal:</label>
                                 <input
                                   className="text-black"
-                                  name="kodePraktikum"
-                                  value={formData.kodePraktikum}
+                                  name="kodeSoal"
+                                  value={formData.kodeSoal}
                                   onChange={handleChange}
                                 />
                               </div>
                               <div className="edit-form-group-mahasiswa">
-                                <label>Tanggal Praktikum:</label>
+                                <label>Tanggal Soal:</label>
+                                <input type="date" onChange={handleChange} />
+                              </div>
+                              <div className="edit-form-group-mahasiswa">
+                                <label>File Soal:</label>
                                 <input
-                                  type="date"
+                                  type="file"
                                   onChange={handleChangeFile}
+                                  accept="application/pdf,application/vnd.ms-excel"
                                 />
                               </div>
                             </form>
@@ -311,8 +286,8 @@ export default function Praktikum() {
                     className="action-button delete"
                     onClick={() => {
                       Swal.fire({
-                        title: "Hapus Praktikum?",
-                        text: "Praktikum akan dihapus secara permanen!",
+                        title: "Hapus Soal?",
+                        text: "Soal akan dihapus secara permanen!",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonText: "Ya, hapus!",
@@ -326,7 +301,7 @@ export default function Praktikum() {
                           setData(newData);
                           Swal.fire(
                             "Berhasil!",
-                            "Praktikum berhasil dihapus!",
+                            "Soal berhasil dihapus!",
                             "success"
                           );
                         }
@@ -341,12 +316,12 @@ export default function Praktikum() {
           </tbody>
         </table>
         <div className="">
-          {/* <div className="pagination-info">
+          <div className="pagination-info">
             {`Showing ${indexOfFirstItem + 1} to ${Math.min(
               indexOfLastItem,
               data.length
             )} of ${data.length} entries`}
-          </div> */}
+          </div>
 
           <div className="pagination">
             <button
@@ -356,29 +331,31 @@ export default function Praktikum() {
             >
               &lt;
             </button>
-            {/* {Array.from(
+            {Array.from(
               { length: Math.ceil(data.length / itemsPerPage) },
               (_, index) => (
                 <button
                   key={index + 1}
-                  className={`page-item ${currentPage === index + 1 ? "active" : ""
-                    }`}
+                  className={`page-item ${
+                    currentPage === index + 1 ? "active" : ""
+                  }`}
                   onClick={() => paginate(index + 1)}
                 >
                   {index + 1}
                 </button>
               )
-            )} */}
-            {/* <button
-              className={`page-item ${currentPage === Math.ceil(data.length / itemsPerPage)
-                ? "disabled"
-                : ""
-                }`}
+            )}
+            <button
+              className={`page-item ${
+                currentPage === Math.ceil(data.length / itemsPerPage)
+                  ? "disabled"
+                  : ""
+              }`}
               onClick={() => paginate(currentPage + 1)}
               disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
             >
               &gt;
-            </button> */}
+            </button>
           </div>
         </div>
       </div>

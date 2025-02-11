@@ -1,5 +1,5 @@
 // import React from "react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // import "../Pengguna/Mahasiswa/editMahasiswa.css";
 import EditPopupMahasiswa from "../Pengguna/Mahasiswa/EditPopupMahasiswa";
 import Swal from "sweetalert2";
@@ -14,14 +14,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/Components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import { CookiesProvider, useCookies } from "react-cookie";
-import { useQuery } from '@tanstack/react-query'
-import axios from "axios";
-import { RoutesApi } from "@/Routes";
-import ClipLoader from "react-spinners/ClipLoader";
 
-export default function Praktikum() {
+export default function PraktikumBackup() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [selectedData, setSelectedData] = useState(null);
@@ -29,50 +25,52 @@ export default function Praktikum() {
   const itemsPerPage = 10;
   const [cookies, setCookie] = useCookies(["user"]);
 
-
-  const { isLoading, isError, data, error } = useQuery({
-    queryKey: ['tasks'],
-    queryFn: async () => {
-      const { data } = await axios.get(RoutesApi.tasksAdmin, {
-        headers: {
-          Authorization: `Bearer ${cookies.token}`
-        }
-      })
-      console.log(data.data)
-      return data.data
+  const [data, setData] = useState([
+    {
+      id: "1",
+      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
+      kodePraktikum: "xAE12",
+      nilai: "98",
+      tanggal: "25-Januari-2024",
+      isSelected: false,
     },
-  })
-
-  // const [data, setData] = useState([
-  //   {
-  //     namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-  //     kodePraktikum: "xAE12",
-  //     nilai: "98",
-  //     tanggal: "25-Januari-2024",
-  //   },
-  //   {
-  //     namaPraktikum: "Praktikum Pajak Bumi Makanan",
-  //     kodePraktikum: "xAE12",
-  //     nilai: "98",
-  //     tanggal: "25-Januari-2024",
-  //   },
-  //   {
-  //     namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-  //     kodePraktikum: "xAE12",
-  //     nilai: "98",
-  //     tanggal: "25-Januari-2024",
-  //   },
-  //   {
-  //     namaPraktikum: "Praktikum Pajak Bumi Bangunan",
-  //     kodePraktikum: "xAE12",
-  //     nilai: "98",
-  //     tanggal: "25-Januari-2024",
-  //   },
-  // ]);
-
-  useEffect(() => {
-    console.log(data)
-  }, [])
+    {
+      id: "2",
+      namaPraktikum: "Praktikum Pajak Bumi Makanan",
+      kodePraktikum: "xAE12",
+      nilai: "98",
+      tanggal: "25-Januari-2024",
+      isSelected: false,
+    },
+    {
+      id: "3",
+      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
+      kodePraktikum: "xAE12",
+      nilai: "98",
+      tanggal: "25-Januari-2024",
+      isSelected: false,
+    },
+    {
+      id: "4",
+      namaPraktikum: "Praktikum Pajak Bumi Bangunan",
+      kodePraktikum: "xAE12",
+      nilai: "98",
+      tanggal: "25-Januari-2024",
+      isSelected: false,
+    },
+  ]);
+  const handleSelectAll = () => {
+    setData((data) =>
+      data.map((item) => ({ ...item, isSelected: !item.isSelected }))
+    );
+  };
+  const toggleSelection = (kode) => {
+    setData((prevData) =>
+      prevData.map((item) =>
+        item.id === kode ? { ...item, isSelected: !item.isSelected } : item
+      )
+    );
+  };
 
   const handleSort = (key) => {
     let direction = "ascending";
@@ -100,7 +98,7 @@ export default function Praktikum() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -127,31 +125,19 @@ export default function Praktikum() {
   }
   const [search, setSearch] = useState("");
 
-  // const processedData = data.map((item) => ({
-  //   ...item,
-  //   highlight:
-  //     search &&
-  //     Object.values(item).some((value) =>
-  //       String(value).toLowerCase().includes(search.toLowerCase())
-  //     ),
-  // }));
-
-  if (isLoading) {
-    return (
-
-      <div className="loading">
-        <ClipLoader color="#7502B5" size={50} />
-      </div>
-      // <div className="h-full w-full text-2xl italic font-bold text-center flex items-center justify-center">Loading...</div>
-    )
-  }
+  const processedData = data.map((item) => ({
+    ...item,
+    highlight:
+      search &&
+      Object.values(item).some((value) =>
+        String(value).toLowerCase().includes(search.toLowerCase())
+      ),
+  }));
 
   return (
-
     <div className="kontrak-container">
-
       <div className="header">
-        <h2>Data Praktikum</h2>
+        <h2>Data Praktikum - BACKUP</h2>
         {/* <p>{cookies.user ? cookies.user : "no user"}</p>
         {processedData.map((item) => (
           <li key={item.id} style={{ color: item.highlight ? "red" : "black" }}>
@@ -169,7 +155,13 @@ export default function Praktikum() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <AlertDialog>
+        <button
+          className="bg-blue-700 p-2 rounded-md text-white"
+          onClick={handleSelectAll}
+        >
+          Select All
+        </button>
+        {/* <AlertDialog>
           <AlertDialogTrigger>
             <div className="bg-blue-800 p-2 rounded-lg text-white">
               + Tambah Praktikum
@@ -217,37 +209,37 @@ export default function Praktikum() {
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
-        </AlertDialog>
+        </AlertDialog> */}
       </div>
       <div className="table-container">
         <table>
           <thead>
             <tr>
-              <th onClick={() => handleSort("name")}>
+              <th onClick={() => handleSort("namaPraktikum")}>
                 Judul Praktikum{" "}
-                {sortConfig.key === "name"
+                {sortConfig.key === "namaPraktikum"
                   ? sortConfig.direction === "ascending"
                     ? "↑"
                     : "↓"
                   : sortConfig.direction === "descending"
-                    ? "↓"
-                    : "↑"}
+                  ? "↓"
+                  : "↑"}
               </th>
               <th className="">Kode Praktikum</th>
               <th className="">Tanggal Praktikum</th>
+              <th></th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
-              <tr >
-                <td>{item.name}</td>
+              <tr key={index}>
+                <td>{item.namaPraktikum}</td>
                 <td className="max-w-5">
-                  {/* <p className="truncate">{item.kodePraktikum}</p> */}
-                  <p className="truncate">Xae12</p>
+                  <p className="truncate">{item.kodePraktikum}</p>
                 </td>
                 <td className="max-w-5">
-                  <p className="">{item.updated_at = item.updated_at.split(" ")[0]}</p>
+                  <p className="">{item.tanggal}</p>
                 </td>
                 <td>
                   <AlertDialog>
@@ -336,17 +328,24 @@ export default function Praktikum() {
                     Delete
                   </button>
                 </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    onChange={() => toggleSelection(item.id)}
+                    checked={item.isSelected}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
         <div className="">
-          {/* <div className="pagination-info">
+          <div className="pagination-info">
             {`Showing ${indexOfFirstItem + 1} to ${Math.min(
               indexOfLastItem,
               data.length
             )} of ${data.length} entries`}
-          </div> */}
+          </div>
 
           <div className="pagination">
             <button
@@ -356,29 +355,31 @@ export default function Praktikum() {
             >
               &lt;
             </button>
-            {/* {Array.from(
+            {Array.from(
               { length: Math.ceil(data.length / itemsPerPage) },
               (_, index) => (
                 <button
                   key={index + 1}
-                  className={`page-item ${currentPage === index + 1 ? "active" : ""
-                    }`}
+                  className={`page-item ${
+                    currentPage === index + 1 ? "active" : ""
+                  }`}
                   onClick={() => paginate(index + 1)}
                 >
                   {index + 1}
                 </button>
               )
-            )} */}
-            {/* <button
-              className={`page-item ${currentPage === Math.ceil(data.length / itemsPerPage)
-                ? "disabled"
-                : ""
-                }`}
+            )}
+            <button
+              className={`page-item ${
+                currentPage === Math.ceil(data.length / itemsPerPage)
+                  ? "disabled"
+                  : ""
+              }`}
               onClick={() => paginate(currentPage + 1)}
               disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
             >
               &gt;
-            </button> */}
+            </button>
           </div>
         </div>
       </div>
