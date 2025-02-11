@@ -7,15 +7,20 @@ import axios from "axios";
 import { RoutesApi } from "@/Routes";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
-import { Route, Routes } from "react-router";
+import { useToast } from "@/hooks/use-toast";
+
+import EditKontrak from "./EditKontrak";
 
 const Kontrak = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const [idEdit, setIdEdit] = useState(0);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [cookies, setCookie] = useCookies(["user"]);
   const [url, setUrl] = useState(RoutesApi.contractAdmin);
+  const { toast } = useToast();
 
   //   const { isLoading, isError, data, error } = useQuery({
   const { isLoading, isError, data, error } = useQuery({
@@ -66,6 +71,57 @@ const Kontrak = () => {
   //     { jenisKontrak: "Unit", instansi: "UM Jos", mahasiswa: 70, periodeAwal: "2023-03-01", periodeAkhir: "2024-02-29", spt: "5", bupot: "5", faktur: "5", kodePembelian: "U003", status: "Active" },
 
   // ]);
+  const mutation = useMutation({
+    mutationFn: async (id) => {
+      console.log("button clicked");
+      // const { response } = await axios.post(RoutesApi.login, {
+      const response = await axios.get(`http://192.168.1.86/api/csrf-token`, {
+        // withCredentials: true,
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          Accept: "application/json",
+        },
+      });
+      console.log(response.data.token);
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
+      console.log(cookies.token);
+      const data = await axios.delete(
+        RoutesApi.contractAdmin + `/${id}`,
+
+        //   university_id: 1,
+        //   contract_type: "LICENSE",
+        //   qty_student: 1,
+        //   start_period: "2025-02-10",
+        //   end_period: "2026-02-10",
+        //   spt: 5,
+        //   bupot: 5,
+        //   faktur: 5,
+        //   contract_code: "L-0001"
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-CSRF-TOKEN": response.data.token,
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      const role = data.data.user.roles[0].name;
+      setCookie("token", data.data.token, { path: "/" });
+      setCookie("role", role, { path: "/" });
+
+      window.location.href = "/" + role;
+      // alert("Login successful!");
+      // queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   const handleData = (newData) => {
     setData([...data, newData]);
@@ -112,6 +168,16 @@ const Kontrak = () => {
     <div className="kontrak-container">
       <div className="header-kontrak">
         <h2>Data Kontrak Instansi</h2>
+        {/* <button
+          onClick={() => {
+            toast({
+              title: "Scheduled: Catch up",
+              description: "Friday, February 10, 2023 at 5:57 PM",
+            });
+          }}
+        >
+          alert
+        </button> */}
       </div>
       <div className="search-add-container">
         <input
@@ -128,7 +194,15 @@ const Kontrak = () => {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onSave={handleData}
+        setOpen={setIsOpen}
       />
+      <EditKontrak
+        UniData={dataUni}
+        isOpen={isOpenEdit}
+        id={idEdit}
+        onClose={() => setIsOpenEdit(false)}
+        onSave={handleData}
+      ></EditKontrak>
 
       <div className="table-container">
         <table>
@@ -152,7 +226,7 @@ const Kontrak = () => {
             {data.data.map((item, index) => (
               <tr key={index}>
                 <td>{item.contract_type}</td>
-                <td>{item.instansi}</td>
+                <td>{item.university.name}</td>
                 <td>{item.qty_student}</td>
                 <td>{item.start_period}</td>
                 <td>{item.end_period}</td>
@@ -162,7 +236,15 @@ const Kontrak = () => {
                 <td>{item.contract_code}</td>
                 <td>{item.status}</td>
                 <td>
-                  <button className="action-button">Edit</button>
+                  <button
+                    className="action-button"
+                    onClick={() => {
+                      setIdEdit(item.id);
+                      setIsOpenEdit(true);
+                    }}
+                  >
+                    Edit
+                  </button>
                   <button
                     className="action-button delete"
                     onClick={() => {
@@ -175,11 +257,13 @@ const Kontrak = () => {
                         cancelButtonText: "Batal",
                       }).then((result) => {
                         if (result.isConfirmed) {
-                          const newData = data.filter(
-                            (itemData) =>
-                              itemData.kodePembelian !== item.kodePembelian
-                          );
-                          setData(newData);
+                          mutation.mutate(item.id);
+                          //   window.location.reload();
+                          //   const newData = data.filter(
+                          //     (itemData) =>
+                          //       itemData.kodePembelian !== item.kodePembelian
+                          //   );
+                          //   setData(newData);
                           Swal.fire(
                             "Berhasil!",
                             "Kelas berhasil dihapus!",
@@ -206,13 +290,11 @@ const Kontrak = () => {
 
           <div className="pagination">
             <button
-              className={`page-item ${
-                data.meta.currentPage === 1 ? "disabled" : ""
-              }`}
+              className={`page-item`}
               onClick={() => {
                 setUrl(data.links.prev);
               }}
-              disabled={data.meta.currentPage === 1}
+              disabled={data.meta.current_page === 1}
             >
               &lt;
             </button>
@@ -232,7 +314,7 @@ const Kontrak = () => {
                 console.log(data.links.next);
                 setUrl(data.links.next);
               }}
-              //   disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
+              disabled={data.links.next == null}
             >
               &gt;
             </button>
