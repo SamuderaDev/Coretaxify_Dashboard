@@ -28,23 +28,19 @@ export default function UploadSoal() {
   const [data, setData] = useState([
     {
       namaSoal: "Soal Pajak Bumi Bangunan",
-      kodeSoal: "xAE12",
-      tanggal: "25-Januari-2024",
+      file: "file.pdf",
     },
     {
       namaSoal: "Soal Pajak Bumi Makanan",
-      kodeSoal: "xAE12",
-      tanggal: "25-Januari-2024",
+      file: "file.pdf",
     },
     {
       namaSoal: "Soal Pajak Bumi Bangunan",
-      kodeSoal: "xAE12",
-      tanggal: "25-Januari-2024",
+      file: "file.pdf",
     },
     {
       namaSoal: "Soal Pajak Bumi Bangunan",
-      kodeSoal: "xAE12",
-      tanggal: "25-Januari-2024",
+      file: "file.pdf",
     },
   ]);
 
@@ -315,7 +311,7 @@ export default function UploadSoal() {
             ))}
           </tbody>
         </table>
-        <div className="">
+        <div className="pagination-container">
           <div className="pagination-info">
             {`Showing ${indexOfFirstItem + 1} to ${Math.min(
               indexOfLastItem,

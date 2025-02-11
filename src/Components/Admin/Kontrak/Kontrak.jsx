@@ -135,7 +135,7 @@ const Kontrak = () => {
           <thead>
             <tr>
               <th onClick={() => handleSort("jenisKontrak")}>Jenis Kontrak</th>
-              {/* <th onClick={() => handleSort("instansi")}>Instansi</th> */}
+              <th onClick={() => handleSort("instansi")}>Instansi</th>
               <th onClick={() => handleSort("mahasiswa")}>Jumlah Mahasiswa</th>
               <th>Periode Awal</th>
               <th>Periode Akhir</th>
@@ -143,7 +143,8 @@ const Kontrak = () => {
               <th>Bupot</th>
               <th>Faktur</th>
               <th>Kode Pembelian</th>
-              {/* <th>Status</th> */}
+              <th>Kolom Soal</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -151,7 +152,7 @@ const Kontrak = () => {
             {data.data.map((item, index) => (
               <tr key={index}>
                 <td>{item.contract_type}</td>
-                {/* <td>{item.instansi}</td> */}
+                <td>{item.instansi}</td>
                 <td>{item.qty_student}</td>
                 <td>{item.start_period}</td>
                 <td>{item.end_period}</td>
@@ -159,7 +160,7 @@ const Kontrak = () => {
                 <td>{item.bupot}</td>
                 <td>{item.faktur}</td>
                 <td>{item.contract_code}</td>
-                {/* <td>{item.status}</td> */}
+                <td>{item.status}</td>
                 <td>
                   <button className="action-button">Edit</button>
                   <button
