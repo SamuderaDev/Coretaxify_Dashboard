@@ -156,13 +156,19 @@ const SidebarAdmin = () => {
           <></>
         )}
         <li
-          className="menu-item"
+          className={`menu-item`}
           onClick={() => {
-            window.location.href = `/${cookies.role}/praktikum`;
+            if (cookies.role == "admin") {
+              window.location.href = "/admin/coretaxify";
+            } else {
+              window.location.href = `/${cookies.role}/praktikum`;
+            }
           }}
         >
           <FaLaptopCode className="menu-icon" />
-          {isOpen && <span>Praktikum</span>}
+          {isOpen && (
+            <span>{cookies.role == "admin" ? "Coretaxify" : "Praktikum"}</span>
+          )}
         </li>
         <li
           className="menu-item"
@@ -232,6 +238,14 @@ const SidebarAdmin = () => {
                       }}
                     >
                       Kelas
+                    </li>
+                    <li
+                      className={`dropdown-item`}
+                      onClick={() => {
+                        window.location.href = `/${cookies.role}/praktikum`;
+                      }}
+                    >
+                      {isOpen && <span>Praktikum</span>}
                     </li>
                   </ul>
                 </AccordionContent>
@@ -347,6 +361,58 @@ const SidebarAdmin = () => {
               <span className={`text-[16px]`}>Kelas</span>
             </li>
           </>
+        ) : cookies.role == "admin-psc" ? (
+          <Accordion type="single" collapsible className="pl-4">
+            <AccordionItem
+              value="item-1"
+              className="border-none hover:no-underline"
+            >
+              <AccordionTrigger className="w-full ">
+                <div className="flex">
+                  <FaUsers className="menu-icon" />
+                  <span className={`text-[16px] ${isOpen ? "" : "hidden"}`}>
+                    Data Pengguna
+                  </span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className={`${isOpen ? "" : "hidden"}`}>
+                <ul className="">
+                  <li
+                    className="dropdown-item"
+                    onClick={() => {
+                      window.location.href = "/admin-psc/edit-mahasiswa";
+                    }}
+                  >
+                    Mahasiswa
+                  </li>
+                  <li
+                    className="dropdown-item"
+                    onClick={() => {
+                      window.location.href = "/admin-psc/edit-kelas";
+                    }}
+                  >
+                    Kelas
+                  </li>
+                  <li
+                    className="dropdown-item"
+                    onClick={() => {
+                      window.location.href = "/admin-psc/edit-ujian";
+                    }}
+                  >
+                    Ujian
+                  </li>
+                  <li
+                    className="dropdown-item"
+                    onClick={() => {
+                      window.location.href = "/admin-psc/edit-pengajar";
+                    }}
+                  >
+                    Pengajar
+                  </li>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         ) : (
           <></>
         )}
