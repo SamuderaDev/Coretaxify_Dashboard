@@ -10,7 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 import { useToast } from "@/hooks/use-toast";
 
-const TambahKontrak = ({ isOpen, onClose, onSave, UniData, setOpen}) => {
+const TambahKontrak = ({ isOpen, onClose, onSave, UniData, setOpen }) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     jenisKontrak: "",
