@@ -76,9 +76,8 @@ const EditDosen = () => {
                                                             <tr>
                                                                       <th onClick={() => handleSort("namaDosen")}>Nama Dosen {sortConfig.key === "namaDosen" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}</th>
                                                                       <th onClick={() => handleSort("instansi")}>Instansi {sortConfig.key === "instansi" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}</th>
-                                                                      <th onClick={() => handleSort("kuotaKelas")}>Kuota Kelas {sortConfig.key === "kuotaKelas" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}</th>
                                                                       <th>Kode Registrasi</th>
-                                                                      <th>Jumlah Siswa</th>
+                                                                     
                                                                       <th>Kode Pembelian</th>
                                                                       <th>Status</th>
                                                                       <th>Action</th>
@@ -89,9 +88,9 @@ const EditDosen = () => {
                                                                       <tr key={item.id}>
                                                                                 <td>{item.namaDosen}</td>
                                                                                 <td>{item.instansi}</td>
-                                                                                <td>{item.kuotaKelas}</td>
+                                                            
                                                                                 <td>{item.kodeRegistrasi}</td>
-                                                                                <td>{item.jumlahSiswa}</td>
+                                                            
                                                                                 <td>{item.kodePembelian}</td>
                                                                                 <td>{item.status}</td>
                                                                                 <td>

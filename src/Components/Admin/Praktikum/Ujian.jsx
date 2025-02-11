@@ -30,7 +30,8 @@ export default function Ujian() {
       namaUjian: "Ujian Pajak Bumi Bangunan",
       kodeUjian: "xAE12",
       nilai: "98",
-      tanggal: "25-01-24 00:00",
+      tanggalMulai: "25-01-24 00:00",
+      tanggalSelesai: "25-01-24 00:00",
     },
     {
       instansi: "Politeknik Negeri Bandung",
@@ -38,7 +39,8 @@ export default function Ujian() {
       namaUjian: "Ujian Pajak Bumi Bangunan",
       kodeUjian: "xAE12",
       nilai: "98",
-      tanggal: "25-01-24 00:00",
+      tanggalMulai: "25-01-24 00:00",
+      tanggalSelesai: "25-01-24 00:00",
     },
     {
       instansi: "Politeknik Negeri Bandung",
@@ -46,7 +48,8 @@ export default function Ujian() {
       namaUjian: "Ujian Pajak Bumi Bangunan",
       kodeUjian: "xAE12",
       nilai: "98",
-      tanggal: "25-01-24 00:00",
+      tanggalMulai: "25-01-24 00:00",
+      tanggalSelesai: "25-01-24 00:00",
     },
     {
       instansi: "Politeknik Negeri Bandung",
@@ -54,7 +57,8 @@ export default function Ujian() {
       namaUjian: "Ujian Pajak Bumi Bangunan",
       kodeUjian: "xAE12",
       nilai: "98",
-      tanggal: "25-01-24 00:00",
+      tanggalMulai: "25-01-24 00:00",
+      tanggalSelesai: "25-01-24 00:00",
     },
   ]);
 
@@ -94,7 +98,8 @@ export default function Ujian() {
     namaUjian: "",
     kodeUjian: "",
     nilai: "",
-    tanggal: "",
+    tanggalMulai: "",
+    tanggalSelesai:"",
   });
 
   const handleChange = (e) => {
@@ -162,7 +167,8 @@ export default function Ujian() {
                   : "↑"}
               </th>
               <th className="">Kode Ujian</th>
-              <th className="">Tanggal Ujian</th>
+              <th className="">Tanggal Mulai</th>
+              <th>Tanggal Selesai</th>
               <th className="">Action</th>
             </tr>
           </thead>
@@ -176,7 +182,10 @@ export default function Ujian() {
                   <p className="truncate">{item.kodeUjian}</p>
                 </td>
                 <td className="max-w-5">
-                  <p className="">{item.tanggal}</p>
+                  <p className="">{item.tanggalMulai}</p>
+                </td>
+                <td>
+                  <p>{item.tanggalSelesai}</p>
                 </td>
                 <td>
                   <AlertDialog>

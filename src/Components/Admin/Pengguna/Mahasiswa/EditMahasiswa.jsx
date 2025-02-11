@@ -16,6 +16,7 @@ const EditMahasiswa = () => {
       instansi: "Poltek Jos",
       email: "hendra@coretaxify.com",
       kelas: "Abangkuh",
+      tanggalRegistrasi: "22-5-2023",
       kodeRegistrasi: "L001",
       status: "Active",
     },
@@ -24,6 +25,7 @@ const EditMahasiswa = () => {
       instansi: "UB Jos",
       email: "hendra@coretaxify.com",
       kelas: "Abangkuh",
+      tanggalRegistrasi: "22-5-2023",
       kodeRegistrasi: "U002",
       status: "Expired",
     },
@@ -32,6 +34,7 @@ const EditMahasiswa = () => {
       instansi: "UM Jos",
       email: "hendra@coretaxify.com",
       kelas: "Abangkuh",
+      tanggalRegistrasi: "22-5-2023",
       kodeRegistrasi: "U003",
       status: "Active",
     },
@@ -107,6 +110,7 @@ const EditMahasiswa = () => {
                   <th>Email</th>
                   <th>Instansi</th>
                   <th>Kelas</th>
+                  <th>Tanggal Registrasi</th>
                   <th>Kode Registrasi</th>
                   <th>Status</th>
                   <th>Action</th>
@@ -119,6 +123,7 @@ const EditMahasiswa = () => {
                     <td>{item.email}</td>
                     <td>{item.instansi}</td>
                     <td>{item.kelas}</td>
+                    <td>{item.tanggalRegistrasi}</td>
                     <td>{item.kodeRegistrasi}</td>
                     <td>{item.status}</td>
                     <td>

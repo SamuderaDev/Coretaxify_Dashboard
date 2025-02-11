@@ -27,18 +27,22 @@ export default function UploadSoal() {
 
   const [data, setData] = useState([
     {
+      id: 1,
       namaSoal: "Soal Pajak Bumi Bangunan",
       file: "file.pdf",
     },
     {
+      id: 2,
       namaSoal: "Soal Pajak Bumi Makanan",
       file: "file.pdf",
     },
     {
+      id: 3,
       namaSoal: "Soal Pajak Bumi Bangunan",
       file: "file.pdf",
     },
     {
+      id: 4,
       namaSoal: "Soal Pajak Bumi Bangunan",
       file: "file.pdf",
     },
@@ -76,8 +80,6 @@ export default function UploadSoal() {
 
   const [formData, setFormData] = useState({
     namaSoal: "",
-    kodeSoal: "",
-    tanggal: "",
     file: "",
   });
 
@@ -151,19 +153,6 @@ export default function UploadSoal() {
                       />
                     </div>
                     <div className="edit-form-group-mahasiswa">
-                      <label>Kode Soal:</label>
-                      <input
-                        className="text-black"
-                        name="kodeSoal"
-                        value={formData.kodeSoal}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="edit-form-group-mahasiswa">
-                      <label>Tanggal Soal:</label>
-                      <input type="date" onChange={handleChangeFile} />
-                    </div>
-                    <div className="edit-form-group-mahasiswa">
                       <label>File Soal:</label>
                       <input
                         type="file"
@@ -190,6 +179,16 @@ export default function UploadSoal() {
         <table>
           <thead>
             <tr>
+              <th onClick={() => handleSort("id")}>
+                  No {" "}
+                  {sortConfig.key === "id"
+                    ? sortConfig.direction === "ascending"
+                      ? "↑"
+                      : "↓"
+                    : sortConfig.direction === "descending"
+                    ? "↓"
+                    : "↑"}
+              </th>
               <th onClick={() => handleSort("namaSoal")}>
                 Judul Soal{" "}
                 {sortConfig.key === "namaSoal"
@@ -200,20 +199,27 @@ export default function UploadSoal() {
                   ? "↓"
                   : "↑"}
               </th>
-              <th className="">Kode Soal</th>
-              <th className="">Tanggal Soal</th>
-              <th></th>
+              <th>
+                File
+              </th>
+              <th>
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
               <tr key={index}>
+                <td>{indexOfFirstItem + index + 1}</td>
                 <td>{item.namaSoal}</td>
-                <td className="max-w-5">
-                  <p className="truncate">{item.kodeSoal}</p>
-                </td>
-                <td className="max-w-5">
-                  <p className="">{item.tanggal}</p>
+                <td>
+                  <a
+                    href={item.file}
+                    download
+                    className="text-blue-500 hover:text-blue-700 hover:underline"
+                  >
+                    File
+                  </a>
                 </td>
                 <td>
                   <AlertDialog>
@@ -235,19 +241,6 @@ export default function UploadSoal() {
                                   onChange={handleChange}
                                   required
                                 />
-                              </div>
-                              <div className="edit-form-group-mahasiswa">
-                                <label>Kode Soal:</label>
-                                <input
-                                  className="text-black"
-                                  name="kodeSoal"
-                                  value={formData.kodeSoal}
-                                  onChange={handleChange}
-                                />
-                              </div>
-                              <div className="edit-form-group-mahasiswa">
-                                <label>Tanggal Soal:</label>
-                                <input type="date" onChange={handleChange} />
                               </div>
                               <div className="edit-form-group-mahasiswa">
                                 <label>File Soal:</label>
