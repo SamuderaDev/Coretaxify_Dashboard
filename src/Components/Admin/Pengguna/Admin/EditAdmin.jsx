@@ -83,7 +83,7 @@ const EditAdmin = () => {
                                                                       <th onClick={() => handleSort("email")}>
                                                                                 Email {sortConfig.key === "email" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
                                                                       </th>
-                                                                      <th>Status</th>
+                                                                      
                                                                       <th>Action</th>
                                                             </tr>
                                                   </thead>
@@ -92,7 +92,6 @@ const EditAdmin = () => {
                                                                       <tr key={index}>
                                                                                 <td>{item.namaAdmin}</td>
                                                                                 <td>{item.email}</td>
-                                                                                <td>{item.status}</td>
                                                                                 <td>
                                                                                           <button className="action-button" onClick={() => handleEdit(item)}>Edit</button>
                                                                                           <button

@@ -217,7 +217,8 @@ const Kontrak = () => {
               <th>Bupot</th>
               <th>Faktur</th>
               <th>Kode Pembelian</th>
-              {/* <th>Status</th> */}
+              <th>Kolom Soal</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -233,7 +234,7 @@ const Kontrak = () => {
                 <td>{item.bupot}</td>
                 <td>{item.faktur}</td>
                 <td>{item.contract_code}</td>
-                {/* <td>{item.status}</td> */}
+                <td>{item.status}</td>
                 <td>
                   <button
                     className="action-button"

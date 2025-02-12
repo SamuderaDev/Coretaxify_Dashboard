@@ -25,28 +25,40 @@ export default function Ujian() {
 
   const [data, setData] = useState([
     {
+      instansi: "Politeknik Negeri Bandung",
+      namaDosen: "Hendra", 
       namaUjian: "Ujian Pajak Bumi Bangunan",
       kodeUjian: "xAE12",
       nilai: "98",
-      tanggal: "25-Januari-2024",
+      tanggalMulai: "25-01-24 00:00",
+      tanggalSelesai: "25-01-24 00:00",
     },
     {
+      instansi: "Politeknik Negeri Bandung",
+      namaDosen: "Hendra",
       namaUjian: "Ujian Pajak Bumi Bangunan",
       kodeUjian: "xAE12",
       nilai: "98",
-      tanggal: "25-Januari-2024",
+      tanggalMulai: "25-01-24 00:00",
+      tanggalSelesai: "25-01-24 00:00",
     },
     {
+      instansi: "Politeknik Negeri Bandung",
+      namaDosen: "Hendra",
       namaUjian: "Ujian Pajak Bumi Bangunan",
       kodeUjian: "xAE12",
       nilai: "98",
-      tanggal: "25-Januari-2024",
+      tanggalMulai: "25-01-24 00:00",
+      tanggalSelesai: "25-01-24 00:00",
     },
     {
+      instansi: "Politeknik Negeri Bandung",
+      namaDosen: "Hendra",
       namaUjian: "Ujian Pajak Bumi Bangunan",
       kodeUjian: "xAE12",
       nilai: "98",
-      tanggal: "25-Januari-2024",
+      tanggalMulai: "25-01-24 00:00",
+      tanggalSelesai: "25-01-24 00:00",
     },
   ]);
 
@@ -81,10 +93,13 @@ export default function Ujian() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [formData, setFormData] = useState({
+    instansi: "",
+    namaDosen: "",
     namaUjian: "",
     kodeUjian: "",
     nilai: "",
-    tanggal: "",
+    tanggalMulai: "",
+    tanggalSelesai:"",
   });
 
   const handleChange = (e) => {
@@ -116,60 +131,31 @@ export default function Ujian() {
             placeholder="Cari Ujian   🔎"
           />
         </div>
-        <AlertDialog>
-          <AlertDialogTrigger>
-            <div className="bg-blue-700 p-2 rounded-lg text-white ">
-              + Tambah Ujian
-            </div>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Tambah Ujian</AlertDialogTitle>
-              <AlertDialogDescription className="w-full">
-                <div className="">
-                  <form>
-                    <div className="edit-form-group-kelas ">
-                      <label>Judul Ujian:</label>
-                      <input
-                        type="text"
-                        name="namaUjian"
-                        value={formData.namaUjian}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="edit-form-group-kelas ">
-                      <label>Kode Ujian:</label>
-                      <input
-                        className="text-black"
-                        name="kodeUjian"
-                        value={formData.kodeUjian}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="edit-form-group-kelas ">
-                      <label>Tanggal Ujian:</label>
-                      <input type="date" onChange={handleChangeFile} />
-                    </div>
-                  </form>
-                </div>
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel className="bg-red-600 text-white">
-                Kembali
-              </AlertDialogCancel>
-              <AlertDialogAction className="bg-green-600">
-                Simpan
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
       </div>
       <div className="table-container">
         <table>
           <thead>
             <tr>
+              <th onClick={() => handleSort("instansi") }>
+                Instansi{" "}
+                {sortConfig.key === "instansi"
+                  ? sortConfig.direction === "ascending"
+                    ? "↑"
+                    : "↓"
+                  : sortConfig.direction === "descending"
+                  ? "↓"
+                  : "↑"}
+              </th>
+              <th onClick={() => handleSort("namaDosen")}>
+                Dosen{" "}
+                {sortConfig.key === "namaDosen"
+                  ? sortConfig.direction === "ascending"
+                    ? "↑"
+                    : "↓"
+                  : sortConfig.direction === "descending"
+                  ? "↓"
+                  : "↑"}
+              </th>
               <th onClick={() => handleSort("namaUjian")}>
                 Judul Ujian{" "}
                 {sortConfig.key === "namaUjian"
@@ -181,19 +167,25 @@ export default function Ujian() {
                   : "↑"}
               </th>
               <th className="">Kode Ujian</th>
-              <th className="">Tanggal Ujian</th>
-              <th></th>
+              <th className="">Tanggal Mulai</th>
+              <th>Tanggal Selesai</th>
+              <th className="">Action</th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
               <tr key={index}>
+                <td>{item.instansi}</td>
+                <td>{item.namaDosen}</td>
                 <td>{item.namaUjian}</td>
                 <td className="max-w-5">
                   <p className="truncate">{item.kodeUjian}</p>
                 </td>
                 <td className="max-w-5">
-                  <p className="">{item.tanggal}</p>
+                  <p className="">{item.tanggalMulai}</p>
+                </td>
+                <td>
+                  <p>{item.tanggalSelesai}</p>
                 </td>
                 <td>
                   <AlertDialog>
@@ -286,7 +278,7 @@ export default function Ujian() {
             ))}
           </tbody>
         </table>
-        <div className="">
+        <div className="pagination-container">
           <div className="pagination-info">
             {`Showing ${indexOfFirstItem + 1} to ${Math.min(
               indexOfLastItem,

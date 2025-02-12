@@ -5,9 +5,12 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { RoutesApi } from "@/Routes";
 import { CookiesProvider, useCookies } from "react-cookie";
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+
 import { useToast } from "@/hooks/use-toast";
 
-const TambahKontrak = ({ isOpen, onClose, onSave, UniData, setOpen}) => {
+const TambahKontrak = ({ isOpen, onClose, onSave, UniData, setOpen }) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     jenisKontrak: "",
@@ -169,7 +172,7 @@ const TambahKontrak = ({ isOpen, onClose, onSave, UniData, setOpen}) => {
               onChange={handleChange}
               required
             >
-              <option value="">Pilih Status</option>
+              <option value="">Pilih Instansi</option>
               {UniData.map((item, index) => (
                 <option key={index} value={item.id}>
                   {item.name}
@@ -177,6 +180,19 @@ const TambahKontrak = ({ isOpen, onClose, onSave, UniData, setOpen}) => {
               ))}
             </select>
             {/* <input type="text" name="instansi" value={formData.instansi} onChange={handleChange} required /> */}
+          </div>
+          <div className="kontrak-form-group">
+            <label>Soal</label>
+            <RadioGroup defaultValue="option-one">
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem className="" value="option-one" id="option-one" />
+                <Label htmlFor="option-one">Ya</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="option-two" id="option-two" />
+                <Label htmlFor="option-two">Tidak</Label>
+              </div>
+            </RadioGroup>
           </div>
           <div className="kontrak-form-group">
             <label>Jumlah Mahasiswa</label>
