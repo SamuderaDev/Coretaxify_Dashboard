@@ -53,7 +53,7 @@ const EditKontrak = ({ isOpen, onClose, onSave, UniData, id }) => {
     mutationFn: async () => {
       console.log("button clicked");
       // const { response } = await axios.post(RoutesApi.login, {
-      const response = await axios.get(`http://192.168.1.86/api/csrf-token`, {
+      const response = await axios.get(`${RoutesApi.url}api/csrf-token`, {
         // withCredentials: true,
         headers: {
           "X-Requested-With": "XMLHttpRequest",

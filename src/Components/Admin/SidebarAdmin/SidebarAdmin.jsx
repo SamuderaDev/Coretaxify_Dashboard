@@ -42,7 +42,7 @@ const SidebarAdmin = () => {
     mutationFn: async () => {
       console.log("button clicked");
       // const { response } = await axios.post(RoutesApi.login, {
-      const response = await axios.get("http://192.168.1.86/api/csrf-token", {
+      const response = await axios.get(`${RoutesApi.url}api/csrf-token`, {
         // withCredentials: true,
         headers: {
           "X-Requested-With": "XMLHttpRequest",
@@ -120,8 +120,9 @@ const SidebarAdmin = () => {
             />
           )}
           <FaBars
-            className={`menu-toggle w-full pr-6 mt-2 ${isOpen ? "hidden" : ""
-              } `}
+            className={`menu-toggle w-full pr-6 mt-2 ${
+              isOpen ? "hidden" : ""
+            } `}
             onClick={toggleSidebar}
           />
         </div>
@@ -131,8 +132,9 @@ const SidebarAdmin = () => {
           Login
         </button> */}
         <li
-          className={`menu-item ${cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
-            }`}
+          className={`menu-item ${
+            cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
+          }`}
           onClick={() => {
             window.location.href = "/admin";
           }}
@@ -178,8 +180,9 @@ const SidebarAdmin = () => {
           {isOpen && <span>Ujian</span>}
         </li>
         <li
-          className={`menu-item ${cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
-            }`}
+          className={`menu-item ${
+            cookies.role == "admin" || cookies.role === "dosen" ? "" : "!hidden"
+          }`}
           onClick={() => {
             window.location.href = "/admin/upload-soal";
           }}
@@ -423,8 +426,9 @@ const SidebarAdmin = () => {
             <>
               <span>Profile</span>
               <FaChevronDown
-                className={`dropdown-icon ${isProfileDropdownOpen ? "rotate" : ""
-                  }`}
+                className={`dropdown-icon ${
+                  isProfileDropdownOpen ? "rotate" : ""
+                }`}
               />
             </>
           )}
