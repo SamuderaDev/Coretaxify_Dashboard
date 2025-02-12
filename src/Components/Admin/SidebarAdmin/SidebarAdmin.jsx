@@ -52,7 +52,7 @@ const SidebarAdmin = () => {
       // console.log(response);
       axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
       const data = await axios.post(
-        "http://192.168.1.86/api/login",
+        `${RoutesApi.login}`,
         {
           email: "admin@example.com",
           password: "password123",

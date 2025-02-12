@@ -33,6 +33,7 @@ import EditPengajar from "./Components/AdminPsc/Pengguna/Pengajar/EditPengajar";
 import EditKelasPsc from "./Components/AdminPsc/Pengguna/Kelas/EditKelasPsc";
 import UjianPsc from "./Components/AdminPsc/Pengguna/Praktikum/UjianPsc";
 import EditMahasiswaPsc from "./Components/AdminPsc/Pengguna/Mahasiswa/EditMahasiswaPsc";
+import ProtectedRoutes from "./Components/ProtectedRoutes";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -56,34 +57,40 @@ const App = () => {
         <Route
           path="/admin"
           element={
-            <div className="admin-layout">
-              <SidebarAdmin />
-              <div className="admin-content">
-                <DashboardAdmin />
+            <ProtectedRoutes>
+              <div className="admin-layout">
+                <SidebarAdmin />
+                <div className="admin-content">
+                  <DashboardAdmin />
+                </div>
               </div>
-            </div>
+            </ProtectedRoutes>
           }
         />
         <Route
           path="/admin/kontrak"
           element={
-            <div className="admin-layout">
-              <SidebarAdmin />
-              <div className="admin-content">
-                <Kontrak />
+            <ProtectedRoutes>
+              <div className="admin-layout">
+                <SidebarAdmin />
+                <div className="admin-content">
+                  <Kontrak />
+                </div>
               </div>
-            </div>
+            </ProtectedRoutes>
           }
         />
         <Route
           path="/admin/edit-dosen"
           element={
-            <div className="admin-layout">
-              <SidebarAdmin />
-              <div className="admin-content">
-                <EditDosen />
+            <ProtectedRoutes>
+              <div className="admin-layout">
+                <SidebarAdmin />
+                <div className="admin-content">
+                  <EditDosen />
+                </div>
               </div>
-            </div>
+            </ProtectedRoutes>
           }
         />
         <Route
