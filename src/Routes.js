@@ -1,9 +1,9 @@
 // const url = "http://192.168.1.86/";
-const url = "http://192.168.31.155:8000/";
+const url = "http://192.168.31.122:8000/";
 const role = {
   admin: "admin",
-  mahasiswa: "mahasiswa",
-  dosen: "dosen",
+  mahasiswa: "mahasswa",
+  lecturer: "lecturer",
 };
 
 export const RoutesApi = {
@@ -12,4 +12,5 @@ export const RoutesApi = {
   tasksAdmin: url + `api/${role.admin}/tasks`,
   contractAdmin: url + `api/${role.admin}/contract`,
   uniAdmin: url + `api/${role.admin}/universities`,
+  classAdmin: url + `api/${role.lecturer}/groups`,
 };

@@ -9,7 +9,7 @@ export default function ProtectedRoutes({ children }) {
     const role = urlSplit[1];
     return role;
   };
-  // alert(getUrlRole()); 
+  // alert(getUrlRole
   if (cookies.token == null) {
     window.location.href = "/login";
   }
