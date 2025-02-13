@@ -18,4 +18,8 @@ export const RoutesApi = {
     url: url + `api/${role.admin}/users`,
     intent: "api.user.get.admin",
   },
+  postAdmin: {
+    url: url + `api/${role.admin}/users`,
+    intent: "api.user.create.admin",
+  },
 };

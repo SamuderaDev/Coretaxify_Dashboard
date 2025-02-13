@@ -8,6 +8,17 @@ import ClipLoader from "react-spinners/ClipLoader";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { RoutesApi } from "@/Routes";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const EditAdmin = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +29,15 @@ const EditAdmin = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [cookies, setCookie] = useCookies(["user"]);
   const itemsPerPage = 10;
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["contracts", url],
     queryFn: async () => {
@@ -31,6 +51,53 @@ const EditAdmin = () => {
       });
       console.log(data.data);
       return data;
+    },
+  });
+  const mutation = useMutation({
+    mutationFn: async (id) => {
+      console.log("button clicked");
+      // const { response } = await axios.post(RoutesApi.login, {
+      const response = await axios.get(`${RoutesApi.url}api/csrf-token`, {
+        // withCredentials: true,
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          Accept: "application/json",
+        },
+      });
+      console.log(response.data.token);
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
+      console.log(cookies.token);
+      const data = await axios.put(
+        RoutesApi.postAdmin.url + `/${id}`,
+
+        {
+          name: formData.name,
+          email: formData.email,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-CSRF-TOKEN": response.data.token,
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          //   params: {
+          //     intent: RoutesApi.postAdmin.intent,
+          //   },
+        }
+      );
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      window.location.reload();
+
+      // window.location.href = "/" + role;
+      // alert("Login successful!");
+      // queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      console.log(error);
     },
   });
   const mutationDelete = useMutation({
@@ -72,9 +139,6 @@ const EditAdmin = () => {
     },
     onSuccess: (data) => {
       console.log(data);
-      const role = data.data.user.roles[0].name;
-      setCookie("token", data.data.token, { path: "/" });
-      setCookie("role", role, { path: "/" });
       Swal.fire("Berhasil!", "Admin berhasil dihapus!", "success");
 
       window.location.reload();
@@ -166,15 +230,6 @@ const EditAdmin = () => {
         onSave={handleData}
       />
 
-      {editPopupOpen && (
-        <EditPopupAdmin
-          isOpen={editPopupOpen}
-          onClose={() => setEditPopupOpen(false)}
-          admin={selectedAdmin}
-          onSave={handleUpdateAdmin}
-        />
-      )}
-
       <div className="table-container">
         <table>
           <thead>
@@ -205,12 +260,66 @@ const EditAdmin = () => {
                 <td>{item.name}</td>
                 <td>{item.email}</td>
                 <td>
-                  <button
+                  {/* <button
                     className="action-button"
-                    onClick={() => handleEdit(item)}
-                  >
-                    Edit
-                  </button>
+                    // onClick={() => handleEdit(item)}
+                  > */}
+                  <AlertDialog>
+                    <AlertDialogTrigger className="action-button">
+                      Edit
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Edit Admin</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          <form>
+                            <div className="edit-form-group-mahasiswa ">
+                              <label>Nama Admin:</label>
+                              <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                            <div className="edit-form-group-mahasiswa">
+                              <label>Email Admin:</label>
+                              <input
+                                type="text"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                          </form>
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Kembali</AlertDialogCancel>
+                        {/* <AlertDialogAction> */}
+                        <button
+                          className="action-button"
+                          onClick={() => mutation.mutate(item.id)}
+                        >
+                          Simpan
+                        </button>
+                        {/* </AlertDialogAction> */}
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                  {/* {editPopupOpen && (
+                      <EditPopupAdmin
+                        isOpen={editPopupOpen}
+                        id={item.id}
+                        onClose={() => setEditPopupOpen(false)}
+                        admin={selectedAdmin}
+                        onSave={handleUpdateAdmin}
+                      />
+                    )} */}
+                  {/* Edit
+                  </button> */}
                   <button
                     className="action-button delete"
                     onClick={() => {
