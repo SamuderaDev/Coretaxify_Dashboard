@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { RoutesApi } from "@/Routes";
 import { CookiesProvider, useCookies } from "react-cookie";
+// import { p } from "react-router/dist/development/fog-of-war-Ckdfl79L";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -134,9 +135,9 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-purple-900 text-white py-2 rounded-md hover:bg-purple-950"
+            className="w-full bg-purple-900 text-white py-2 rounded-md hover:bg-purple-950 h-10 "
           >
-            Login
+            {mutation.status == "pending" ? <p>Loading...</p> : <>Login</>}
           </button>
         </form>
 

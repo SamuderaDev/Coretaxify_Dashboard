@@ -1,5 +1,5 @@
-// const url = "http://192.168.1.86/";
-const url = "http://192.168.31.122:8000/";
+const url = "http://192.168.1.86/";
+// const url = "http://192.168.31.122:8000/";
 const role = {
   admin: "admin",
   mahasiswa: "mahasswa",
