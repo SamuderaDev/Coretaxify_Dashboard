@@ -3,7 +3,7 @@ import "./editDosen.css";
 import TambahDosen from "./TambahDosen";
 import EditPopupDosen from "./EditPopupDosen";
 import Swal from "sweetalert2";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { RoutesApi } from "@/Routes";
 import { ClipLoader } from "react-spinners";
@@ -11,6 +11,7 @@ import { useCookies } from "react-cookie";
 
 const EditDosen = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [id, setId] = useState(0);
   const [url, setUrl] = useState(RoutesApi.getDosenAdmin.url);
   const [editPopupOpen, setEditPopupOpen] = useState(false);
   const [selectedDosen, setSelectedDosen] = useState(null);
@@ -81,6 +82,63 @@ const EditDosen = () => {
   //   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const mutation = useMutation({
+    mutationFn: async (id) => {
+      console.log("button clicked");
+      // const { response } = await axios.post(RoutesApi.login, {
+      const response = await axios.get(`${RoutesApi.url}api/csrf-token`, {
+        // withCredentials: true,
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          Accept: "application/json",
+        },
+      });
+      console.log(response.data.token);
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
+      console.log(cookies.token);
+      const data = await axios.delete(
+        RoutesApi.postAdmin.url + `/${id}`,
+        // `http://127.0.0.1:8000/api/admin/users/${id}?intent=api.user.create.admin`,
+
+        //   university_id: 1,
+        //   contract_type: "LICENSE",
+        //   qty_student: 1,
+        //   start_period: "2025-02-10",
+        //   end_period: "2026-02-10",
+        //   spt: 5,
+        //   bupot: 5,
+        //   faktur: 5,
+        //   contract_code: "L-0001"
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-CSRF-TOKEN": response.data.token,
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          // params: {
+          //   intent: RoutesApi.postAdmin.intent,
+          // },
+        }
+      );
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      Swal.fire("Berhasil!", "Data dosen berhasil dihapus!", "success");
+      window.location.reload();
+      // const role = data.data.user.roles[0].name;
+      // setCookie("token", data.data.token, { path: "/" });
+      // setCookie("role", role, { path: "/" });
+
+      // window.location.href = "/" + role;
+      // alert("Login successful!");
+      // queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   if (isLoading) {
     return (
@@ -121,6 +179,7 @@ const EditDosen = () => {
         onClose={() => setEditPopupOpen(false)}
         dosen={selectedDosen}
         onSave={handleUpdateDosen}
+        id={id}
       />
       <div className="table-container">
         <table>
@@ -178,12 +237,14 @@ const EditDosen = () => {
                         cancelButtonText: "Batal",
                       }).then((result) => {
                         if (result.isConfirmed) {
-                          setData(data.filter((d) => d.id !== item.id));
-                          Swal.fire(
-                            "Berhasil!",
-                            "Data dosen berhasil dihapus!",
-                            "success"
-                          );
+                          setId(item.id);
+                          mutation.mutate(item.id);
+                          // setData(data.filter((d) => d.id !== item.id));
+                          // Swal.fire(
+                          //   "Berhasil!",
+                          //   "Data dosen berhasil dihapus!",
+                          //   "success"
+                          // );
                         }
                       });
                     }}

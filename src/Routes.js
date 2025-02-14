@@ -3,7 +3,7 @@
 const url = "http://127.0.0.1:8000/";
 const role = {
   admin: "admin",
-  mahasiswa: "mahasswa",
+  mahasiswa: "mahasiswa",
   lecturer: "lecturer",
 };
 
@@ -25,5 +25,9 @@ export const RoutesApi = {
   getDosenAdmin: {
     url: url + `api/${role.admin}/users`,
     intent: "api.user.get.dosen",
+  },
+  importDosenAdmin: {
+    url: url + `api/${role.admin}/users`,
+    intent: "api.user.import.dosen",
   },
 };
