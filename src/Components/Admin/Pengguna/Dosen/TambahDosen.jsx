@@ -8,6 +8,7 @@ import { IoMdDownload } from "react-icons/io";
 const TambahDosen = ({ isOpen, onClose, onSave }) => {
   const [cookies, setCookie] = useCookies(["user"]);
   const [formData, setFormData] = useState({
+    contractId: "",
     fileDosen: "",
     // namaDosen: "",
     // instansi: "",
@@ -33,12 +34,14 @@ const TambahDosen = ({ isOpen, onClose, onSave }) => {
       console.log(cookies.token);
       const data = await axios.post(
         RoutesApi.importDosenAdmin.url,
+        // "http://127.0.0.1:8000/api/admin/users?intent=api.user.import.dosen",
         {
+          contract_id: formData.contractId,
           import_file: formData.fileDosen,
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Accept: "application/json",
             "X-CSRF-TOKEN": response.data.token,
             Authorization: `Bearer ${cookies.token}`,
@@ -70,6 +73,7 @@ const TambahDosen = ({ isOpen, onClose, onSave }) => {
 
   const handleSave = () => {
     // onSave(formData);
+    console.log(formData.fileDosen);
     mutation.mutate();
     // setFormData({
     //   namaDosen: "",
@@ -109,9 +113,24 @@ const TambahDosen = ({ isOpen, onClose, onSave }) => {
           </select> */}
         </div>
         <div className="overflow-x-auto">
+          <label htmlFor="contractId">ID Kontak :</label>
+          <input
+            type="text"
+            name="contractId"
+            value={formData.contractId}
+            onChange={handleChange}
+            className="w-full border px-2 py-1 rounded my-2"
+            required
+          />
           <div className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded flex items-center">
             <IoMdDownload className="mr-2" />
-            <input type="file" name="fileDosen" onChange={handleChange} />
+            <input
+              type="file"
+              name="fileDosen"
+              onChange={(e) =>
+                setFormData({ ...formData, fileDosen: e.target.files[0] })
+              }
+            />
           </div>
           {/* <table className="w-full border-collapse mt-4">
             <thead>
