@@ -22,4 +22,8 @@ export const RoutesApi = {
     url: url + `api/${role.admin}/users`,
     intent: "api.user.create.admin",
   },
+  getDosenAdmin: {
+    url: url + `api/${role.admin}/users`,
+    intent: "api.user.get.dosen",
+  },
 };

@@ -39,7 +39,7 @@ const EditAdmin = () => {
     setFormData({ ...formData, [name]: value });
   };
   const { isLoading, isError, data, error } = useQuery({
-    queryKey: ["contracts", url],
+    queryKey: ["admin", url],
     queryFn: async () => {
       const { data } = await axios.get(url, {
         params: {
