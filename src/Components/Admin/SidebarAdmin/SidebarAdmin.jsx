@@ -162,7 +162,7 @@ const SidebarAdmin = () => {
           <></>
         )}
         <li
-          className={`menu-item ${cookies.role === "dosen" ? "" : "hidden"}`}
+          className={`menu-item ${cookies.role === "dosen" ? "" : "!hidden"}`}
           onClick={() => {
             window.location.href = "/dosen/kelas";
           }}
