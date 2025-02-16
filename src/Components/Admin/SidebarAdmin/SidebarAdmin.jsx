@@ -162,6 +162,15 @@ const SidebarAdmin = () => {
           <></>
         )}
         <li
+          className={`menu-item ${cookies.role === "dosen" ? "" : "hidden"}`}
+          onClick={() => {
+            window.location.href = "/dosen/kelas";
+          }}
+        >
+          <FaUsers className="menu-icon" />
+          {isOpen && <span>Kelas</span>}
+        </li>
+        <li
           className={`menu-item`}
           onClick={() => {
             if (cookies.role == "admin") {

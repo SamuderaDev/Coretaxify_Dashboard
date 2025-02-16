@@ -15,7 +15,7 @@ import {
 import { CookiesProvider, useCookies } from "react-cookie";
 import { FaFile } from "react-icons/fa";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { ClipLoader } from "react-spinners";
 import { RoutesApi } from "@/Routes";
 
@@ -76,22 +76,24 @@ export default function DosenKelas() {
   //   ]);
 
   const [formData, setFormData] = useState({
-    namaPraktikum: "",
-    kodePraktikum: "",
-    supportingFile: null,
-    deadline: "",
+    namaKelas: "",
+    kodeKelas: "",
+    status: "",
+    file_name: "",
+    start_period: "",
+    end_period: "",
   });
 
-  const generateRandomCode = () => {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let result = "";
-    for (let i = 0; i < 5; i++) {
-      result += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
-    }
-    return result;
-  };
+  // const generateRandomCode = () => {
+  //   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  //   let result = "";
+  //   for (let i = 0; i < 5; i++) {
+  //     result += characters.charAt(
+  //       Math.floor(Math.random() * characters.length)
+  //     );
+  //   }
+  //   return result;
+  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -107,15 +109,11 @@ export default function DosenKelas() {
       };
       reader.readAsDataURL(file);
     }
-    setFormData({ ...formData, supportingFile: file });
+    setFormData({ ...formData, file_name: file });
   };
 
   const handleSave = () => {
-    if (
-      !formData.namaPraktikum ||
-      !formData.kodePraktikum ||
-      !formData.deadline
-    ) {
+    if (!namaKelas || !kodeKelas || !status) {
       Swal.fire("Error", "Harap isi semua field yang diperlukan!", "error");
       return;
     }
@@ -187,6 +185,74 @@ export default function DosenKelas() {
   //         String(value).toLowerCase().includes(search.toLowerCase())
   //       ),
   //   }));
+  const mutation = useMutation({
+    mutationFn: async (id) => {
+      console.log("button clicked");
+      // const { response } = await axios.post(RoutesApi.login, {
+      const response = await axios.get(`${RoutesApi.url}api/csrf-token`, {
+        // withCredentials: true,
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          Accept: "application/json",
+        },
+      });
+      console.log(response.data.token);
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
+      console.log(cookies.token);
+      const data = await axios.put(
+        RoutesApi.classAdmin + `/${id}`,
+        {
+          id: 1,
+          name: formData.namaKelas,
+          // user_id: 2,
+          // qty_student: 1,
+          start_period: formData.start_period,
+          end_period: formData.end_period,
+          class_code: formData.kodeKelas,
+          status: formData.status,
+          // university_id: 1,
+          //   contract_type: "LICENSE",
+          //   qty_student: 1,
+          //   start_period: "2025-02-10",
+          //   end_period: "2026-02-10",
+          //   spt: 5,
+          //   bupot: 5,
+          //   faktur: 5,
+          //   contract_code: "L-0001",
+
+          // university_id: parseInt(formData.instansi),
+          // contract_type: formData.jenisKontrak,
+          // qty_student: parseInt(formData.mahasiswa),
+          // start_period: formData.periodeAwal,
+          // end_period: formData.periodeAkhir,
+          // spt: parseInt(formData.spt),
+          // bupot: parseInt(formData.bupot),
+          // faktur: parseInt(formData.faktur),
+          // contract_code: formData.kodePembelian,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-CSRF-TOKEN": response.data.token,
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      window.location.reload();
+
+      // window.location.href = "/" + role;
+      // alert("Login successful!");
+      // queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   if (isLoading) {
     return (
@@ -273,21 +339,21 @@ export default function DosenKelas() {
                             <div className="">
                               <form>
                                 <div className="edit-form-group-mahasiswa ">
-                                  <label>Nama Praktikum:</label>
+                                  <label>Nama Kelas:</label>
                                   <input
                                     type="text"
-                                    name="namaPraktikum"
-                                    value={formData.namaPraktikum}
+                                    name="namaKelas"
+                                    value={formData.namaKelas}
                                     onChange={handleChange}
                                     required
                                   />
                                 </div>
                                 <div className="edit-form-group-mahasiswa">
-                                  <label>Kode Praktikum:</label>
+                                  <label>Kode Kelas:</label>
                                   <input
                                     className="text-black"
-                                    name="kodePraktikum"
-                                    value={formData.kodePraktikum}
+                                    name="kodeKelas"
+                                    value={formData.kodeKelas}
                                     onChange={handleChange}
                                   />
                                 </div>
@@ -296,8 +362,18 @@ export default function DosenKelas() {
                                   <input
                                     className="text-black"
                                     type="file"
-                                    name="supportingFile"
+                                    name="file_name"
                                     onChange={handleFileChange}
+                                  />
+                                </div>
+                                <div className="edit-form-group-mahasiswa">
+                                  <label>Tanggal Mulai:</label>
+                                  <input
+                                    className="text-black"
+                                    type="date"
+                                    name="start_period"
+                                    value={formData.start_period}
+                                    onChange={handleChange}
                                   />
                                 </div>
                                 <div className="edit-form-group-mahasiswa">
@@ -305,10 +381,22 @@ export default function DosenKelas() {
                                   <input
                                     className="text-black"
                                     type="date"
-                                    name="deadline"
-                                    value={formData.deadline}
+                                    name="end_period"
+                                    value={formData.end_period}
                                     onChange={handleChange}
                                   />
+                                </div>
+                                <div className="edit-form-group-mahasiswa">
+                                  <select
+                                    name="status"
+                                    value={formData.status}
+                                    onChange={handleChange}
+                                    required
+                                  >
+                                    <option value="">Pilih Status</option>
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="INACTIVE">Expired</option>
+                                  </select>
                                 </div>
                               </form>
                             </div>
@@ -318,7 +406,10 @@ export default function DosenKelas() {
                           <AlertDialogCancel className="bg-red-600 text-white">
                             Kembali
                           </AlertDialogCancel>
-                          <AlertDialogAction className="bg-green-600 ">
+                          <AlertDialogAction
+                            onClick={() => mutation.mutate(item.id)}
+                            className="bg-green-600 "
+                          >
                             Simpan
                           </AlertDialogAction>
                         </AlertDialogFooter>
