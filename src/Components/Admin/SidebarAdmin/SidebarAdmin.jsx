@@ -36,7 +36,7 @@ const SidebarAdmin = () => {
   //     queryClient.invalidateQueries({ queryKey: ["login"] });
   //   },
   // });
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -103,6 +103,12 @@ const SidebarAdmin = () => {
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
+  };
+
+  const logout = () => {
+    removeCookie("token");
+    removeCookie("role");
+    window.location.reload();
   };
 
   return (
@@ -445,9 +451,10 @@ const SidebarAdmin = () => {
             </li>
             <li
               className="dropdown-item"
-              onClick={() => {
-                window.location.href = "/logout";
-              }}
+              onClick={logout}
+              // onClick={() => {
+              //   window.location.href = "/logout";
+              // }}
             >
               Logout
             </li>

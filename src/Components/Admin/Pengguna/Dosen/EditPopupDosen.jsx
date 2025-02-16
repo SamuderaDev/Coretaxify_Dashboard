@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./editPopupDosen.css";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { RoutesApi } from "@/Routes";
+import { useCookies } from "react-cookie";
 
 const EditPopupDosen = ({ isOpen, onClose, dosen, onSave }) => {
+  const [cookies, setCookie] = useCookies(["user"]);
+
   const [formData, setFormData] = useState({
+    id: "",
+    contractId: "",
     name: "",
     email: "",
     // instansi: "",
@@ -13,19 +21,21 @@ const EditPopupDosen = ({ isOpen, onClose, dosen, onSave }) => {
     // status: "",
   });
 
-  //   useEffect(() => {
-  //     if (dosen) {
-  //       setFormData({
-  //         namaDosen: dosen.namaDosen || "",
-  //         instansi: dosen.instansi || "",
-  //         kuotaKelas: dosen.kuotaKelas || "",
-  //         kodeRegistrasi: dosen.kodeRegistrasi || "",
-  //         jumlahSiswa: dosen.jumlahSiswa || "",
-  //         kodePembelian: dosen.kodePembelian || "",
-  //         status: dosen.status || "",
-  //       });
-  //     }
-  //   }, [dosen]);
+  useEffect(() => {
+    if (dosen) {
+      setFormData({
+        id: dosen.id || "",
+        contractId: dosen.contractId || "",
+        name: dosen.name || "",
+        email: dosen.email || "",
+        // kuotaKelas: dosen.kuotaKelas || "",
+        // kodeRegistrasi: dosen.kodeRegistrasi || "",
+        // jumlahSiswa: dosen.jumlahSiswa || "",
+        // kodePembelian: dosen.kodePembelian || "",
+        // status: dosen.status || "",
+      });
+    }
+  }, [dosen]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,17 +44,66 @@ const EditPopupDosen = ({ isOpen, onClose, dosen, onSave }) => {
 
   const handleSave = () => {
     if (
-      formData.namaDosen &&
-      formData.instansi &&
-      formData.kuotaKelas &&
-      formData.status
+      formData.name &&
+      formData.email
+      // formData.kuotaKelas &&
+      // formData.status
     ) {
-      onSave({ ...dosen, ...formData });
+      // onSave({ ...dosen, ...formData });
+      mutation.mutate();
       onClose();
     } else {
       alert("Harap isi semua bidang yang wajib!");
     }
   };
+  const mutation = useMutation({
+    mutationFn: async () => {
+      console.log("button clicked");
+      // const { response } = await axios.post(RoutesApi.login, {
+      const response = await axios.get(`${RoutesApi.url}api/csrf-token`, {
+        // withCredentials: true,
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          Accept: "application/json",
+        },
+      });
+      console.log(response.data.token);
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
+      console.log(cookies.token);
+      const data = await axios.put(
+        RoutesApi.postAdmin.url + `/${dosen.id}`,
+        // "http://127.0.0.1:8000/api/admin/users?intent=api.user.import.dosen",
+        {
+          contract_id: formData.contractId,
+          name: formData.name,
+          email: formData.email,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Accept: "application/json",
+            "X-CSRF-TOKEN": response.data.token,
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          // params: {
+          //   intent: RoutesApi.importDosenAdmin.intent,
+          // },
+        }
+      );
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      // window.location.reload();
+
+      // window.location.href = "/" + role;
+      // alert("Login successful!");
+      // queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   if (!isOpen) return null;
 
@@ -59,8 +118,8 @@ const EditPopupDosen = ({ isOpen, onClose, dosen, onSave }) => {
             <label>Nama Dosen:</label>
             <input
               type="text"
-              name="namaDosen"
-              value={formData.namaDosen}
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               required
             />
@@ -68,14 +127,14 @@ const EditPopupDosen = ({ isOpen, onClose, dosen, onSave }) => {
           <div className="edit-form-group-dosen">
             <label>Instansi:</label>
             <input
-              type="text"
-              name="instansi"
-              value={formData.instansi}
+              type="email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
               required
             />
           </div>
-          <div className="edit-form-group-dosen">
+          {/* <div className="edit-form-group-dosen">
             <label>Kuota Kelas:</label>
             <input
               type="number"
@@ -124,7 +183,7 @@ const EditPopupDosen = ({ isOpen, onClose, dosen, onSave }) => {
               <option value="Active">Active</option>
               <option value="Expired">Expired</option>
             </select>
-          </div>
+          </div> */}
         </form>
         <div className="edit-popup-actions-dosen">
           <button className="edit-save-button" onClick={handleSave}>

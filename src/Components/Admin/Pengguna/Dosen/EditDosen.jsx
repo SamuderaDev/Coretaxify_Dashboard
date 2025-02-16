@@ -179,7 +179,7 @@ const EditDosen = () => {
         onClose={() => setEditPopupOpen(false)}
         dosen={selectedDosen}
         onSave={handleUpdateDosen}
-        id={id}
+        // id={id}
       />
       <div className="table-container">
         <table>
