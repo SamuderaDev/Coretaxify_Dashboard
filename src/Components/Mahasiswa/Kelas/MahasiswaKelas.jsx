@@ -1,48 +1,86 @@
 import React, { useState } from "react";
-import icon_class from "../../../Assets/image/class_icon.png";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { useCookies } from "react-cookie";
-import { LuClock } from "react-icons/lu";
+import Swal from "sweetalert2";
+import { IoReload } from "react-icons/io5";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/Components/ui/alert-dialog";
+import { CookiesProvider, useCookies } from "react-cookie";
+import { FaFile } from "react-icons/fa";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { ClipLoader } from "react-spinners";
+import { RoutesApi } from "@/Routes";
+import Wulan from "../../../Assets/image/wulan.png";
 
-export default function MahsiswaKelas() {
+export default function MahasiswaKelas() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAddOpen, setIsAddOpen] = useState(false); // State untuk popup tambah kelas
+  const [url, setUrl] = useState(RoutesApi.classAdmin);
+  const [isAddOpen, setIsAddOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [selectedData, setSelectedData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [cookies, setCookie] = useCookies(["user"]);
+  const [filePreview, setFilePreview] = useState(null);
 
-  const [data, setData] = useState([
-    {
-      id: "1",
-      nama: "Kelas Poltek",
-      kodeKelas: "xAE12",
-      isSelected: false,
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["kelas_dosen", url],
+    queryFn: async () => {
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${cookies.token}`,
+          Accept: "application/json",
+        },
+      });
+      console.log(data);
+      return data;
     },
-    {
-      id: "2",
-      nama: "Kelas UB",
-      kodeKelas: "xAE12",
-      isSelected: false,
-    },
-    {
-      id: "3",
-      nama: "Kelas UM",
-      kodeKelas: "xAE12",
-      isSelected: false,
-    },
-    {
-      id: "4",
-      nama: "Kelas UGM",
-      kodeKelas: "xAE12",
-      isSelected: false,
-    },
-  ]);
+  });
+
+  //   const [data, setData] = useState([
+  //     {
+  //       id: "1",
+  //       namaPraktikum: "Praktikum 1",
+  //       kodePraktikum: "xAE12",
+  //       supportingFile: "file.pdf",
+  //       deadline: "2021-12-12",
+  //     },
+  //     {
+  //       id: "2",
+  //       namaPraktikum: "Praktikum 2",
+  //       kodePraktikum: "xAE12",
+  //       supportingFile: "file.pdf",
+  //       deadline: "2021-12-12",
+  //     },
+  //     {
+  //       id: "3",
+  //       namaPraktikum: "Praktikum 2",
+  //       kodePraktikum: "xAE12",
+  //       supportingFile: "file.pdf",
+  //       deadline: "2021-12-12",
+  //     },
+  //     {
+  //       id: "4",
+  //       namaPraktikum: "Praktikum 3",
+  //       kodePraktikum: "xAE12",
+  //       supportingFile: "file.pdf",
+  //       deadline: "2021-12-12",
+  //     },
+  //   ]);
 
   const [formData, setFormData] = useState({
-    nama: "",
-    kodeKelas: "",
+    namaPraktikum: "",
+    kodePraktikum: "",
+    supportingFile: null,
+    deadline: "",
   });
 
   const generateRandomCode = () => {
@@ -61,20 +99,53 @@ export default function MahsiswaKelas() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFilePreview({ name: file.name, url: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+    setFormData({ ...formData, supportingFile: file });
+  };
+
   const handleSave = () => {
-    const newKelas = {
+    if (
+      !formData.namaPraktikum ||
+      !formData.kodePraktikum ||
+      !formData.deadline
+    ) {
+      Swal.fire("Error", "Harap isi semua field yang diperlukan!", "error");
+      return;
+    }
+
+    const newTugas = {
       id: String(data.length + 1),
-      nama: formData.nama,
-      kodeKelas: formData.kodeKelas,
-      isSelected: false,
+      namaPraktikum: formData.namaPraktikum,
+      kodePraktikum: formData.kodePraktikum,
+      supportingFile: formData.supportingFile
+        ? formData.supportingFile.name
+        : "No file",
+      deadline: formData.deadline,
     };
-    setData([...data, newKelas]);
+
+    setData([...data, newTugas]);
     setIsAddOpen(false);
-    setFormData({ nama: "", kodeKelas: "" });
+    setFormData({
+      namaPraktikum: "",
+      kodePraktikum: "",
+      supportingFile: null,
+      deadline: "",
+    });
+    setFilePreview(null);
+
+    Swal.fire("Berhasil!", "Praktikum berhasil ditambahkan!", "success");
   };
 
   const handleReloadCode = () => {
-    setFormData({ ...formData, kodeKelas: generateRandomCode() });
+    setFormData({ ...formData, kodePraktikum: generateRandomCode() });
   };
 
   const handleSort = (key) => {
@@ -103,25 +174,34 @@ export default function MahsiswaKelas() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  //   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [search, setSearch] = useState("");
 
-  const processedData = data.map((item) => ({
-    ...item,
-    highlight:
-      search &&
-      Object.values(item).some((value) =>
-        String(value).toLowerCase().includes(search.toLowerCase())
-      ),
-  }));
+  //   const processedData = data.map((item) => ({
+  //     ...item,
+  //     highlight:
+  //       search &&
+  //       Object.values(item).some((value) =>
+  //         String(value).toLowerCase().includes(search.toLowerCase())
+  //       ),
+  //   }));
+
+  if (isLoading) {
+    return (
+      <div className="loading">
+        <ClipLoader color="#7502B5" size={50} />
+      </div>
+      // <div className="h-full w-full text-2xl italic font-bold text-center flex items-center justify-center">Loading...</div>
+    );
+  }
 
   return (
     <div className="kontrak-container">
       <div className="header">
-        <h2>Data Kelas</h2>
+        <h2>Kelas</h2>
       </div>
       <div className="search-add-container">
         <div className="search-input-container">
@@ -129,64 +209,369 @@ export default function MahsiswaKelas() {
             type="text"
             id="search"
             className="search-input"
-            placeholder="Cari Kelas   🔎"
+            placeholder="Cari Kelas                     🔎"
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
+        <button
+          className="bg-blue-800 p-2 rounded-md text-white hover:bg-blue-900"
+          onClick={() => {
+            setIsAddOpen(true);
+            setFormData({ ...formData, kodePraktikum: generateRandomCode() });
+          }}
+        >
+          Tambah Kelas
+        </button>
       </div>
-      <div className="grid grid-cols-3 w-full gap-5">
-        <div className="shadow-md border-2 rounded-md min-h-64 flex flex-col relative bg-white">
-          <div className="w-full bg-purple-500 h-fit rounded-t-md p-6 text-white flex justify-between">
-            <div className="">
-              <h3 className="text-xl font-bold">KELAS A</h3>
-              <h4 className="text-lg">Kode Kelas</h4>
+      {/* <div className="table-container"> */}
+      {/* <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th onClick={() => handleSort("namaPraktikum ")}>
+                Nama Kelas{" "}
+                {sortConfig.key === "namaPraktikum"
+                  ? sortConfig.direction === "ascending"
+                    ? "↑"
+                    : "↓"
+                  : sortConfig.direction === "descending"
+                  ? "↓"
+                  : "↑"}
+              </th>
+              <th>Kode Kelas</th>
+              <th>Status</th>
+              <th>Nama File</th>
+              <th>Tanggal Mulai</th>
+              <th>Tanggal Selesai</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody> */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 place-items-start">
+        {data == undefined ? (
+          <div className="loading">
+            <h1>Data Empty !</h1>
+            {/* <ClipLoader color="#7502B5" size={50} /> */}
+          </div>
+        ) : (
+          data.map((item, index) => (
+            <div
+              key={item.id}
+              className="relative  shadow-lg rounded-lg w-100 md:min-w-96 p-4 cursor-pointer"
+              // onClick={() => navigate("/dosen/item/tugas")}
+            >
+              <div className="bg-purple-700 text-white p-4 rounded-t-lg w-150">
+                <h3 className="font-bold text-lg">{item.name}</h3>
+                <p className="text-sm">Pengajar : {item.user.name}</p>
+              </div>
+              <div className="p-4">
+                <ul className="text-gray-700 text-sm space-y-2 h-10">
+                  <li>
+                    <strong className="text-indigo-700">
+                      Kode Kelas : {item.class_code}
+                    </strong>
+                    {/* <p className="text-gray-500 p-4">
+                      Tanggal Mulai {item.start_period}
+                    </p>
+                    <strong className="text-indigo-700">
+                      {item.perusahaan}
+                    </strong>
+                    <p className="text-gray-500 p-4">
+                      Deadline {item.end_period}
+                    </p> */}
+                  </li>
+                </ul>
+              </div>
+              <div className="border-t px-4 py-2 flex items-center text-gray-700 text-sm">
+                {/* <span className="mr-2">⏳</span> */}
+                <p>Waktu pengerjaan :</p>
+                <p className="text-gray-500 p-4">{item.start_period}</p>-
+                <p className="text-gray-500 p-4"> {item.end_period}</p>
+              </div>
+              <img
+                src={Wulan}
+                alt="Icon"
+                className="absolute bottom-[200px] right-4 w-14 h-14 rounded-full border-2 border-white shadow-md"
+              />
             </div>
-            <div className="">
-              <BsThreeDotsVertical className="text-2xl" />
-            </div>
-          </div>
-          <div className="z-10 top-16 left-64 absolute">
-            <img src={icon_class} alt="" className="w-24" />
-          </div>
-          <div className="w-full p-5 h-[8.5rem] border-b-2 border-black">
-            <h4 className="text-lg font-bold">- PT Cakra </h4>
-            <p className="text-sm">Deadline Dec 27, 2024</p>
-          </div>
-          <div className="w-full p-2 pl-3 py-5 flex items-center gap-3 ">
-            <LuClock className="text-2xl" />
-            <p className="text-sm ">
-              <span className="font-bold">Kelas dibuat pada : </span>
-              August, 27 2024
-            </p>
-          </div>
-        </div>
+            // <tr key={item.id}>
+            //   <td>{item.id + index + 1}</td>
+            //   <td>{item.name}</td>
+            //   <td>{item.class_code}</td>
+            //   <td>{item.status}</td>
+            //   <td>{item.filename}</td>
+            //   <td>{item.start_period}</td>
+            //   <td>{item.end_period}</td>
+            //   <td>
+            //     <AlertDialog>
+            //       <AlertDialogTrigger className="action-button edit">
+            //         Edit
+            //       </AlertDialogTrigger>
+            //       <AlertDialogContent>
+            //         <AlertDialogHeader>
+            //           <AlertDialogTitle>Edit Kelas</AlertDialogTitle>
+            //           <AlertDialogDescription className="w-full">
+            //             <div className="">
+            //               <form>
+            //                 <div className="edit-form-group-mahasiswa ">
+            //                   <label>Nama Praktikum:</label>
+            //                   <input
+            //                     type="text"
+            //                     name="namaPraktikum"
+            //                     value={formData.namaPraktikum}
+            //                     onChange={handleChange}
+            //                     required
+            //                   />
+            //                 </div>
+            //                 <div className="edit-form-group-mahasiswa">
+            //                   <label>Kode Praktikum:</label>
+            //                   <input
+            //                     className="text-black"
+            //                     name="kodePraktikum"
+            //                     value={formData.kodePraktikum}
+            //                     onChange={handleChange}
+            //                   />
+            //                 </div>
+            //                 <div className="edit-form-group-mahasiswa">
+            //                   <label>File Support:</label>
+            //                   <input
+            //                     className="text-black"
+            //                     type="file"
+            //                     name="supportingFile"
+            //                     onChange={handleFileChange}
+            //                   />
+            //                 </div>
+            //                 <div className="edit-form-group-mahasiswa">
+            //                   <label>Deadline:</label>
+            //                   <input
+            //                     className="text-black"
+            //                     type="date"
+            //                     name="deadline"
+            //                     value={formData.deadline}
+            //                     onChange={handleChange}
+            //                   />
+            //                 </div>
+            //               </form>
+            //             </div>
+            //           </AlertDialogDescription>
+            //         </AlertDialogHeader>
+            //         <AlertDialogFooter>
+            //           <AlertDialogCancel className="bg-red-600 text-white">
+            //             Kembali
+            //           </AlertDialogCancel>
+            //           <AlertDialogAction className="bg-green-600 ">
+            //             Simpan
+            //           </AlertDialogAction>
+            //         </AlertDialogFooter>
+            //       </AlertDialogContent>
+            //     </AlertDialog>
 
-        <div className="shadow-md border-2 rounded-md min-h-64 flex flex-col relative bg-white">
-          <div className="w-full bg-purple-500 h-fit rounded-t-md p-6 text-white flex justify-between">
-            <div className="">
-              <h3 className="text-xl font-bold">KELAS A</h3>
-              <h4 className="text-lg">Kode Kelas</h4>
-            </div>
-            <div className="">
-              <BsThreeDotsVertical className="text-2xl" />
-            </div>
+            //     <button
+            //       className="action-button delete"
+            //       onClick={() => {
+            //         Swal.fire({
+            //           title: "Hapus Kelas?",
+            //           text: "Kelas akan dihapus secara permanen!",
+            //           icon: "warning",
+            //           showCancelButton: true,
+            //           confirmButtonText: "Ya, hapus!",
+            //           cancelButtonText: "Batal",
+            //           dangerMode: true,
+            //         }).then((result) => {
+            //           if (result.isConfirmed) {
+            //             const newData = data.filter(
+            //               (itemData) => itemData.id !== item.id
+            //             );
+            //             setData(newData);
+            //             Swal.fire(
+            //               "Berhasil!",
+            //               "Kelas berhasil dihapus!",
+            //               "success"
+            //             );
+            //           }
+            //         });
+            //       }}
+            //     >
+            //       Delete
+            //     </button>
+            //   </td>
+            // </tr>
+          ))
+        )}
+        {/* </tbody>
+        </table> */}
+        {/* <div className="pagination-container sticky">
+          <div className="pagination-info">
+            {`Showing ${indexOfFirstItem + 1} to ${Math.min(
+              indexOfLastItem,
+              data.length
+            )} of ${data.length} entries`}
           </div>
-          <div className="z-10 top-16 left-64 absolute">
-            <img src={icon_class} alt="" className="w-24" />
-          </div>
-          <div className="w-full p-5 h-[8.5rem] border-b-2 border-black">
-            <h4 className="text-lg font-bold">- PT Cakra </h4>
-            <p className="text-sm">Deadline Dec 27, 2024</p>
-          </div>
-          <div className="w-full p-2 pl-3 py-5 flex items-center gap-3 ">
-            <LuClock className="text-2xl" />
-            <p className="text-sm ">
-              <span className="font-bold">Kelas dibuat pada : </span>
-              August, 27 2024
-            </p>
+
+          <div className="pagination ">
+            <button
+              className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              &lt;
+            </button>
+            {Array.from(
+              { length: Math.ceil(data.length / itemsPerPage) },
+              (_, index) => (
+                <button
+                  key={index + 1}
+                  className={`page-item ${
+                    currentPage === index + 1 ? "active" : ""
+                  }`}
+                  onClick={() => paginate(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              )
+            )}
+            <button
+              className={`page-item ${
+                currentPage === Math.ceil(data.length / itemsPerPage)
+                  ? "disabled"
+                  : ""
+              }`}
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
+            >
+              &gt;
+            </button>
           </div>
         </div>
+      </div> */}
       </div>
+      {isOpen && (
+        <EditPopupMahasiswa
+          onClose={() => setIsOpen(false)}
+          data={selectedData}
+        />
+      )}
+      <AlertDialog
+        open={isAddOpen}
+        onOpenChange={setIsAddOpen}
+        className="max-h-[50vh] overflow-y-auto"
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Tambah Praktikum</AlertDialogTitle>
+            <AlertDialogDescription className="w-full">
+              <div className="max-h-[70vh] overflow-y-auto">
+                <form>
+                  <div className="edit-form-group-mahasiswa ">
+                    <label>Nama Kelas:</label>
+                    <input
+                      type="text"
+                      name="namaPraktikum"
+                      value={formData.namaPraktikum}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="edit-form-group-mahasiswa">
+                    <label>Kode Praktikum:</label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        className="text-black"
+                        name="kodePraktikum"
+                        value={formData.kodePraktikum}
+                        onChange={handleChange}
+                        readOnly
+                      />
+                      <button
+                        type="button"
+                        className="p-3 bg-purple-800 rounded-md hover:bg-purple-900"
+                        onClick={handleReloadCode}
+                      >
+                        <IoReload className="text-lg text-white " />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="edit-form-group-mahasiswa">
+                    <label>File Support:</label>
+                    <div className="flex items-center justify-center w-full ">
+                      <label
+                        htmlFor="dropzone-file"
+                        className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                      >
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                          {filePreview ? (
+                            <>
+                              <div className="grid justify-center items-center p-20">
+                                <FaFile className="w-8 h-8 text-gray-500 dark:text-gray-400 mb-2" />
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                  {filePreview.name}
+                                </p>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <svg
+                                className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 20 16"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                                />
+                              </svg>
+                              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                <span className="font-semibold">
+                                  Click to upload
+                                </span>{" "}
+                                or drag and drop
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">
+                                ZIP, RAR atau PDF (MAX. 10mb)
+                              </p>
+                            </>
+                          )}
+                        </div>
+
+                        <input
+                          id="dropzone-file"
+                          type="file"
+                          className="hidden"
+                          accept=".zip, .rar, .pdf"
+                          onChange={handleFileChange}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div className="edit-form-group-mahasiswa ">
+                    <label>Deadline:</label>
+                    <input
+                      type="date"
+                      name="deadline"
+                      value={formData.deadline}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </form>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="bg-red-600 text-white hover:bg-red-800 hover:text-white">
+              Batal
+            </AlertDialogCancel>
+            <AlertDialogAction className="bg-green-600" onClick={handleSave}>
+              Simpan
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -26,7 +26,7 @@ import Ujian from "./Components/Admin/Praktikum/Ujian";
 import UploadSoal from "./Components/Admin/Praktikum/UploadSoal";
 import KontrakBackup from "./Components/Admin/Kontrak/KontrakBackup";
 import PraktikumBackup from "./Components/Admin/Praktikum/PraktikumBackup";
-import MahsiswaKelas from "./Components/Mahasiswa/Kelas/MahasiswaKelas";
+import MahsiswaKelas from "./components/Mahasiswa/Kelas/MahasiswaKelas-backup";
 import MahasiswaPraktikum from "./Components/Mahasiswa/Praktikum/MahasiswaPraktikum";
 import MahasiswaUjian from "./Components/Mahasiswa/Praktikum/MahasiswaUjian";
 import EditPengajar from "./Components/AdminPsc/Pengguna/Pengajar/EditPengajar";
@@ -34,6 +34,8 @@ import EditKelasPsc from "./Components/AdminPsc/Pengguna/Kelas/EditKelasPsc";
 import UjianPsc from "./Components/AdminPsc/Pengguna/Praktikum/UjianPsc";
 import EditMahasiswaPsc from "./Components/AdminPsc/Pengguna/Mahasiswa/EditMahasiswaPsc";
 import ProtectedRoutes from "./Components/ProtectedRoutes";
+import DosenKelas from "./Components/Dosen/Kelas/DosenKelas";
+import MahasiswaKelas from "./components/Mahasiswa/Kelas/MahasiswaKelas";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -231,7 +233,8 @@ const App = () => {
             <div className="admin-layout">
               <SidebarAdmin />
               <div className="admin-content">
-                <DosenCardKelas></DosenCardKelas>
+                <DosenKelas></DosenKelas>
+                {/* <DosenCardKelas></DosenCardKelas> */}
               </div>
             </div>
           }
@@ -292,12 +295,12 @@ const App = () => {
           }
         />
         <Route
-          path="/mahasiswa/kelas"
+          path="/mahasiswa"
           element={
             <div className="admin-layout">
               <SidebarAdmin />
               <div className="admin-content">
-                <MahsiswaKelas></MahsiswaKelas>
+                <MahasiswaKelas></MahasiswaKelas>
               </div>
             </div>
           }
