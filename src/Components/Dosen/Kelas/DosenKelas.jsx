@@ -84,16 +84,16 @@ export default function DosenKelas() {
     end_period: "",
   });
 
-  // const generateRandomCode = () => {
-  //   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  //   let result = "";
-  //   for (let i = 0; i < 5; i++) {
-  //     result += characters.charAt(
-  //       Math.floor(Math.random() * characters.length)
-  //     );
-  //   }
-  //   return result;
-  // };
+  const generateRandomCode = () => {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let result = "";
+    for (let i = 0; i < 5; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -185,6 +185,54 @@ export default function DosenKelas() {
   //         String(value).toLowerCase().includes(search.toLowerCase())
   //       ),
   //   }));
+  const mutationClass = useMutation({
+    mutationFn: async (id) => {
+      console.log("button clicked");
+      // const { response } = await axios.post(RoutesApi.login, {
+      const response = await axios.get(`${RoutesApi.url}api/csrf-token`, {
+        // withCredentials: true,
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          Accept: "application/json",
+        },
+      });
+      console.log(response.data.token);
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
+      console.log(cookies.token);
+      const data = await axios.post(
+        RoutesApi.classAdmin,
+        {
+          // id: 1,
+          name: formData.namaKelas,
+          // user_id: 2,
+          // qty_student: 1,
+          start_period: formData.start_period,
+          end_period: formData.end_period,
+          class_code: formData.kodeKelas,
+          status: formData.status,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-CSRF-TOKEN": response.data.token,
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          params: {
+            intent: "api.user.create.group",
+          },
+        }
+      );
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
   const mutation = useMutation({
     mutationFn: async (id) => {
       console.log("button clicked");
@@ -296,7 +344,7 @@ export default function DosenKelas() {
           className="bg-blue-800 p-2 rounded-md text-white hover:bg-blue-900"
           onClick={() => {
             setIsAddOpen(true);
-            setFormData({ ...formData, kodePraktikum: generateRandomCode() });
+            setFormData({ ...formData, kodeKelas: generateRandomCode() });
           }}
         >
           Tambah Kelas
@@ -525,19 +573,19 @@ export default function DosenKelas() {
                     <label>Nama Kelas:</label>
                     <input
                       type="text"
-                      name="namaPraktikum"
-                      value={formData.namaPraktikum}
+                      name="namaKelas"
+                      value={formData.namaKelas}
                       onChange={handleChange}
                       required
                     />
                   </div>
                   <div className="edit-form-group-mahasiswa">
-                    <label>Kode Praktikum:</label>
+                    <label>Kode Kelas:</label>
                     <div className="flex items-center gap-2">
                       <input
                         className="text-black"
-                        name="kodePraktikum"
-                        value={formData.kodePraktikum}
+                        name="kodeKelas"
+                        value={formData.kodeKelas}
                         onChange={handleChange}
                         readOnly
                       />
@@ -607,15 +655,37 @@ export default function DosenKelas() {
                       </label>
                     </div>
                   </div>
-                  <div className="edit-form-group-mahasiswa ">
+                  <div className="edit-form-group-mahasiswa">
+                    <label>Tanggal Mulai:</label>
+                    <input
+                      className="text-black"
+                      type="date"
+                      name="start_period"
+                      value={formData.start_period}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="edit-form-group-mahasiswa">
                     <label>Deadline:</label>
                     <input
+                      className="text-black"
                       type="date"
-                      name="deadline"
-                      value={formData.deadline}
+                      name="end_period"
+                      value={formData.end_period}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="edit-form-group-mahasiswa">
+                    <select
+                      name="status"
+                      value={formData.status}
                       onChange={handleChange}
                       required
-                    />
+                    >
+                      <option value="">Pilih Status</option>
+                      <option value="ACTIVE">Active</option>
+                      <option value="INACTIVE">Expired</option>
+                    </select>
                   </div>
                 </form>
               </div>
@@ -625,7 +695,10 @@ export default function DosenKelas() {
             <AlertDialogCancel className="bg-red-600 text-white hover:bg-red-800 hover:text-white">
               Batal
             </AlertDialogCancel>
-            <AlertDialogAction className="bg-green-600" onClick={handleSave}>
+            <AlertDialogAction
+              className="bg-green-600"
+              onClick={() => mutationClass.mutate()}
+            >
               Simpan
             </AlertDialogAction>
           </AlertDialogFooter>
