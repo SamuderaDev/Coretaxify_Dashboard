@@ -210,25 +210,6 @@ export default function DosenKelas() {
           end_period: formData.end_period,
           class_code: formData.kodeKelas,
           status: formData.status,
-          // university_id: 1,
-          //   contract_type: "LICENSE",
-          //   qty_student: 1,
-          //   start_period: "2025-02-10",
-          //   end_period: "2026-02-10",
-          //   spt: 5,
-          //   bupot: 5,
-          //   faktur: 5,
-          //   contract_code: "L-0001",
-
-          // university_id: parseInt(formData.instansi),
-          // contract_type: formData.jenisKontrak,
-          // qty_student: parseInt(formData.mahasiswa),
-          // start_period: formData.periodeAwal,
-          // end_period: formData.periodeAkhir,
-          // spt: parseInt(formData.spt),
-          // bupot: parseInt(formData.bupot),
-          // faktur: parseInt(formData.faktur),
-          // contract_code: formData.kodePembelian,
         },
         {
           headers: {
@@ -243,6 +224,39 @@ export default function DosenKelas() {
     },
     onSuccess: (data) => {
       console.log(data);
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  const mutationDelete = useMutation({
+    mutationFn: async (id) => {
+      console.log("button clicked");
+      // const { response } = await axios.post(RoutesApi.login, {
+      const response = await axios.get(`${RoutesApi.url}api/csrf-token`, {
+        // withCredentials: true,
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          Accept: "application/json",
+        },
+      });
+      console.log(response.data.token);
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
+      console.log(cookies.token);
+      const data = await axios.delete(RoutesApi.classAdmin + `/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "X-CSRF-TOKEN": response.data.token,
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      });
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      Swal.fire("Berhasil!", "Kelas berhasil dihapus!", "success");
       window.location.reload();
 
       // window.location.href = "/" + role;
@@ -429,15 +443,11 @@ export default function DosenKelas() {
                           dangerMode: true,
                         }).then((result) => {
                           if (result.isConfirmed) {
-                            const newData = data.filter(
-                              (itemData) => itemData.id !== item.id
-                            );
-                            setData(newData);
-                            Swal.fire(
-                              "Berhasil!",
-                              "Kelas berhasil dihapus!",
-                              "success"
-                            );
+                            // const newData = data.filter(
+                            //   (itemData) => itemData.id !== item.id
+                            // );
+                            // setData(newData);
+                            mutationDelete.mutate(item.id);
                           }
                         });
                       }}
