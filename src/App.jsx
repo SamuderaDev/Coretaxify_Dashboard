@@ -17,7 +17,12 @@ import DetailTugasPenilaianDosen from "./Components/Dosen/Penilaian/DetailTugasP
 import EditMahasiswa from "./Components/Admin/Pengguna/Mahasiswa/EditMahasiswa";
 import EditAdmin from "./Components/Admin/Pengguna/Admin/EditAdmin";
 import EditKelas from "./Components/Admin/Pengguna/Kelas/EditKelas";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import EditArtikel from "./Components/Admin/LandingPage/EditArtikel";
 import EditUlasan from "./Components/Admin/LandingPage/EditUlasan";
@@ -295,7 +300,7 @@ const App = () => {
           }
         />
         <Route
-          path="/mahasiswa"
+          path="/mahasiswa/kelas"
           element={
             <div className="admin-layout">
               <SidebarAdmin />
@@ -304,6 +309,10 @@ const App = () => {
               </div>
             </div>
           }
+        />
+        <Route
+          path="/mahasiswa"
+          element={<Navigate to="/mahasiswa/kelas" replace />}
         />
         <Route
           path="/mahasiswa/praktikum"

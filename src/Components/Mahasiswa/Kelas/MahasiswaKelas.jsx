@@ -15,7 +15,7 @@ import {
 import { CookiesProvider, useCookies } from "react-cookie";
 import { FaFile } from "react-icons/fa";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { ClipLoader } from "react-spinners";
 import { RoutesApi } from "@/Routes";
 import Wulan from "../../../Assets/image/wulan.png";
@@ -77,10 +77,10 @@ export default function MahasiswaKelas() {
   //   ]);
 
   const [formData, setFormData] = useState({
-    namaPraktikum: "",
-    kodePraktikum: "",
-    supportingFile: null,
-    deadline: "",
+    kodeKelas: "",
+    // kodePraktikum: "",
+    // supportingFile: null,
+    // deadline: "",
   });
 
   const generateRandomCode = () => {
@@ -113,9 +113,9 @@ export default function MahasiswaKelas() {
 
   const handleSave = () => {
     if (
-      !formData.namaPraktikum ||
-      !formData.kodePraktikum ||
-      !formData.deadline
+      !formData.kodeKelas
+      // !formData.kodePraktikum ||
+      // !formData.deadline
     ) {
       Swal.fire("Error", "Harap isi semua field yang diperlukan!", "error");
       return;
@@ -131,17 +131,18 @@ export default function MahasiswaKelas() {
       deadline: formData.deadline,
     };
 
-    setData([...data, newTugas]);
+    // setData([...data, newTugas]);
     setIsAddOpen(false);
-    setFormData({
-      namaPraktikum: "",
-      kodePraktikum: "",
-      supportingFile: null,
-      deadline: "",
-    });
-    setFilePreview(null);
+    // setFormData({
+    //   namaPraktikum: "",
+    //   kodePraktikum: "",
+    //   supportingFile: null,
+    //   deadline: "",
+    // });
+    // setFilePreview(null);
+    mutation.mutate();
 
-    Swal.fire("Berhasil!", "Praktikum berhasil ditambahkan!", "success");
+    // window.location.reload();
   };
 
   const handleReloadCode = () => {
@@ -188,6 +189,63 @@ export default function MahasiswaKelas() {
   //         String(value).toLowerCase().includes(search.toLowerCase())
   //       ),
   //   }));
+  const mutation = useMutation({
+    mutationFn: async (id) => {
+      console.log("button clicked");
+      // const { response } = await axios.post(RoutesApi.login, {
+      const response = await axios.get(`${RoutesApi.url}api/csrf-token`, {
+        // withCredentials: true,
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          Accept: "application/json",
+        },
+      });
+      console.log(response.data.token);
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
+      console.log(cookies.token);
+      const data = await axios.post(
+        RoutesApi.joinClass.url,
+        {
+          class_code: formData.kodeKelas,
+        },
+
+        //   university_id: 1,
+        //   contract_type: "LICENSE",
+        //   qty_student: 1,
+        //   start_period: "2025-02-10",
+        //   end_period: "2026-02-10",
+        //   spt: 5,
+        //   bupot: 5,
+        //   faktur: 5,
+        //   contract_code: "L-0001"
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-CSRF-TOKEN": response.data.token,
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          params: {
+            intent: RoutesApi.joinClass.intent,
+          },
+        }
+      );
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      Swal.fire("Berhasil!", "Praktikum berhasil ditambahkan!", "success");
+      // const role = data.data.user.roles[0].name;
+      // setCookie("token", data.data.token, { path: "/" });
+      // setCookie("role", role, { path: "/" });
+
+      // alert("Login successful!");
+      // queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   if (isLoading) {
     return (
@@ -217,7 +275,7 @@ export default function MahasiswaKelas() {
           className="bg-blue-800 p-2 rounded-md text-white hover:bg-blue-900"
           onClick={() => {
             setIsAddOpen(true);
-            setFormData({ ...formData, kodePraktikum: generateRandomCode() });
+            // setFormData({ ...formData, kodePraktikum: generateRandomCode() });
           }}
         >
           Tambah Kelas
@@ -458,40 +516,40 @@ export default function MahasiswaKelas() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Tambah Praktikum</AlertDialogTitle>
+            <AlertDialogTitle>Tambah Kelas</AlertDialogTitle>
             <AlertDialogDescription className="w-full">
               <div className="max-h-[70vh] overflow-y-auto">
                 <form>
                   <div className="edit-form-group-mahasiswa ">
-                    <label>Nama Kelas:</label>
-                    <input
+                    {/* <label>Nama Kelas:</label> */}
+                    {/* <input
                       type="text"
                       name="namaPraktikum"
                       value={formData.namaPraktikum}
                       onChange={handleChange}
                       required
-                    />
+                    /> */}
                   </div>
                   <div className="edit-form-group-mahasiswa">
-                    <label>Kode Praktikum:</label>
+                    <label>Kode Kelas:</label>
                     <div className="flex items-center gap-2">
                       <input
                         className="text-black"
-                        name="kodePraktikum"
-                        value={formData.kodePraktikum}
+                        name="kodeKelas"
+                        value={formData.kodeKelas}
                         onChange={handleChange}
-                        readOnly
+                        // readOnly
                       />
-                      <button
+                      {/* <button
                         type="button"
                         className="p-3 bg-purple-800 rounded-md hover:bg-purple-900"
                         onClick={handleReloadCode}
                       >
                         <IoReload className="text-lg text-white " />
-                      </button>
+                      </button> */}
                     </div>
                   </div>
-                  <div className="edit-form-group-mahasiswa">
+                  {/* <div className="edit-form-group-mahasiswa">
                     <label>File Support:</label>
                     <div className="flex items-center justify-center w-full ">
                       <label
@@ -547,8 +605,8 @@ export default function MahasiswaKelas() {
                         />
                       </label>
                     </div>
-                  </div>
-                  <div className="edit-form-group-mahasiswa ">
+                  </div> */}
+                  {/* <div className="edit-form-group-mahasiswa ">
                     <label>Deadline:</label>
                     <input
                       type="date"
@@ -557,7 +615,7 @@ export default function MahasiswaKelas() {
                       onChange={handleChange}
                       required
                     />
-                  </div>
+                  </div> */}
                 </form>
               </div>
             </AlertDialogDescription>
@@ -567,7 +625,7 @@ export default function MahasiswaKelas() {
               Batal
             </AlertDialogCancel>
             <AlertDialogAction className="bg-green-600" onClick={handleSave}>
-              Simpan
+              Gabung Kelas
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

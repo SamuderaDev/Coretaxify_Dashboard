@@ -167,13 +167,13 @@ const SidebarAdmin = () => {
             if (cookies.role == "admin") {
               window.location.href = "/admin/coretaxify";
             } else {
-              window.location.href = `/${cookies.role}/kelas`;
+              window.location.href = `/${cookies.role}/praktikum`;
             }
           }}
         >
           <FaLaptopCode className="menu-icon" />
           {isOpen && (
-            <span>{cookies.role == "admin" ? "Coretaxify" : "Kelas"}</span>
+            <span>{cookies.role == "admin" ? "Coretaxify" : "Praktikum"}</span>
           )}
         </li>
         <li
@@ -360,7 +360,7 @@ const SidebarAdmin = () => {
             <li
               className="menu-item"
               onClick={() => {
-                window.location.href = "/mahasiswa";
+                window.location.href = "/mahasiswa/kelas";
               }}
             >
               <FaUsers className="menu-icon" />
